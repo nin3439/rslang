@@ -1,6 +1,7 @@
 import React from 'react';
 import { AppBar, Tabs, Tab, Typography, Box } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
+import getWords from '../../../actions/words';
 
 function TabPanel(props: any) {
   const { children, value, index, ...other } = props;
@@ -43,6 +44,7 @@ export const TextBook = () => {
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
+  console.log(getWords(0, 0));
 
   return (
     <div className={classes.root}>
