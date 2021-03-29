@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
 import Header from './Header/Header';
 import { Footer } from './Footer';
@@ -7,6 +7,7 @@ import { TextBook } from './Content/TextBook/TextBook';
 import Menu from './Menu/Menu';
 import { connect } from 'react-redux';
 import { IMainProps } from '../types';
+import { Games } from './Content/Games/Games';
 
 const Main: React.FC<IMainProps> = ({ isModalActive }) => {
   return (
@@ -38,7 +39,7 @@ const Main: React.FC<IMainProps> = ({ isModalActive }) => {
             </Route>
             <Route path="/games">
               {' '}
-              <div>Games</div>
+              <Games />
               {/* мини-игры */}
             </Route>
             <Route path="/statistics">
