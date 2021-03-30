@@ -1,15 +1,30 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
-import { GamesMenu } from './GamesMenu';
+import { CardContent, Grid, Card, Typography } from '@material-ui/core';
+import { GAMES } from '../../../constants/games';
+import { Link } from 'react-router-dom';
 
 export const Games = () => {
   return (
-    <Switch>
-      <Route exact path="/games" render={() => <GamesMenu />} />
-      <Route path="/games/savannah" render={() => <div>Savannah</div>} />
-      <Route path="/games/sprint" render={() => <div>sprint</div>} />
-      <Route path="/games/audiocall" render={() => <div>audiocall</div>} />
-      <Route path="/games/game" render={() => <div>game</div>} />
-    </Switch>
+    <Grid
+      container
+      direction="row"
+      justify="center"
+      alignItems="center"
+      spacing={3}
+    >
+      {GAMES.map((game) => {
+        return (
+          <Grid item key={game.name}>
+            <Link to={game.path}>
+              <Card style={{ width: '450px', height: '250px' }}>
+                <CardContent>
+                  <Typography variant="h5">{game.name}</Typography>
+                </CardContent>
+              </Card>
+            </Link>
+          </Grid>
+        );
+      })}
+    </Grid>
   );
 };
