@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
 import { Header } from './Header/Header';
 import { Footer } from './Footer';
 import { TextBook } from './Content/TextBook/TextBook';
+import { Menu } from './Menu/Menu';
 
 export const Main: React.FC = () => {
+  const [showUserMenu, setShowUserMenu] = useState(false);
   return (
     <Router>
       <Grid
@@ -14,7 +16,7 @@ export const Main: React.FC = () => {
         justify="space-between"
         alignItems="center"
       >
-        <Header />
+        <Header showUserMenu={showUserMenu} setShowUserMenu={setShowUserMenu} />
         <Grid
           container
           direction="column"
@@ -46,6 +48,9 @@ export const Main: React.FC = () => {
         </Grid>
         <Footer />
       </Grid>
+      {showUserMenu ? (
+        <Menu showUserMenu={showUserMenu} setShowUserMenu={setShowUserMenu} />
+      ) : null}
     </Router>
   );
 };

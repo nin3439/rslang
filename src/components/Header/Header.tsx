@@ -8,7 +8,15 @@ const StyledGrid = styled(Grid)`
   padding: 0 28px;
 `;
 
-export const Header = () => {
+interface IHeaderProps {
+  showUserMenu: boolean;
+  setShowUserMenu: any;
+}
+
+export const Header: React.FC<IHeaderProps> = ({
+  showUserMenu,
+  setShowUserMenu,
+}) => {
   return (
     <StyledGrid
       container
@@ -19,7 +27,7 @@ export const Header = () => {
       <MenuBlock />
       <Typography>RS Lang</Typography>
       <IconButton>
-        <AccountCircle />
+        <AccountCircle onClick={() => setShowUserMenu(!showUserMenu)} />
       </IconButton>
     </StyledGrid>
   );
