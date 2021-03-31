@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Input from '../../../utils/Input';
-import { useDispatch } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { login } from '../../../redux/actions/user';
 import styled from 'styled-components';
 
@@ -40,10 +40,9 @@ const Button = styled.button`
   }
 `;
 
-const Login = () => {
+const Login = ({ login }: any) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const dispatch = useDispatch();
 
   return (
     <MenuBlock>
@@ -60,11 +59,18 @@ const Login = () => {
         type="password"
         placeholder="Введите пароль..."
       />
-      <Button onClick={() => dispatch(login({ email, password }))}>
+      <Button
+        onClick={() => {
+          login({ email, password });
+        }}
+      >
         Войти
       </Button>
     </MenuBlock>
   );
 };
 
-export default Login;
+const mapStateToProps = (state: any) => {
+  return {};
+};
+export default connect(mapStateToProps, { login })(Login);

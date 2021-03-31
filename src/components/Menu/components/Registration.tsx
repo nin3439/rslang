@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Input from '../../../utils/Input';
 import { registration } from '../../../redux/actions/user';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 const MenuBlock = styled.div`
   display: flex;
@@ -39,7 +40,7 @@ const Button = styled.button`
   }
 `;
 
-const Registration = () => {
+const Registration = ({ registration }: any) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -65,11 +66,17 @@ const Registration = () => {
         type="password"
         placeholder="Введите пароль..."
       />
-      <Button onClick={() => registration({ name, email, password })}>
+      <Button
+        onClick={() => {
+          registration({ name, email, password });
+        }}
+      >
         Зарегистрироваться
       </Button>
     </MenuBlock>
   );
 };
-
-export default Registration;
+const mapStateToProps = (state: any) => {
+  return {};
+};
+export default connect(mapStateToProps, { registration })(Registration);

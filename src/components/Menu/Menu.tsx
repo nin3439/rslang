@@ -6,7 +6,8 @@ import { TabPanel, a11yProps, useStyles } from './components/Bookmarks';
 import Registration from './components/Registration';
 import Login from './components/Login';
 import { auth } from '../../redux/actions/user';
-import { useDispatch } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
+import { ChangeModalAuth } from '../../redux/actions/controllerActions';
 
 const PopUpMenu = styled.div`
   position: fixed;
@@ -67,9 +68,10 @@ const Button = styled.button`
   }
 `;
 
-export const Menu: React.FC<any> = ({
-  showUserMenu,
-  setShowUserMenu,
+const Menu: React.FC<any> = ({
+  isModalActive,
+  changeModalAuth,
+  auth,
   isAuth,
 }) => {
   const classes = useStyles();
@@ -105,10 +107,26 @@ export const Menu: React.FC<any> = ({
             </TabPanel>
           </div>
         )}
-        <Button onClick={() => setShowUserMenu(!showUserMenu)}>
+        <Button onClick={() => changeModalAuth()}>
           <CancelIcon />
         </Button>
       </PopUpMenuInner>
     </PopUpMenu>
   );
 };
+const mapStateToProps = (state: any) => {
+  return {
+    isModalActive: state.controllers.isModalActive,
+    isAuth: state.userReducer.isAuth,
+  };
+};
+const mapStateToDispatch = (dispatch: any) => {
+  return {
+    changeModalAuth() {
+      const action = ChangeModalAuth();
+      dispatch(action);
+    },
+    auth,
+  };
+};
+export default connect(mapStateToProps, mapStateToDispatch)(Menu);

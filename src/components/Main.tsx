@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
-import { Header } from './Header/Header';
+import Header from './Header/Header';
 import { Footer } from './Footer';
 import { TextBook } from './Content/TextBook/TextBook';
-import { Menu } from './Menu/Menu';
-
-export const Main: React.FC = () => {
-  const [showUserMenu, setShowUserMenu] = useState(false);
+import Menu from './Menu/Menu';
+import { connect } from 'react-redux';
+interface IMainProps {
+  isModalActive: string;
+}
+const Main: React.FC<IMainProps> = ({ isModalActive }) => {
   return (
     <Router>
       <Grid
@@ -16,7 +18,7 @@ export const Main: React.FC = () => {
         justify="space-between"
         alignItems="center"
       >
-        <Header showUserMenu={showUserMenu} setShowUserMenu={setShowUserMenu} />
+        <Header />
         <Grid
           container
           direction="column"
@@ -48,9 +50,13 @@ export const Main: React.FC = () => {
         </Grid>
         <Footer />
       </Grid>
-      {showUserMenu ? (
-        <Menu showUserMenu={showUserMenu} setShowUserMenu={setShowUserMenu} />
-      ) : null}
+      {isModalActive && <Menu />}
     </Router>
   );
 };
+const mapStateToProps = (state: any) => {
+  return {
+    isModalActive: state.controllers.isModalActive,
+  };
+};
+export default connect(mapStateToProps)(Main);
