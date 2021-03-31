@@ -3,7 +3,7 @@ import { AppBar, Tabs, Tab } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { Groups } from './groups/groups';
 import { Route, Switch, useRouteMatch } from 'react-router';
-import { Page } from './page/page';
+import Page from './page/page';
 import { Link } from 'react-router-dom';
 import { Dictionary } from './dictionary/Dictionary';
 
@@ -35,7 +35,7 @@ export const TextBook = () => {
         <Route path={`${path}/dictionary`}>
           <Dictionary />
         </Route>
-        <Route path={`${path}/group/:numberGroup/page/:numberPage`}>
+        <Route path={`${path}/group/:groupNumber/page/:pageNumber`}>
           <Page />
         </Route>
         <Route exact path="/textbook">

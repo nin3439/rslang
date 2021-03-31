@@ -28,4 +28,11 @@ export interface IPropsLoadWords {
 export interface IGroupParametr {
   numberGroup: number;
   color: string;
+  id: string;
+}
+
+export interface IStatePage {
+  textbook: {
+    currentWords: {}[];
+  };
 }
