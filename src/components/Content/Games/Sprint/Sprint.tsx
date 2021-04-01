@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Grid } from '@material-ui/core';
-import { GameHeader } from '../Common/GameHeader';
 import styled from 'styled-components';
-import { InitialDialog } from './components/InitialDialog';
+import { InitialPage } from './components/InitialPage';
 import { Game } from './components/Game';
 
 const StyledGrid = styled(Grid)`
@@ -15,6 +14,7 @@ const StyledGrid = styled(Grid)`
 
 export const Sprint = () => {
   const [isGameStart, setIsGameStart] = useState(false);
+  const [level, setLevel] = useState(0);
 
   return (
     <StyledGrid
@@ -23,11 +23,14 @@ export const Sprint = () => {
       alignItems="center"
       justify="center"
     >
-      <GameHeader />
       {isGameStart ? (
-        <Game setIsGameStart={setIsGameStart} />
+        <Game setIsGameStart={setIsGameStart} level={level} />
       ) : (
-        <InitialDialog setIsGameStart={setIsGameStart} />
+        <InitialPage
+          setIsGameStart={setIsGameStart}
+          level={level}
+          setLevel={setLevel}
+        />
       )}
     </StyledGrid>
   );
