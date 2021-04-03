@@ -6,8 +6,6 @@ import styled from 'styled-components';
 const StyledIconButton = styled(IconButton)`
   transform: scale(1);
   transition: transform 0.5s;
-  width: 50px;
-  height: 50px;
   &:hover {
     transform: scale(1.3);
     transition: transform 0.5s;
@@ -21,7 +19,7 @@ const StyledGridHeader = styled(Grid)`
   position: fixed;
   top: 0;
   left: 0;
-  padding: 5% 20% 0;
+  padding: 3% 10% 0;
 `;
 
 interface IGameHeaderProps {
@@ -43,10 +41,14 @@ export const GameHeader: React.FC<IGameHeaderProps> = ({
       alignItems="center"
     >
       <StyledIconButton onClick={() => setIsGameStart(false)}>
-        <ArrowBack />
+        <ArrowBack fontSize="large" />
       </StyledIconButton>
       <StyledIconButton onClick={() => setIsSoundOn(!isSoundOn)}>
-        {isSoundOn ? <VolumeUp /> : <VolumeOff />}
+        {isSoundOn ? (
+          <VolumeUp fontSize="large" />
+        ) : (
+          <VolumeOff fontSize="large" />
+        )}
       </StyledIconButton>
     </StyledGridHeader>
   );

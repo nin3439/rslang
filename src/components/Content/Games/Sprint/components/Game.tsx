@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Paper, Typography, Button, Grid } from '@material-ui/core';
+import { Paper, Typography, Grid, Box } from '@material-ui/core';
 import getWords from '../../../../../api/words';
-import styled from 'styled-components';
 import { GameHeader } from '../components/GameHeader';
+import { PaperHeader } from '../components/PaperHeader';
+import { GameButtons } from '../components/GameButtons';
 import { PAGESNUMBER } from '../../../../../constants/pagesNumber';
 import useSound from 'use-sound';
+import styled from 'styled-components';
 const wrongAnswerSound = require('../../../../../assets/sounds/wrongAnswer.mp3');
 const rightAnswerSound = require('../../../../../assets/sounds/rightAnswer.mp3');
 const isEmpty = require('lodash.isempty');
@@ -14,23 +16,40 @@ const StyledGrid = styled(Grid)`
   height: 100vh;
 `;
 
-const StyledButton = styled(Button)`
-  width: 10vw;
-  height 7vh;
+const StyledTimerBox = styled(Box)`
+  color: #fff;
+  border: 5px solid #fff;
+  border-radius: 50%;
+  padding: 10px;
+  position: absolute;
+  top: 50%;
+  right: 20%;
 `;
 
+interface StyledProps {
+  isAnswerRight: boolean;
+  isBorderShow: boolean;
+}
+
 const StyledPaper = styled(Paper)`
-  padding: 20px;
   position: relative;
-  width: 40vw;
-  height: 40vh;
+  width: 350px;
+  height: 400px;
   &.MuiPaper-root {
     background-color: #ffd6cf;
   }
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
+  &.MuiPaper-elevation1 {
+    box-shadow: ${(p: StyledProps) =>
+      p.isBorderShow
+        ? p.isAnswerRight
+          ? 'inset 0 0 0 5px #11a911'
+          : 'inset 0 0 0 5px #f13434'
+        : 'none'};
+  }
 `;
 
 interface IWord {
@@ -60,13 +79,20 @@ export const Game: React.FC<IGameProps> = ({ setIsGameStart, level }) => {
   const [randomWord, setRandomWord] = useState<any>({});
   const [playedWords, setPlayedWords] = useState<string[]>([]);
   const [timer, setTimer] = useState(60);
-  const [translation, setTranslation] = useState('');
+  const [translateRandomWord, setTranslateRandomWord] = useState('');
   const [rightAnswers, setRightAnswers] = useState<IWord[] | []>([]);
   const [wrongAnswers, setWrongAnswers] = useState<IWord[] | []>([]);
-  const [isSoundOn, setIsSoundOn] = useState(false);
-  // const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [isSoundOn, setIsSoundOn] = useState(true);
   const [isWrongTranslationAdded, setIsWrongTranslationAdded] = useState(false);
   const [score, setScore] = useState(0);
+  const [isAnswerRight, setIsAnswerRight] = useState(true);
+  const [isBorderShow, setIsBorderShow] = useState(false);
+  const [isСolorHeaderShow, setIsColorHeaderShow] = useState(false);
+  const [isHeaderYellow, setIsHeaderYellow] = useState(false);
+  const [
+    numberConsecutiveRightAnswers,
+    setNumberConsecutiveRightAnswers,
+  ] = useState(0);
 
   const [playWrongAnswer] = useSound(wrongAnswerSound.default, {
     volume: 0.45,
@@ -129,7 +155,7 @@ export const Game: React.FC<IGameProps> = ({ setIsGameStart, level }) => {
     );
     setPlayedWords((prev: string[]) => [...prev, randomWord.word]);
     setRandomWord(randomWord);
-    setTranslation(randomWord.wordTranslate[Math.round(Math.random())]);
+    setTranslateRandomWord(randomWord.wordTranslate[Math.round(Math.random())]);
   };
 
   useEffect(() => {
@@ -149,34 +175,82 @@ export const Game: React.FC<IGameProps> = ({ setIsGameStart, level }) => {
     }
     // eslint-disable-next-line
   }, [timer, words]);
+  console.log(isAnswerRight, numberConsecutiveRightAnswers);
 
   const checkRightButton = () => {
-    if (randomWord.wordTranslate[0] === translation) {
+    if (randomWord.wordTranslate[0] === translateRandomWord) {
       setRightAnswers((prev: IWord[]) => [...prev, randomWord]);
       if (isSoundOn) {
         playRightAnswer();
-        setScore((prev: number) => prev + 10);
       }
+      setIsAnswerRight(true);
+      updateScore({ isRight: true });
     } else {
       setWrongAnswers((prev: IWord[]) => [...prev, randomWord]);
       if (isSoundOn) {
         playWrongAnswer();
       }
+      setIsAnswerRight(false);
+      updateScore({ isRight: false });
     }
+    setIsBorderShow(true);
+    setTimeout(() => {
+      setIsBorderShow(false);
+    }, 1000);
   };
+
   const checkWrongButton = () => {
-    console.log(randomWord.wordTranslate[0], translation);
-    if (randomWord.wordTranslate[0] !== translation) {
+    if (randomWord.wordTranslate[0] !== translateRandomWord) {
       setRightAnswers((prev: IWord[]) => [...prev, randomWord]);
       if (isSoundOn) {
         playRightAnswer();
       }
-      setScore((prev: number) => prev + 10);
+      setIsAnswerRight(true);
+      updateScore({ isRight: true });
     } else {
       setWrongAnswers((prev: IWord[]) => [...prev, randomWord]);
       if (isSoundOn) {
         playWrongAnswer();
       }
+      setIsAnswerRight(false);
+      updateScore({ isRight: false });
+    }
+    setIsBorderShow(true);
+    setTimeout(() => {
+      setIsBorderShow(false);
+    }, 1000);
+  };
+
+  const updateScore = ({ isRight }: any) => {
+    if (isRight) {
+      setNumberConsecutiveRightAnswers((prev: number) => prev + 1);
+      if (
+        numberConsecutiveRightAnswers >= 3 &&
+        numberConsecutiveRightAnswers <= 6
+      ) {
+        setScore((prev: number) => prev + 20);
+        setIsColorHeaderShow(true);
+        setIsHeaderYellow(true);
+      } else if (
+        numberConsecutiveRightAnswers >= 7 &&
+        numberConsecutiveRightAnswers <= 10
+      ) {
+        setScore((prev: number) => prev + 40);
+        setIsColorHeaderShow(true);
+        setIsHeaderYellow(false);
+      } else if (numberConsecutiveRightAnswers > 10) {
+        setScore((prev: number) => prev + 80);
+        setIsColorHeaderShow(true);
+        setIsHeaderYellow(false);
+      } else {
+        setScore((prev: number) => prev + 10);
+        setIsColorHeaderShow(false);
+        setIsHeaderYellow(false);
+      }
+    } else {
+      setNumberConsecutiveRightAnswers(0);
+      setIsColorHeaderShow(false);
+      setIsHeaderYellow(false);
     }
   };
 
@@ -192,42 +266,32 @@ export const Game: React.FC<IGameProps> = ({ setIsGameStart, level }) => {
         isSoundOn={isSoundOn}
         setIsGameStart={setIsGameStart}
       />
-      <Typography>{score} </Typography>
-      <StyledPaper>
-        <Typography variant="h4" align="center">
+      <Typography variant="h3" style={{ color: 'green', marginBottom: '10px' }}>
+        {score}{' '}
+      </Typography>
+      <StyledPaper isAnswerRight={isAnswerRight} isBorderShow={isBorderShow}>
+        <PaperHeader
+          numberConsecutiveRightAnswers={numberConsecutiveRightAnswers}
+          isСolorHeaderShow={isСolorHeaderShow}
+          isHeaderYellow={isHeaderYellow}
+        />
+        <Typography variant="h4" align="center" style={{ color: '#343e48' }}>
           {isEmpty(randomWord) ? '' : randomWord.word}{' '}
         </Typography>
-        <Typography variant="h5" align="center">
-          {isEmpty(randomWord) ? '' : translation}{' '}
+        <Typography variant="h5" align="center" style={{ color: '#343e48' }}>
+          {isEmpty(randomWord) ? '' : translateRandomWord}{' '}
         </Typography>
-        <Grid container alignItems="center" justify="center" spacing={2}>
-          <Grid item>
-            <StyledButton
-              variant="contained"
-              style={{ background: '#f13434' }}
-              onClick={() => {
-                checkWrongButton();
-                getRandomWord();
-              }}
-            >
-              Неверно
-            </StyledButton>
-          </Grid>
-          <Grid item>
-            <StyledButton
-              variant="contained"
-              style={{ background: '#11a911' }}
-              onClick={() => {
-                checkRightButton();
-                getRandomWord();
-              }}
-            >
-              Верно
-            </StyledButton>
-          </Grid>
-        </Grid>
-        <Typography>{timer} </Typography>
+        <GameButtons
+          checkRightButton={checkRightButton}
+          checkWrongButton={checkWrongButton}
+          getRandomWord={getRandomWord}
+        />
       </StyledPaper>
+      <StyledTimerBox>
+        <Typography variant="h3" align="center" style={{ width: '55px' }}>
+          {timer}{' '}
+        </Typography>
+      </StyledTimerBox>
     </StyledGrid>
   );
 };

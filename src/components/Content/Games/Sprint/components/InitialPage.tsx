@@ -8,16 +8,38 @@ import {
   Select,
   FormControl,
   MenuItem,
+  Box,
 } from '@material-ui/core';
-import { Close } from '@material-ui/icons';
+import { Close, Fullscreen, FullscreenExit } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
+const StyledBox = styled(Box)`
+  display: flex;
+  align-items: center;
+`;
 
 const StyledGrid = styled(Grid)`
   position: fixed;
   top: 0;
   left: 0;
   padding: 20px 50px 0 40px;
+`;
+
+const StyledIconButton = styled(IconButton)`
+  transform: scale(1);
+  transition: transform 0.5s;
+  &:hover {
+    transform: scale(1.3);
+    transition: transform 0.5s;
+  }
+  &.MuiIconButton-root {
+    color: #fff;
+  }
+`;
+
+const StyledTypography = styled(Typography)`
+  color: #343e48;
 `;
 
 const StyledLink = styled(Link)`
@@ -32,6 +54,9 @@ const StyledLink = styled(Link)`
 const StyledButton = styled(Button)`
   transform: scale(1);
   transition: all 0.5s;
+  &.MuiButton-root {
+    color: #343e48;
+  }
   &:hover {
     transform: scale(1.2);
     transition: transform 0.5s;
@@ -49,18 +74,28 @@ const StyledPaper = styled(Paper)`
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
+  transition: height 0.5s;
 `;
+
+interface FullScreenHandle {
+  active: boolean;
+  enter: () => Promise<void>;
+  exit: () => Promise<void>;
+  node: React.MutableRefObject<HTMLDivElement | null>;
+}
 
 interface IPageProps {
   setIsGameStart: (isGameStart: boolean) => void;
   level: number;
   setLevel: (level: number) => void;
+  changeFullscreen: FullScreenHandle;
 }
 
 export const InitialPage: React.FC<IPageProps> = ({
   setIsGameStart,
   level,
   setLevel,
+  changeFullscreen,
 }) => {
   const changeLevel = (event: React.ChangeEvent<{ value: unknown }>) => {
     setLevel(event.target.value as number);
@@ -76,32 +111,42 @@ export const InitialPage: React.FC<IPageProps> = ({
       >
         <StyledLink to="/games">
           <IconButton style={{ color: '#fff' }}>
-            <Close />
+            <Close fontSize="large" />
           </IconButton>
         </StyledLink>
-
-        <FormControl style={{ color: '#fff' }}>
-          <Select
-            value={level}
-            onChange={changeLevel}
-            style={{ color: '#fff', width: '120px' }}
-          >
-            <MenuItem value={0} selected>
-              Уровень 1
-            </MenuItem>
-            <MenuItem value={1}>Уровень 2</MenuItem>
-            <MenuItem value={2}>Уровень 3</MenuItem>
-            <MenuItem value={3}>Уровень 4</MenuItem>
-            <MenuItem value={4}>Уровень 5</MenuItem>
-            <MenuItem value={5}>Уровень 6</MenuItem>
-          </Select>
-        </FormControl>
+        <StyledBox>
+          <FormControl style={{ color: '#fff', marginRight: '20px' }}>
+            <Select
+              value={level}
+              onChange={changeLevel}
+              style={{ color: '#fff', width: '120px' }}
+            >
+              <MenuItem value={0} selected>
+                Уровень 1
+              </MenuItem>
+              <MenuItem value={1}>Уровень 2</MenuItem>
+              <MenuItem value={2}>Уровень 3</MenuItem>
+              <MenuItem value={3}>Уровень 4</MenuItem>
+              <MenuItem value={4}>Уровень 5</MenuItem>
+              <MenuItem value={5}>Уровень 6</MenuItem>
+            </Select>
+          </FormControl>
+          {!window.screenTop && !window.screenY ? (
+            <StyledIconButton onClick={changeFullscreen.enter}>
+              <Fullscreen fontSize="large" />
+            </StyledIconButton>
+          ) : (
+            <StyledIconButton onClick={changeFullscreen.exit}>
+              <FullscreenExit fontSize="large" />{' '}
+            </StyledIconButton>
+          )}
+        </StyledBox>
       </StyledGrid>
       <StyledPaper>
-        <Typography variant="h3">Спринт</Typography>
-        <Typography variant="h5" align="center">
+        <StyledTypography variant="h3">Спринт</StyledTypography>
+        <StyledTypography variant="h5" align="center">
           Выберите соответсвует ли перевод предложенному слову
-        </Typography>
+        </StyledTypography>
         <StyledButton variant="outlined" onClick={() => setIsGameStart(true)}>
           Начать
         </StyledButton>
