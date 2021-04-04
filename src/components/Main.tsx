@@ -6,6 +6,7 @@ import { Footer } from './Footer';
 import { TextBook } from './Content/TextBook/TextBook';
 import Menu from './Menu/Menu';
 import { connect } from 'react-redux';
+
 interface IMainProps {
   isModalActive: string;
 }

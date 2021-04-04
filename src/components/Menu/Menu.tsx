@@ -25,8 +25,8 @@ const PopUpMenuInner = styled.div`
   position: absolute;
   left: 25%;
   right: 25%;
-  top: 10%;
-  bottom: 10%;
+  top: 5%;
+  bottom: 5%;
   margin: auto;
   background: white;
   padding: 10px 20px 10px;
@@ -76,6 +76,7 @@ const Menu: React.FC<any> = ({
 }) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const [avatar, setAvatar] = React.useState<string | unknown>('');
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
@@ -86,13 +87,25 @@ const Menu: React.FC<any> = ({
     dispatch(auth());
   }, []);
 
+  const uploadUserAvatar = (e: any) => {
+    const file = e.target.files[0];
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    }).then((userAvatarUrl) => {
+      setAvatar(userAvatarUrl);
+    });
+  };
+
   return (
     <PopUpMenu>
       <PopUpMenuInner>
         {isAuth ? (
           <div>Пользователь авторизирован</div>
         ) : (
-          <div className={classes.root}>
+          <div>
             <AppBar position="static" color="default">
               <Tabs value={value} onChange={handleChange}>
                 <Tab label="Регистрация" {...a11yProps(0)} />
@@ -100,7 +113,10 @@ const Menu: React.FC<any> = ({
               </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
-              <Registration />
+              <Registration
+                avatar={avatar}
+                uploadUserAvatar={uploadUserAvatar}
+              />
             </TabPanel>
             <TabPanel value={value} index={1}>
               <Login />

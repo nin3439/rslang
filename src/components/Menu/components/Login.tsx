@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Input from '../../../utils/Input';
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { login } from '../../../redux/actions/user';
 import styled from 'styled-components';
 

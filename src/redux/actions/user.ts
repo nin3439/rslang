@@ -11,18 +11,30 @@ interface IRegistration {
   email: string;
   password: string;
   name: string;
-  // avatar: string | unknown;
+  avatar: string | unknown;
 }
-export const registration = ({ email, password, name }: IRegistration) => {
+export const registration = ({
+  email,
+  password,
+  name,
+  avatar,
+}: IRegistration) => {
   return async (dispatch: any) => {
     try {
       const response = await axios.post(`${API_URL}/users`, {
         email,
         password,
         name,
-        // avatar,
+        avatar,
       });
-      alert(response.data.message);
+
+      const responseLogin = await axios.post(`${API_URL}/signin`, {
+        email,
+        password,
+      });
+      localStorage.setItem('token', responseLogin.data.token);
+      localStorage.setItem('userId', responseLogin.data.userId);
+      dispatch(setUser(responseLogin.data));
       dispatch(ChangeModalAuth());
     } catch (e) {
       dispatch(changeErrorRegistration(e.response.data.message));
@@ -34,7 +46,6 @@ interface ILogin {
   email: string;
   password: string;
 }
-
 export const login = ({ email, password }: ILogin) => {
   return async (dispatch: any) => {
     try {
@@ -46,7 +57,6 @@ export const login = ({ email, password }: ILogin) => {
       localStorage.setItem('userId', response.data.userId);
       dispatch(setUser(response.data));
       dispatch(ChangeModalAuth());
-      console.log(`${response.data.name} login`);
     } catch (e) {
       dispatch(changeErrorLogin(true));
     }
@@ -61,7 +71,6 @@ export const auth = () => {
       });
       localStorage.setItem('token', response.data.token);
       dispatch(setUser(response.data.user));
-      console.log(response.data);
     } catch (e) {
       localStorage.removeItem('token');
     }

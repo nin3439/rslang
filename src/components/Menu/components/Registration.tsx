@@ -40,7 +40,16 @@ const Button = styled.button`
   }
 `;
 
-const Registration = ({ registration }: any) => {
+const InputFile = styled.input`
+  margin-top: 10px;
+  margin-bottom: 10px;
+`;
+
+const Registration: React.FC<any> = ({
+  registration,
+  uploadUserAvatar,
+  avatar,
+}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -65,10 +74,21 @@ const Registration = ({ registration }: any) => {
         setValue={setPassword}
         type="password"
         placeholder="Введите пароль..."
+        minlength="8"
+        maxlength="32"
+      />
+      <label>Загрузить фото</label>
+      <InputFile
+        placeholder="Upload avatar"
+        type="file"
+        accept=".jpg, .jpeg, .png, .gif, .bmp"
+        onChange={(e: any) => {
+          uploadUserAvatar(e);
+        }}
       />
       <Button
         onClick={() => {
-          registration({ name, email, password });
+          registration({ name, email, password, avatar });
         }}
       >
         Зарегистрироваться
