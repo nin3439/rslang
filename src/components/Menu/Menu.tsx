@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import CancelIcon from '@material-ui/icons/Cancel';
 import { AppBar, Tabs, Tab } from '@material-ui/core';
-import { TabPanel, a11yProps, useStyles } from './components/Bookmarks';
+import { TabPanel, a11yProps } from './components/Bookmarks';
 import Registration from './components/Registration';
 import Login from './components/Login';
 import { auth } from '../../redux/actions/user';
@@ -74,7 +74,6 @@ const Menu: React.FC<any> = ({
   auth,
   isAuth,
 }) => {
-  const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const [avatar, setAvatar] = React.useState<string | unknown>('');
 
