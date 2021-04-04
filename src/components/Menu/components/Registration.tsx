@@ -1,8 +1,13 @@
 import { useState } from 'react';
-import Input from '../../../utils/Input';
 import { registration } from '../../../redux/actions/user';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import IconButton from '@material-ui/core/IconButton';
 
 const MenuBlock = styled.div`
   display: flex;
@@ -41,8 +46,14 @@ const Button = styled.button`
 `;
 
 const InputFile = styled.input`
-  margin-top: 10px;
   margin-bottom: 10px;
+`;
+
+const ElementBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 5px;
+  margin-bottom: 5px;
 `;
 
 const Registration: React.FC<any> = ({
@@ -53,39 +64,66 @@ const Registration: React.FC<any> = ({
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleMouseDownPassword = (event: any) => {
+    event.preventDefault();
+  };
 
   return (
     <MenuBlock>
-      <div>Регистрация</div>
-      <Input
-        value={name}
-        setValue={setName}
-        type="text"
-        placeholder="Введите имя..."
-      />
-      <Input
-        value={email}
-        setValue={setEmail}
-        type="text"
-        placeholder="Введите email..."
-      />
-      <Input
-        value={password}
-        setValue={setPassword}
-        type="password"
-        placeholder="Введите пароль..."
-        minlength="8"
-        maxlength="32"
-      />
-      <label>Загрузить фото</label>
-      <InputFile
-        placeholder="Upload avatar"
-        type="file"
-        accept=".jpg, .jpeg, .png, .gif, .bmp"
-        onChange={(e: any) => {
-          uploadUserAvatar(e);
-        }}
-      />
+      <ElementBlock>
+        <InputLabel>Имя пользователя</InputLabel>
+        <OutlinedInput
+          color="secondary"
+          placeholder="Введите имя"
+          style={{ height: '50px' }}
+          value={name}
+          onChange={(event) => setName(event.target.value)}
+        />
+      </ElementBlock>
+      <ElementBlock>
+        <InputLabel>Адрес электронной почты</InputLabel>
+        <OutlinedInput
+          color="secondary"
+          placeholder="Введите адрес почты"
+          style={{ height: '50px' }}
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+        />
+      </ElementBlock>
+      <ElementBlock>
+        <InputLabel>Пароль</InputLabel>
+        <OutlinedInput
+          type={showPassword ? 'text' : 'password'}
+          placeholder="Введите пароль"
+          style={{ height: '50px' }}
+          color="secondary"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={() => setShowPassword(!showPassword)}
+                onMouseDown={handleMouseDownPassword}
+              >
+                {showPassword ? <Visibility /> : <VisibilityOff />}
+              </IconButton>
+            </InputAdornment>
+          }
+        />
+      </ElementBlock>
+      <ElementBlock>
+        <InputLabel>Загрузить аватар</InputLabel>
+        <InputFile
+          placeholder="Upload avatar"
+          type="file"
+          onChange={(e: any) => {
+            uploadUserAvatar(e);
+          }}
+        />
+      </ElementBlock>
       <Button
         onClick={() => {
           registration({ name, email, password, avatar });

@@ -33,6 +33,7 @@ export const registration = ({
         password,
       });
       localStorage.setItem('token', responseLogin.data.token);
+      localStorage.setItem('userName', responseLogin.data.name);
       localStorage.setItem('userId', responseLogin.data.userId);
       dispatch(setUser(responseLogin.data));
       dispatch(ChangeModalAuth());
@@ -54,6 +55,7 @@ export const login = ({ email, password }: ILogin) => {
         password,
       });
       localStorage.setItem('token', response.data.token);
+      localStorage.setItem('userName', response.data.name);
       localStorage.setItem('userId', response.data.userId);
       dispatch(setUser(response.data));
       dispatch(ChangeModalAuth());

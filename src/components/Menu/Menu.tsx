@@ -8,6 +8,7 @@ import Login from './components/Login';
 import { auth } from '../../redux/actions/user';
 import { connect } from 'react-redux';
 import { ChangeModalAuth } from '../../redux/actions/controllerActions';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 
 const PopUpMenu = styled.div`
   position: fixed;
@@ -92,35 +93,38 @@ const Menu: React.FC<any> = ({
       setAvatar(userAvatarUrl);
     });
   };
-
   return (
     <PopUpMenu>
-      <PopUpMenuInner>
-        {isAuth ? (
-          <div>Пользователь авторизирован</div>
-        ) : (
-          <div>
-            <AppBar position="static" color="default">
-              <Tabs value={value} onChange={handleChange}>
-                <Tab label="Регистрация" {...a11yProps(0)} />
-                <Tab label="Логин" {...a11yProps(1)} />
-              </Tabs>
-            </AppBar>
-            <TabPanel value={value} index={0}>
-              <Registration
-                avatar={avatar}
-                uploadUserAvatar={uploadUserAvatar}
-              />
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-              <Login />
-            </TabPanel>
-          </div>
-        )}
-        <Button onClick={() => changeModalAuth()}>
-          <CancelIcon />
-        </Button>
-      </PopUpMenuInner>
+      <ClickAwayListener onClickAway={() => changeModalAuth()}>
+        <PopUpMenuInner>
+          {isAuth ? (
+            <div>
+              Пользователь {localStorage.getItem('userName')} авторизирован
+            </div>
+          ) : (
+            <div>
+              <AppBar position="static" color="default">
+                <Tabs value={value} onChange={handleChange}>
+                  <Tab label="Регистрация" {...a11yProps(0)} />
+                  <Tab label="Логин" {...a11yProps(1)} />
+                </Tabs>
+              </AppBar>
+              <TabPanel value={value} index={0}>
+                <Registration
+                  avatar={avatar}
+                  uploadUserAvatar={uploadUserAvatar}
+                />
+              </TabPanel>
+              <TabPanel value={value} index={1}>
+                <Login />
+              </TabPanel>
+            </div>
+          )}
+          <Button onClick={() => changeModalAuth()}>
+            <CancelIcon />
+          </Button>
+        </PopUpMenuInner>
+      </ClickAwayListener>
     </PopUpMenu>
   );
 };

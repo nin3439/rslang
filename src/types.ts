@@ -29,3 +29,7 @@ export interface IGroupParametr {
   numberGroup: number;
   color: string;
 }
+
+export interface IMainProps {
+  isModalActive: string;
+}
