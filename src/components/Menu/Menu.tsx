@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import CancelIcon from '@material-ui/icons/Cancel';
 import { AppBar, Tabs, Tab } from '@material-ui/core';
@@ -6,7 +6,7 @@ import { TabPanel, a11yProps } from './components/Bookmarks';
 import Registration from './components/Registration';
 import Login from './components/Login';
 import { auth } from '../../redux/actions/user';
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { ChangeModalAuth } from '../../redux/actions/controllerActions';
 
 const PopUpMenu = styled.div`
@@ -80,11 +80,6 @@ const Menu: React.FC<any> = ({
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(auth());
-  }, []);
 
   const uploadUserAvatar = (e: any) => {
     const file = e.target.files[0];

@@ -21,7 +21,7 @@ export const registration = ({
 }: IRegistration) => {
   return async (dispatch: any) => {
     try {
-      const response = await axios.post(`${API_URL}/users`, {
+      await axios.post(`${API_URL}/users`, {
         email,
         password,
         name,

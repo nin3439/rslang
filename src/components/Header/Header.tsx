@@ -13,13 +13,6 @@ const StyledGrid = styled(Grid)`
   padding: 0 28px;
 `;
 
-interface IHeaderProps {
-  isModalActive: boolean;
-  changeModalAuth: () => void;
-  isAuth: any;
-  logout: () => void;
-}
-
 const Header: React.FC<any> = ({
   isModalActive,
   changeModalAuth,
