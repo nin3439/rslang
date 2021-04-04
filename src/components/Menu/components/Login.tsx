@@ -1,8 +1,13 @@
 import { useState } from 'react';
-import Input from '../../../utils/Input';
 import { connect } from 'react-redux';
 import { login } from '../../../redux/actions/user';
 import styled from 'styled-components';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import IconButton from '@material-ui/core/IconButton';
 
 const MenuBlock = styled.div`
   display: flex;
@@ -11,7 +16,15 @@ const MenuBlock = styled.div`
   justify-content: space-between;
 `;
 
+const ElementBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+  margin-bottom: 15px;
+`;
+
 const Button = styled.button`
+  margin-top: 30px;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -43,22 +56,42 @@ const Button = styled.button`
 const Login = ({ login }: any) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleMouseDownPassword = (event: any) => {
+    event.preventDefault();
+  };
 
   return (
     <MenuBlock>
-      <div>Авторизация</div>
-      <Input
-        value={email}
-        setValue={setEmail}
-        type="text"
-        placeholder="Введите email..."
-      />
-      <Input
-        value={password}
-        setValue={setPassword}
-        type="password"
-        placeholder="Введите пароль..."
-      />
+      <ElementBlock>
+        <InputLabel>Адрес электронной почты</InputLabel>
+        <OutlinedInput
+          color="secondary"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+        />
+      </ElementBlock>
+      <ElementBlock>
+        <InputLabel>Пароль</InputLabel>
+        <OutlinedInput
+          type={showPassword ? 'text' : 'password'}
+          color="secondary"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={() => setShowPassword(!showPassword)}
+                onMouseDown={handleMouseDownPassword}
+              >
+                {showPassword ? <Visibility /> : <VisibilityOff />}
+              </IconButton>
+            </InputAdornment>
+          }
+        />
+      </ElementBlock>
       <Button
         onClick={() => {
           login({ email, password });

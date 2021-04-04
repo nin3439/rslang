@@ -36,8 +36,9 @@ const Header: React.FC<any> = ({
           justify="center"
           alignItems="center"
           wrap="nowrap"
-          style={{ maxWidth: '100px' }}
+          style={{ maxWidth: '200px' }}
         >
+          <div>{localStorage.getItem('userName')}</div>
           <Avatar src={userAvatar} style={{ margin: '0 0 0 10px' }} />
           <IconButton onClick={() => changeModalAuth()}>
             <SettingsIcon />
@@ -46,7 +47,6 @@ const Header: React.FC<any> = ({
             onClick={() => {
               logout();
             }}
-            style={{ color: '#000' }}
           >
             <ExitToAppIcon />
           </IconButton>

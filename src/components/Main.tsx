@@ -6,10 +6,8 @@ import { Footer } from './Footer';
 import { TextBook } from './Content/TextBook/TextBook';
 import Menu from './Menu/Menu';
 import { connect } from 'react-redux';
+import { IMainProps } from '../types';
 
-interface IMainProps {
-  isModalActive: string;
-}
 const Main: React.FC<IMainProps> = ({ isModalActive }) => {
   return (
     <Router>
