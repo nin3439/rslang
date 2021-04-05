@@ -9,6 +9,11 @@ import { auth } from '../../redux/actions/user';
 import { connect } from 'react-redux';
 import { ChangeModalAuth } from '../../redux/actions/controllerActions';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormGroup from '@material-ui/core/FormGroup';
+import Switch from '@material-ui/core/Switch';
 
 const PopUpMenu = styled.div`
   position: fixed;
@@ -30,12 +35,22 @@ const PopUpMenuInner = styled.div`
   bottom: 5%;
   margin: auto;
   background: white;
-  padding: 10px 20px 10px;
+  padding: 40px 20px 10px 60px;
   text-align: justify;
   display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  align-items: flex-start;
+`;
+
+const OptionsHeader = styled.div`
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
 `;
 
 const Button = styled.button`
@@ -77,6 +92,14 @@ const Menu: React.FC<any> = ({
 }) => {
   const [value, setValue] = React.useState(0);
   const [avatar, setAvatar] = React.useState<string | unknown>('');
+  const [options, setOptions] = React.useState({
+    translate: true,
+    buttons: true,
+  });
+
+  const optionsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setOptions({ ...options, [event.target.name]: event.target.checked });
+  };
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
@@ -99,14 +122,41 @@ const Menu: React.FC<any> = ({
         <PopUpMenuInner>
           {isAuth ? (
             <div>
-              Пользователь {localStorage.getItem('userName')} авторизирован
+              <OptionsHeader>
+                Пользователь {localStorage.getItem('userName')} авторизован
+              </OptionsHeader>
+              <FormControl component="fieldset">
+                <FormLabel component="legend">Настройки пользователя</FormLabel>
+                <FormGroup>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={options.translate}
+                        onChange={optionsChange}
+                        name="translate"
+                      />
+                    }
+                    label="Показывать перевод слов"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={options.buttons}
+                        onChange={optionsChange}
+                        name="buttons"
+                      />
+                    }
+                    label="Показывать кнопки словаря"
+                  />
+                </FormGroup>
+              </FormControl>
             </div>
           ) : (
             <div>
               <AppBar position="static" color="default">
                 <Tabs value={value} onChange={handleChange}>
                   <Tab label="Регистрация" {...a11yProps(0)} />
-                  <Tab label="Логин" {...a11yProps(1)} />
+                  <Tab label="Вход" {...a11yProps(1)} />
                 </Tabs>
               </AppBar>
               <TabPanel value={value} index={0}>
