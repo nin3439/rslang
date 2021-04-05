@@ -21,11 +21,18 @@ export interface IActionWords {
 }
 
 export interface IPropsLoadWords {
-  groupNumber: number;
-  pageNumber: number;
+  groupNumber: string;
+  pageNumber: string;
 }
 
 export interface IGroupParametr {
   numberGroup: number;
   color: string;
+  id: string;
+}
+
+export interface IStatePage {
+  textbook: {
+    currentWords: IWord[];
+  };
 }

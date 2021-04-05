@@ -3,7 +3,7 @@ import { AppBar, Tabs, Tab } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { Groups } from './groups/groups';
 import { Route, Switch, useRouteMatch } from 'react-router';
-import { Page } from './page/page';
+import Pages from './pages/pages';
 import { Link } from 'react-router-dom';
 import { Dictionary } from './dictionary/Dictionary';
 
@@ -11,6 +11,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   root: {
     width: '100%',
     backgroundColor: theme.palette.background.paper,
+  },
+  main: {
+    marginTop: '20px',
   },
 }));
 
@@ -30,18 +33,19 @@ export const TextBook = () => {
           <Tab label="Словарь" component={Link} to={`${path}/dictionary`} />
         </Tabs>
       </AppBar>
-
-      <Switch>
-        <Route path={`${path}/dictionary`}>
-          <Dictionary />
-        </Route>
-        <Route path={`${path}/group/:numberGroup/page/:numberPage`}>
-          <Page />
-        </Route>
-        <Route exact path="/textbook">
-          <Groups />
-        </Route>
-      </Switch>
+      <div className={classes.main}>
+        <Switch>
+          <Route path={`${path}/dictionary`}>
+            <Dictionary />
+          </Route>
+          <Route path={`${path}/group/:groupNumber/page/:pageNumber`}>
+            <Pages />
+          </Route>
+          <Route exact path="/textbook">
+            <Groups />
+          </Route>
+        </Switch>
+      </div>
     </div>
   );
 };
