@@ -68,6 +68,7 @@ const Login = ({ login }: any) => {
         <InputLabel>Адрес электронной почты</InputLabel>
         <OutlinedInput
           color="secondary"
+          placeholder="Введите адрес почты"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
         />
@@ -77,6 +78,7 @@ const Login = ({ login }: any) => {
         <OutlinedInput
           type={showPassword ? 'text' : 'password'}
           color="secondary"
+          placeholder="Введите пароль"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
           endAdornment={
