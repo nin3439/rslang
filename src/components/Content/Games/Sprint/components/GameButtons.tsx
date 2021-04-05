@@ -1,6 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useEffect } from 'react';
 import { Button, Grid } from '@material-ui/core';
+import { TrendingFlat } from '@material-ui/icons';
+import styled from 'styled-components';
 
 const StyledButton = styled(Button)`
   height 45px;
@@ -27,37 +28,65 @@ export const GameButtons: React.FC<IButtonsprops> = ({
   checkWrongButton,
   getRandomWord,
 }) => {
+  const arrowsKeysHandler = (event: any) => {
+    if (event.keyCode === 37) {
+      checkWrongButton();
+      getRandomWord();
+    } else if (event.keyCode === 39) {
+      checkRightButton();
+      getRandomWord();
+    } else return;
+  };
+
+  useEffect(() => {
+    window.addEventListener('keydown', arrowsKeysHandler);
+    return () => {
+      window.removeEventListener('keydown', arrowsKeysHandler);
+    };
+  });
+
   return (
     <Grid
       container
+      direction="column"
       alignItems="center"
       justify="center"
-      spacing={2}
       style={{ marginBottom: '20px' }}
     >
-      <Grid item>
-        <StyledButton
-          variant="contained"
-          style={{ background: '#f13434' }}
-          onClick={() => {
-            checkWrongButton();
-            getRandomWord();
-          }}
-        >
-          Неверно
-        </StyledButton>
+      <Grid container alignItems="center" justify="center" spacing={2}>
+        <Grid item>
+          <StyledButton
+            variant="contained"
+            style={{ background: '#f13434' }}
+            onClick={() => {
+              checkWrongButton();
+              getRandomWord();
+            }}
+          >
+            Неверно
+          </StyledButton>
+        </Grid>
+        <Grid item>
+          <StyledButton
+            variant="contained"
+            style={{ background: '#11a911' }}
+            onClick={() => {
+              checkRightButton();
+              getRandomWord();
+            }}
+          >
+            Верно
+          </StyledButton>
+        </Grid>
       </Grid>
-      <Grid item>
-        <StyledButton
-          variant="contained"
-          style={{ background: '#11a911' }}
-          onClick={() => {
-            checkRightButton();
-            getRandomWord();
-          }}
-        >
-          Верно
-        </StyledButton>
+      <Grid
+        container
+        alignItems="center"
+        justify="space-around"
+        style={{ padding: '0 45px' }}
+      >
+        <TrendingFlat color="action" style={{ transform: 'rotate(0.5turn)' }} />
+        <TrendingFlat color="action" />
       </Grid>
     </Grid>
   );

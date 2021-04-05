@@ -1,15 +1,24 @@
 import React from 'react';
-import { Typography, Grid } from '@material-ui/core';
-import { CheckCircle, Lens } from '@material-ui/icons';
+import { Typography, Grid, IconButton, Tooltip } from '@material-ui/core';
+import { CheckCircle, Lens, VolumeUp, MusicNote } from '@material-ui/icons';
+import {
+  showFirstCheckIcon,
+  showSecondCheckIcon,
+  showThirdCheckIcon,
+} from '../utils';
+import { IWord } from '../../types';
+import useSound from 'use-sound';
 import styled from 'styled-components';
 
 interface IPaperHeaderProps {
   numberConsecutiveRightAnswers: number;
   isСolorHeaderShow: boolean;
   isHeaderYellow: boolean;
+  randomWord?: IWord | null;
 }
 
 const StyledGrid = styled(Grid)`
+  position: relative;
   width: 100%;
   height: 70px;
   margin-bottom: 15px;
@@ -20,7 +29,7 @@ const StyledGrid = styled(Grid)`
   background-color: ${(p: IPaperHeaderProps) =>
     p.isСolorHeaderShow
       ? p.isHeaderYellow
-        ? '#fccc00d4'
+        ? '#fccc00'
         : p.numberConsecutiveRightAnswers >= 8 &&
           p.numberConsecutiveRightAnswers <= 11
         ? 'orange'
@@ -46,45 +55,48 @@ const StyledLens = styled(Lens)`
   }
 `;
 
+const StyledTooltip = styled((props) => (
+  <Tooltip
+    classes={{ popper: props.className, tooltip: 'tooltip' }}
+    {...props}
+  />
+))`
+  & .tooltip {
+    background-color: #28203f;
+    color: #fff;
+    width: 120px;
+    text-align: center;
+    margin-top: -5px;
+  }
+`;
+
+const StyledIconButton = styled(IconButton)`
+  position: absolute;
+  top: 10px;
+  transform: scale(1);
+  transition: transform 0.5s;
+  &:hover {
+    transform: scale(1.3);
+    transition: transform 0.5s;
+  }
+  &.MuiIconButton-root {
+    color: gray;
+  }
+`;
+
 export const PaperHeader: React.FC<IPaperHeaderProps> = ({
   numberConsecutiveRightAnswers,
   isСolorHeaderShow,
   isHeaderYellow,
+  randomWord,
 }) => {
-  const showFirstCheckIcon = () => {
-    return (
-      numberConsecutiveRightAnswers === 1 ||
-      numberConsecutiveRightAnswers === 2 ||
-      numberConsecutiveRightAnswers === 3 ||
-      numberConsecutiveRightAnswers === 5 ||
-      numberConsecutiveRightAnswers === 6 ||
-      numberConsecutiveRightAnswers === 7 ||
-      numberConsecutiveRightAnswers === 9 ||
-      numberConsecutiveRightAnswers === 10 ||
-      numberConsecutiveRightAnswers === 11
-    );
-  };
+  const [playEnglishWord] = useSound(
+    `https://dream-react-rslang-server.herokuapp.com/${randomWord?.audio}`
+  );
 
-  const showSecondCheckIcon = () => {
-    return (
-      numberConsecutiveRightAnswers === 2 ||
-      numberConsecutiveRightAnswers === 3 ||
-      numberConsecutiveRightAnswers === 6 ||
-      numberConsecutiveRightAnswers === 7 ||
-      numberConsecutiveRightAnswers === 10 ||
-      numberConsecutiveRightAnswers === 11
-    );
-  };
-
-  const showThirdCheckIcon = () => {
-    return (
-      numberConsecutiveRightAnswers === 3 ||
-      numberConsecutiveRightAnswers === 7 ||
-      numberConsecutiveRightAnswers === 11
-    );
-  };
-
-  console.log(numberConsecutiveRightAnswers);
+  const [playEnglishAudioExample] = useSound(
+    `https://dream-react-rslang-server.herokuapp.com/${randomWord?.audioExample}`
+  );
 
   return (
     <Grid container direction="column" alignItems="center" justify="center">
@@ -97,11 +109,39 @@ export const PaperHeader: React.FC<IPaperHeaderProps> = ({
         isСolorHeaderShow={isСolorHeaderShow}
         isHeaderYellow={isHeaderYellow}
       >
+        <StyledTooltip title="Прослушать произношение слова">
+          <StyledIconButton
+            onClick={() => playEnglishWord()}
+            style={{ right: '10px' }}
+          >
+            <VolumeUp fontSize="small" />
+          </StyledIconButton>
+        </StyledTooltip>
+        <StyledTooltip title="Прослушать пример произношения предложения со словом">
+          <StyledIconButton
+            onClick={() => playEnglishAudioExample()}
+            style={{ left: '10px' }}
+          >
+            <MusicNote fontSize="small" />
+          </StyledIconButton>
+        </StyledTooltip>
         {numberConsecutiveRightAnswers < 12 ? (
           <Grid>
-            {showFirstCheckIcon() ? <StyledCheckCircle /> : <StyledLens />}
-            {showSecondCheckIcon() ? <StyledCheckCircle /> : <StyledLens />}
-            {showThirdCheckIcon() ? <StyledCheckCircle /> : <StyledLens />}
+            {showFirstCheckIcon(numberConsecutiveRightAnswers) ? (
+              <StyledCheckCircle />
+            ) : (
+              <StyledLens />
+            )}
+            {showSecondCheckIcon(numberConsecutiveRightAnswers) ? (
+              <StyledCheckCircle />
+            ) : (
+              <StyledLens />
+            )}
+            {showThirdCheckIcon(numberConsecutiveRightAnswers) ? (
+              <StyledCheckCircle />
+            ) : (
+              <StyledLens />
+            )}
           </Grid>
         ) : (
           <StyledCheckCircle />
@@ -141,6 +181,7 @@ export const PaperHeader: React.FC<IPaperHeaderProps> = ({
           alt="Small Deer"
           width="60px"
           height="60px"
+          style={{ marginLeft: '10px' }}
         />
       ) : (
         ''

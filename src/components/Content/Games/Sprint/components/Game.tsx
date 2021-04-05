@@ -4,12 +4,20 @@ import getWords from '../../../../../api/words';
 import { GameHeader } from '../components/GameHeader';
 import { PaperHeader } from '../components/PaperHeader';
 import { GameButtons } from '../components/GameButtons';
-import { PAGESNUMBER } from '../../../../../constants/pagesNumber';
+import { PAGE_NUMBER } from '../../../../../constants/pageNumber';
+import { IWord } from '../../types';
 import useSound from 'use-sound';
 import styled from 'styled-components';
 const wrongAnswerSound = require('../../../../../assets/sounds/wrongAnswer.mp3');
 const rightAnswerSound = require('../../../../../assets/sounds/rightAnswer.mp3');
-const isEmpty = require('lodash.isempty');
+
+const StyledTypographyTimer = styled(Typography)`
+  width: 55px;
+  @media (max-width: 950px) {
+    width: 35px;
+    font-size: 26px;
+  }
+`;
 
 const StyledGrid = styled(Grid)`
   position: relative;
@@ -24,6 +32,9 @@ const StyledTimerBox = styled(Box)`
   position: absolute;
   top: 50%;
   right: 20%;
+  @media (max-width: 950px) {
+    top: 14%;
+  }
 `;
 
 interface StyledProps {
@@ -52,39 +63,34 @@ const StyledPaper = styled(Paper)`
   }
 `;
 
-interface IWord {
-  audio: string;
-  audioExample: string;
-  audioMeaning: string;
-  group: number;
-  id: string;
-  image: string;
-  page: number;
-  textExample: string;
-  textExampleTranslate: string;
-  textMeaning: string;
-  textMeaningTranslate: string;
-  transcription: string;
-  word: string;
-  wordTranslate: string | [];
-}
-
 interface IGameProps {
   setIsGameStart: (isGameStart: boolean) => void;
   level: number;
+  setWrongAnswers: (
+    wrongAnswers: (prev: (IWord | null)[]) => (IWord | null)[]
+  ) => void;
+  setRightAnswers: (
+    rightAnswers: (prev: (IWord | null)[]) => (IWord | null)[]
+  ) => void;
+  score: number;
+  setScore: (score: (value: number) => number) => void;
 }
 
-export const Game: React.FC<IGameProps> = ({ setIsGameStart, level }) => {
+export const Game: React.FC<IGameProps> = ({
+  setIsGameStart,
+  level,
+  setWrongAnswers,
+  setRightAnswers,
+  score,
+  setScore,
+}) => {
   const [words, setWords] = useState<IWord[] | []>([]);
-  const [randomWord, setRandomWord] = useState<any>({});
+  const [randomWord, setRandomWord] = useState<IWord | null>(null);
   const [playedWords, setPlayedWords] = useState<string[]>([]);
   const [timer, setTimer] = useState(60);
   const [translateRandomWord, setTranslateRandomWord] = useState('');
-  const [rightAnswers, setRightAnswers] = useState<IWord[] | []>([]);
-  const [wrongAnswers, setWrongAnswers] = useState<IWord[] | []>([]);
   const [isSoundOn, setIsSoundOn] = useState(true);
   const [isWrongTranslationAdded, setIsWrongTranslationAdded] = useState(false);
-  const [score, setScore] = useState(0);
   const [isAnswerRight, setIsAnswerRight] = useState(true);
   const [isBorderShow, setIsBorderShow] = useState(false);
   const [isСolorHeaderShow, setIsColorHeaderShow] = useState(false);
@@ -125,14 +131,14 @@ export const Game: React.FC<IGameProps> = ({ setIsGameStart, level }) => {
   };
 
   useEffect(() => {
-    getWords(level, Math.floor(Math.random() * PAGESNUMBER)).then((res) => {
+    getWords(level, Math.floor(Math.random() * PAGE_NUMBER)).then((res) => {
       addWrongTranslation(res);
     });
   }, [level]);
 
   useEffect(() => {
     if (words.length === 5) {
-      getWords(level, Math.floor(Math.random() * PAGESNUMBER)).then((res) => {
+      getWords(level, Math.floor(Math.random() * PAGE_NUMBER)).then((res) => {
         addWrongTranslation(res);
       });
     }
@@ -169,24 +175,21 @@ export const Game: React.FC<IGameProps> = ({ setIsGameStart, level }) => {
         };
       } else {
         setIsGameStart(false);
-        console.log(rightAnswers);
-        console.log(wrongAnswers);
       }
     }
     // eslint-disable-next-line
   }, [timer, words]);
-  console.log(isAnswerRight, numberConsecutiveRightAnswers);
 
   const checkRightButton = () => {
-    if (randomWord.wordTranslate[0] === translateRandomWord) {
-      setRightAnswers((prev: IWord[]) => [...prev, randomWord]);
+    if (randomWord?.wordTranslate[0] === translateRandomWord) {
+      setRightAnswers((prev: (IWord | null)[]) => [...prev, randomWord]);
       if (isSoundOn) {
         playRightAnswer();
       }
       setIsAnswerRight(true);
       updateScore({ isRight: true });
     } else {
-      setWrongAnswers((prev: IWord[]) => [...prev, randomWord]);
+      setWrongAnswers((prev: (IWord | null)[]) => [...prev, randomWord]);
       if (isSoundOn) {
         playWrongAnswer();
       }
@@ -200,15 +203,15 @@ export const Game: React.FC<IGameProps> = ({ setIsGameStart, level }) => {
   };
 
   const checkWrongButton = () => {
-    if (randomWord.wordTranslate[0] !== translateRandomWord) {
-      setRightAnswers((prev: IWord[]) => [...prev, randomWord]);
+    if (randomWord?.wordTranslate[0] !== translateRandomWord) {
+      setRightAnswers((prev: (IWord | null)[]) => [...prev, randomWord]);
       if (isSoundOn) {
         playRightAnswer();
       }
       setIsAnswerRight(true);
       updateScore({ isRight: true });
     } else {
-      setWrongAnswers((prev: IWord[]) => [...prev, randomWord]);
+      setWrongAnswers((prev: (IWord | null)[]) => [...prev, randomWord]);
       if (isSoundOn) {
         playWrongAnswer();
       }
@@ -274,12 +277,13 @@ export const Game: React.FC<IGameProps> = ({ setIsGameStart, level }) => {
           numberConsecutiveRightAnswers={numberConsecutiveRightAnswers}
           isСolorHeaderShow={isСolorHeaderShow}
           isHeaderYellow={isHeaderYellow}
+          randomWord={randomWord}
         />
         <Typography variant="h4" align="center" style={{ color: '#343e48' }}>
-          {isEmpty(randomWord) ? '' : randomWord.word}{' '}
+          {randomWord?.word}
         </Typography>
         <Typography variant="h5" align="center" style={{ color: '#343e48' }}>
-          {isEmpty(randomWord) ? '' : translateRandomWord}{' '}
+          {translateRandomWord}
         </Typography>
         <GameButtons
           checkRightButton={checkRightButton}
@@ -288,9 +292,9 @@ export const Game: React.FC<IGameProps> = ({ setIsGameStart, level }) => {
         />
       </StyledPaper>
       <StyledTimerBox>
-        <Typography variant="h3" align="center" style={{ width: '55px' }}>
+        <StyledTypographyTimer variant="h3" align="center">
           {timer}{' '}
-        </Typography>
+        </StyledTypographyTimer>
       </StyledTimerBox>
     </StyledGrid>
   );

@@ -84,11 +84,18 @@ interface FullScreenHandle {
   node: React.MutableRefObject<HTMLDivElement | null>;
 }
 
+interface IGame {
+  name: string;
+  description: string;
+  path: string;
+}
+
 interface IPageProps {
   setIsGameStart: (isGameStart: boolean) => void;
   level: number;
   setLevel: (level: number) => void;
   changeFullscreen: FullScreenHandle;
+  game: IGame;
 }
 
 export const InitialPage: React.FC<IPageProps> = ({
@@ -96,6 +103,7 @@ export const InitialPage: React.FC<IPageProps> = ({
   level,
   setLevel,
   changeFullscreen,
+  game,
 }) => {
   const changeLevel = (event: React.ChangeEvent<{ value: unknown }>) => {
     setLevel(event.target.value as number);
@@ -143,9 +151,9 @@ export const InitialPage: React.FC<IPageProps> = ({
         </StyledBox>
       </StyledGrid>
       <StyledPaper>
-        <StyledTypography variant="h3">Спринт</StyledTypography>
+        <StyledTypography variant="h3">{game.name} </StyledTypography>
         <StyledTypography variant="h5" align="center">
-          Выберите соответсвует ли перевод предложенному слову
+          {game.description}
         </StyledTypography>
         <StyledButton variant="outlined" onClick={() => setIsGameStart(true)}>
           Начать
