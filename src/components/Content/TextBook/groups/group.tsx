@@ -12,7 +12,7 @@ const StyledGroup = styled.div`
   text-decoration: none;
 `;
 
-export const Group = ({ numberGroup, color, id }: IGroupParametr) => {
+export const Group = ({ numberGroup, color }: IGroupParametr) => {
   return (
     <NavLink to={`textbook/group/${numberGroup}/page/0`}>
       <StyledGroup color={color}>Group {numberGroup + 1}</StyledGroup>

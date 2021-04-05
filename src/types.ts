@@ -21,8 +21,8 @@ export interface IActionWords {
 }
 
 export interface IPropsLoadWords {
-  groupNumber: number;
-  pageNumber: number;
+  groupNumber: string;
+  pageNumber: string;
 }
 
 export interface IGroupParametr {
@@ -33,6 +33,6 @@ export interface IGroupParametr {
 
 export interface IStatePage {
   textbook: {
-    currentWords: {}[];
+    currentWords: IWord[];
   };
 }
