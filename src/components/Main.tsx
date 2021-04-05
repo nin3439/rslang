@@ -52,6 +52,7 @@ const Main: React.FC<IMainProps> = ({ isModalActive }) => {
           </Grid>
         </React.Fragment>
       </Switch>
+      {isModalActive && <Menu />}
     </Router>
   );
 };
