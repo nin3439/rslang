@@ -36,3 +36,7 @@ export interface IStatePage {
     currentWords: IWord[];
   };
 }
+
+export interface IMainProps {
+  isModalActive: string;
+}
