@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import { ChangeModalAuth } from '../../redux/actions/controllerActions';
 import { logout } from '../../redux/reducers/userReducer';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import SettingsIcon from '@material-ui/icons/Settings';
 
 const StyledGrid = styled(Grid)`
   padding: 0 28px;
@@ -40,9 +39,6 @@ const Header: React.FC<any> = ({
         >
           <div>{localStorage.getItem('userName')}</div>
           <Avatar src={userAvatar} style={{ margin: '0 0 0 10px' }} />
-          <IconButton onClick={() => changeModalAuth()}>
-            <SettingsIcon />
-          </IconButton>
           <IconButton
             onClick={() => {
               logout();

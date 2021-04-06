@@ -2,6 +2,7 @@ import React from 'react';
 import { Grid, Link } from '@material-ui/core';
 import { AUTHORS } from '../constants/allAuthors';
 import styled from 'styled-components';
+import GitHubIcon from '@material-ui/icons/GitHub';
 
 const StyledLink = styled(Link)`
   transform: scale(1);
@@ -35,8 +36,11 @@ export const Footer: React.FC = () => {
             style={{ width: '45px', height: '45px', marginRight: '15px' }}
           />
         </StyledLink>
-        <span>2021</span>
+        <StyledLink href="https://github.com/nin3439/rslang">
+          <GitHubIcon />
+        </StyledLink>
       </Grid>
+      <span>2021</span>
       <Grid
         container
         spacing={2}
