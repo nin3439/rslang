@@ -53,7 +53,7 @@ export const GameButtons: React.FC<IButtonsprops> = ({
       justify="center"
       style={{ marginBottom: '20px' }}
     >
-      <Grid container alignItems="center" justify="center" spacing={2}>
+      <Grid container alignItems="center" justify="center" spacing={4}>
         <Grid item>
           <StyledButton
             variant="contained"
@@ -83,7 +83,7 @@ export const GameButtons: React.FC<IButtonsprops> = ({
         container
         alignItems="center"
         justify="space-around"
-        style={{ padding: '0 45px' }}
+        style={{ padding: '0 55px' }}
       >
         <TrendingFlat color="action" style={{ transform: 'rotate(0.5turn)' }} />
         <TrendingFlat color="action" />

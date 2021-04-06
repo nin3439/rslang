@@ -24,7 +24,7 @@ interface StyledProps {
 
 const StyledPaper = styled(Paper)`
   position: relative;
-  width: 350px;
+  width: 400px;
   height: 400px;
   &.MuiPaper-root {
     background-color: #ffd6cf;
@@ -87,7 +87,6 @@ export const Game: React.FC<IGameProps> = ({
   });
 
   const addWrongTranslation = (res: IWord[]) => {
-    console.log(`translatefunc`);
     const wordsWithWrongTranslate = res.map((word: IWord, index: number) => {
       if (index !== 0) {
         return {
@@ -244,10 +243,10 @@ export const Game: React.FC<IGameProps> = ({
           isHeaderYellow={isHeaderYellow}
           randomWord={randomWord}
         />
-        <Typography variant="h4" align="center" style={{ color: '#343e48' }}>
+        <Typography variant="h4" align="center" style={{ color: '#2a3c4d' }}>
           {randomWord?.word}
         </Typography>
-        <Typography variant="h5" align="center" style={{ color: '#343e48' }}>
+        <Typography variant="h5" align="center" style={{ color: '#2a3c4d' }}>
           {translateRandomWord}
         </Typography>
         <GameButtons

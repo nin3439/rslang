@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const StyledTypographyTimer = styled(Typography)`
   width: 55px;
-  @media (max-width: 950px) {
+  @media (max-width: 980px) {
     width: 35px;
     font-size: 26px;
   }
@@ -18,7 +18,7 @@ const StyledTimerBox = styled(Box)`
   position: absolute;
   top: 50%;
   right: 20%;
-  @media (max-width: 950px) {
+  @media (max-width: 980px) {
     top: 14%;
   }
 `;

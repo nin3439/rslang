@@ -14,6 +14,60 @@ import styled from 'styled-components';
 const StyledGrid = styled(Grid)`
   height: 300px;
   overflow: auto;
+  padding-left: 15px;
+  &::-webkit-scrollbar-thumb {
+    background-color: #37516a;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: #fff;
+    border-radius: 10px;
+  }
+`;
+
+const StyledVolumeUp = styled(VolumeUp)`
+  width: 20px;
+  margin-right: 10px;
+  transform: scale(1);
+  transition: all 0.5s;
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+    transition: transform 0.5s;
+  }
+`;
+
+const StyledDialogContent = styled(DialogContent)`
+  background: #f8f2ee;
+  width: 400px;
+`;
+
+const StyledTypography = styled(Typography)`
+  color: #37516a;
+`;
+
+const StyledSpan = styled.span`
+  color: #fff;
+  border-radius: 16px;
+  padding: 2px 15px;
+`;
+
+const StyledButton = styled(Button)`
+  margin: 5px 20px;
+  background: #37516a;
+  &.MuiButton-contained {
+    color: #fff;
+  }
+  transform: scale(1);
+  transition: all 0.5s;
+  &:hover {
+    background: #37516a;
+    transform: scale(1.1);
+    transition: transform 0.5s;
+  }
 `;
 
 interface IResultsProps {
@@ -45,13 +99,28 @@ export const Results: React.FC<IResultsProps> = ({
 
   return (
     <Dialog onClose={() => setIsResultsShow(false)} open={isResultsShow}>
-      <DialogContent dividers>
+      <StyledDialogContent dividers>
         <Grid container direction="column" alignItems="center" justify="center">
-          <Typography variant="h5">Результаты</Typography>
-          <Typography gutterBottom>Вы набрали {score} очков.</Typography>
+          <StyledTypography
+            gutterBottom
+            variant="h3"
+            style={{ fontWeight: 'bold' }}
+          >
+            Результаты
+          </StyledTypography>
+          <StyledTypography gutterBottom variant="h5">
+            Вы набрали <span style={{ color: '#11a911' }}>{score}</span> очков.
+          </StyledTypography>
         </Grid>
+      </StyledDialogContent>
+      <StyledDialogContent dividers>
         <StyledGrid>
-          <Typography gutterBottom>Я знаю {rightAnswers.length}</Typography>
+          <StyledTypography gutterBottom variant="h5">
+            Я знаю{' '}
+            <StyledSpan style={{ background: '#11a911' }}>
+              {rightAnswers.length}
+            </StyledSpan>
+          </StyledTypography>
           {rightAnswers.map((rightAnswer) => {
             return (
               <Grid
@@ -61,14 +130,31 @@ export const Results: React.FC<IResultsProps> = ({
                 justify="flex-start"
                 key={rightAnswer?.word}
               >
-                <VolumeUp onClick={() => playEnglishWord(rightAnswer?.audio)} />
-                <Typography>
+                <StyledVolumeUp
+                  onClick={() => playEnglishWord(rightAnswer?.audio)}
+                  style={{
+                    color: '#11a911',
+                  }}
+                />
+                <StyledTypography
+                  variant="subtitle1"
+                  style={{ letterSpacing: 1 }}
+                >
                   {rightAnswer?.word} - {rightAnswer?.wordTranslate[0]}{' '}
-                </Typography>
+                </StyledTypography>
               </Grid>
             );
           })}
-          <Typography gutterBottom>Я не знаю {wrongAnswers.length}</Typography>
+          <StyledTypography
+            gutterBottom
+            variant="h5"
+            style={{ marginTop: '10px' }}
+          >
+            Я не знаю{' '}
+            <StyledSpan style={{ background: '#f13434' }}>
+              {wrongAnswers.length}
+            </StyledSpan>
+          </StyledTypography>
           {wrongAnswers.map((wrongAnswer) => {
             return (
               <Grid
@@ -78,17 +164,25 @@ export const Results: React.FC<IResultsProps> = ({
                 justify="flex-start"
                 key={wrongAnswer?.word}
               >
-                <VolumeUp onClick={() => playEnglishWord(wrongAnswer?.audio)} />
-                <Typography>
+                <StyledVolumeUp
+                  onClick={() => playEnglishWord(wrongAnswer?.audio)}
+                  style={{
+                    color: '#f13434',
+                  }}
+                />
+                <StyledTypography
+                  variant="subtitle1"
+                  style={{ letterSpacing: 1 }}
+                >
                   {wrongAnswer?.word} - {wrongAnswer?.wordTranslate[0]}{' '}
-                </Typography>
+                </StyledTypography>
               </Grid>
             );
           })}
         </StyledGrid>
-      </DialogContent>
-      <DialogActions>
-        <Button
+      </StyledDialogContent>
+      <DialogActions style={{ background: '#f8f2ee' }}>
+        <StyledButton
           variant="contained"
           onClick={() => {
             setIsResultsShow(false);
@@ -98,7 +192,7 @@ export const Results: React.FC<IResultsProps> = ({
           }}
         >
           Закрыть
-        </Button>
+        </StyledButton>
       </DialogActions>
     </Dialog>
   );

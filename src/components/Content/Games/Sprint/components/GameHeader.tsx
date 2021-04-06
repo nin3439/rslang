@@ -26,7 +26,6 @@ interface IGameHeaderProps {
   isSoundOn: boolean;
   setIsSoundOn: (isSoundOn: boolean) => void;
   setIsGameStart: (isGameStart: boolean) => void;
-  // setWrongAnswers: (wrongAnswers: (IWord | null)[]) => void;
   setRightAnswers: (rightAnswers: any) => void;
 }
 
@@ -46,7 +45,7 @@ export const GameHeader: React.FC<IGameHeaderProps> = ({
       <StyledIconButton
         onClick={() => {
           setIsGameStart(false);
-          // setRightAnswers([]);
+          setRightAnswers([]);
         }}
       >
         <ArrowBack fontSize="large" />

@@ -39,7 +39,8 @@ const StyledIconButton = styled(IconButton)`
 `;
 
 const StyledTypography = styled(Typography)`
-  color: #343e48;
+  color: #2b4054;
+  font-weight: bold;
 `;
 
 const StyledLink = styled(Link)`
@@ -52,13 +53,15 @@ const StyledLink = styled(Link)`
 `;
 
 const StyledButton = styled(Button)`
+  background: #2b4054;
+  &.MuiButton-root {
+    color: #fff;
+  }
   transform: scale(1);
   transition: all 0.5s;
-  &.MuiButton-root {
-    color: #343e48;
-  }
   &:hover {
-    transform: scale(1.2);
+    background: #2b4054;
+    transform: scale(1.1);
     transition: transform 0.5s;
   }
 `;
@@ -151,7 +154,9 @@ export const InitialPage: React.FC<IPageProps> = ({
         </StyledBox>
       </StyledGrid>
       <StyledPaper>
-        <StyledTypography variant="h3">{game.name} </StyledTypography>
+        <StyledTypography style={{ fontWeight: 'bold' }} variant="h3">
+          {game.name}{' '}
+        </StyledTypography>
         <StyledTypography variant="h5" align="center">
           {game.description}
         </StyledTypography>

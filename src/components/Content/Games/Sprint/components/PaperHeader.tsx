@@ -20,7 +20,7 @@ const StyledGrid = styled(Grid)`
   position: relative;
   width: 100%;
   height: 70px;
-  margin-bottom: 15px;
+  margin-bottom: 30px;
   padding: 10px;
   border-radius: 4px 4px 0 0;
   box-shadow: ${(p: StyledProps) =>
