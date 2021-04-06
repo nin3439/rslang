@@ -72,14 +72,39 @@ const MiddleBlock = styled.div`
   padding-bottom: 25px;
 `;
 
+const MiddleHeader = styled.div`
+  font-size: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  padding-top: 20px;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+  transform: rotate(1deg);
+`;
+
 const BottomBlock = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  padding-top: 25px;
   padding-bottom: 25px;
+`;
+
+const PlayerBlock = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: url('https://images.unsplash.com/photo-1531685250784-7569952593d2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80');
+  background-size: cover;
+  background-position: center center;
+  padding-top: 25px;
+  padding-bottom: 50px;
 `;
 
 const BottomLowerBlock = styled.div`
@@ -187,14 +212,17 @@ const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
         </Card>
       </MiddleBlock>
       <BottomBlock>
-        <ReactPlayer
-          url="https://www.youtube.com/watch?v=Xs-HbHCcK58"
-          controls={true}
-          loop={true}
-          width="80%"
-          height="100vh"
-          style={{ border: 'solid 16px #f3727b', marginBottom: '30px' }}
-        />
+        <PlayerBlock>
+          <MiddleHeader>Знакомство с приложением</MiddleHeader>
+          <ReactPlayer
+            url="https://www.youtube.com/watch?v=Xs-HbHCcK58"
+            controls={true}
+            loop={true}
+            width="70%"
+            height="100vh"
+            style={{ border: 'solid 16px #f3727b', transform: 'rotate(1deg)' }}
+          />
+        </PlayerBlock>
         <BottomLowerBlock>
           {isAuth ? null : (
             <Button
