@@ -160,7 +160,11 @@ export const InitialPage: React.FC<IPageProps> = ({
         <StyledTypography variant="h5" align="center">
           {game.description}
         </StyledTypography>
-        <StyledButton variant="outlined" onClick={() => setIsGameStart(true)}>
+        <StyledButton
+          autoFocus
+          variant="outlined"
+          onClick={() => setIsGameStart(true)}
+        >
           Начать
         </StyledButton>
       </StyledPaper>

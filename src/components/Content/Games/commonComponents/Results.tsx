@@ -183,6 +183,7 @@ export const Results: React.FC<IResultsProps> = ({
       </StyledDialogContent>
       <DialogActions style={{ background: '#f8f2ee' }}>
         <StyledButton
+          autoFocus
           variant="contained"
           onClick={() => {
             setIsResultsShow(false);
