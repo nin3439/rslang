@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { IMainProps } from '../types';
 import { Games } from './Content/Games/Games';
 import { Sprint } from './Content/Games/Sprint/Sprint';
+import Promo from './Promo/Promo';
 
 const Main: React.FC<IMainProps> = ({ isModalActive }) => {
   return (
@@ -32,11 +33,11 @@ const Main: React.FC<IMainProps> = ({ isModalActive }) => {
               alignItems="center"
               style={{
                 minHeight: 'calc(100vh - 100px)',
-                padding: '0 40px',
+                padding: '0px',
               }}
             >
               <Route exact path="/">
-                <div>Promo Page</div>
+                <Promo />
               </Route>
               <Route path="/textbook">
                 <TextBook />

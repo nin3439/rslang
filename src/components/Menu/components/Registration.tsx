@@ -53,8 +53,14 @@ const InputFile = styled.input`
 const ElementBlock = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+`;
+
+const InputBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 `;
 
 const Registration: React.FC<any> = ({
@@ -73,58 +79,60 @@ const Registration: React.FC<any> = ({
 
   return (
     <MenuBlock>
-      <ElementBlock>
-        <InputLabel>Имя пользователя</InputLabel>
-        <OutlinedInput
-          color="secondary"
-          placeholder="Введите имя"
-          style={{ height: '50px' }}
-          value={name}
-          onChange={(event) => setName(event.target.value)}
-        />
-      </ElementBlock>
-      <ElementBlock>
-        <InputLabel>Адрес электронной почты</InputLabel>
-        <OutlinedInput
-          color="secondary"
-          placeholder="Введите адрес почты"
-          style={{ height: '50px' }}
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-        />
-      </ElementBlock>
-      <ElementBlock>
-        <InputLabel>Пароль</InputLabel>
-        <OutlinedInput
-          type={showPassword ? 'text' : 'password'}
-          placeholder="Введите пароль"
-          style={{ height: '50px' }}
-          color="secondary"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={() => setShowPassword(!showPassword)}
-                onMouseDown={handleMouseDownPassword}
-              >
-                {showPassword ? <Visibility /> : <VisibilityOff />}
-              </IconButton>
-            </InputAdornment>
-          }
-        />
-      </ElementBlock>
-      <ElementBlock>
-        <InputLabel>Загрузить аватар</InputLabel>
-        <InputFile
-          placeholder="Upload avatar"
-          type="file"
-          onChange={(e: any) => {
-            uploadUserAvatar(e);
-          }}
-        />
-      </ElementBlock>
+      <InputBlock>
+        <ElementBlock>
+          <InputLabel>Имя пользователя</InputLabel>
+          <OutlinedInput
+            color="secondary"
+            placeholder="Введите имя"
+            style={{ height: '50px' }}
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+          />
+        </ElementBlock>
+        <ElementBlock>
+          <InputLabel>Адрес электронной почты</InputLabel>
+          <OutlinedInput
+            color="secondary"
+            placeholder="Введите адрес почты"
+            style={{ height: '50px' }}
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+          />
+        </ElementBlock>
+        <ElementBlock>
+          <InputLabel>Пароль</InputLabel>
+          <OutlinedInput
+            type={showPassword ? 'text' : 'password'}
+            placeholder="Введите пароль"
+            style={{ height: '50px' }}
+            color="secondary"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={() => setShowPassword(!showPassword)}
+                  onMouseDown={handleMouseDownPassword}
+                >
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+        </ElementBlock>
+        <ElementBlock>
+          <InputLabel>Загрузить аватар</InputLabel>
+          <InputFile
+            placeholder="Upload avatar"
+            type="file"
+            onChange={(e: any) => {
+              uploadUserAvatar(e);
+            }}
+          />
+        </ElementBlock>
+      </InputBlock>
       <Button
         onClick={() => {
           registration({ name, email, password, avatar });
