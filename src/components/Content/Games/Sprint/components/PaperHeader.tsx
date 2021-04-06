@@ -10,11 +10,10 @@ import { IWord } from '../../types';
 import useSound from 'use-sound';
 import styled from 'styled-components';
 
-interface IPaperHeaderProps {
+interface StyledProps {
   numberConsecutiveRightAnswers: number;
   isСolorHeaderShow: boolean;
   isHeaderYellow: boolean;
-  randomWord?: IWord | null;
 }
 
 const StyledGrid = styled(Grid)`
@@ -24,9 +23,9 @@ const StyledGrid = styled(Grid)`
   margin-bottom: 15px;
   padding: 10px;
   border-radius: 4px 4px 0 0;
-  box-shadow: ${(p: IPaperHeaderProps) =>
+  box-shadow: ${(p: StyledProps) =>
     p.isСolorHeaderShow ? '0 4px 2px -3px #b1b1b1' : 'none'};
-  background-color: ${(p: IPaperHeaderProps) =>
+  background-color: ${(p: StyledProps) =>
     p.isСolorHeaderShow
       ? p.isHeaderYellow
         ? '#fccc00'
@@ -83,6 +82,13 @@ const StyledIconButton = styled(IconButton)`
     color: gray;
   }
 `;
+
+interface IPaperHeaderProps {
+  numberConsecutiveRightAnswers: number;
+  isСolorHeaderShow: boolean;
+  isHeaderYellow: boolean;
+  randomWord: IWord | null;
+}
 
 export const PaperHeader: React.FC<IPaperHeaderProps> = ({
   numberConsecutiveRightAnswers,

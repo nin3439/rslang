@@ -59,6 +59,7 @@ export const Results: React.FC<IResultsProps> = ({
                 direction="row"
                 alignItems="center"
                 justify="flex-start"
+                key={rightAnswer?.word}
               >
                 <VolumeUp onClick={() => playEnglishWord(rightAnswer?.audio)} />
                 <Typography>
@@ -75,6 +76,7 @@ export const Results: React.FC<IResultsProps> = ({
                 direction="row"
                 alignItems="center"
                 justify="flex-start"
+                key={wrongAnswer?.word}
               >
                 <VolumeUp onClick={() => playEnglishWord(wrongAnswer?.audio)} />
                 <Typography>

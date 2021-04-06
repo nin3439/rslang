@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Paper, Typography, Grid, Box } from '@material-ui/core';
+import { Paper, Typography, Grid } from '@material-ui/core';
 import getWords from '../../../../../api/words';
 import { GameHeader } from '../components/GameHeader';
 import { PaperHeader } from '../components/PaperHeader';
 import { GameButtons } from '../components/GameButtons';
+import { Timer } from '../components/Timer';
 import { PAGE_NUMBER } from '../../../../../constants/pageNumber';
 import { IWord } from '../../types';
 import useSound from 'use-sound';
@@ -11,30 +12,9 @@ import styled from 'styled-components';
 const wrongAnswerSound = require('../../../../../assets/sounds/wrongAnswer.mp3');
 const rightAnswerSound = require('../../../../../assets/sounds/rightAnswer.mp3');
 
-const StyledTypographyTimer = styled(Typography)`
-  width: 55px;
-  @media (max-width: 950px) {
-    width: 35px;
-    font-size: 26px;
-  }
-`;
-
 const StyledGrid = styled(Grid)`
   position: relative;
   height: 100vh;
-`;
-
-const StyledTimerBox = styled(Box)`
-  color: #fff;
-  border: 5px solid #fff;
-  border-radius: 50%;
-  padding: 10px;
-  position: absolute;
-  top: 50%;
-  right: 20%;
-  @media (max-width: 950px) {
-    top: 14%;
-  }
 `;
 
 interface StyledProps {
@@ -87,7 +67,6 @@ export const Game: React.FC<IGameProps> = ({
   const [words, setWords] = useState<IWord[] | []>([]);
   const [randomWord, setRandomWord] = useState<IWord | null>(null);
   const [playedWords, setPlayedWords] = useState<string[]>([]);
-  const [timer, setTimer] = useState(60);
   const [translateRandomWord, setTranslateRandomWord] = useState('');
   const [isSoundOn, setIsSoundOn] = useState(true);
   const [isWrongTranslationAdded, setIsWrongTranslationAdded] = useState(false);
@@ -108,6 +87,7 @@ export const Game: React.FC<IGameProps> = ({
   });
 
   const addWrongTranslation = (res: IWord[]) => {
+    console.log(`translatefunc`);
     const wordsWithWrongTranslate = res.map((word: IWord, index: number) => {
       if (index !== 0) {
         return {
@@ -163,22 +143,6 @@ export const Game: React.FC<IGameProps> = ({
     setRandomWord(randomWord);
     setTranslateRandomWord(randomWord.wordTranslate[Math.round(Math.random())]);
   };
-
-  useEffect(() => {
-    if (words.length) {
-      if (timer) {
-        let sec = setTimeout(() => {
-          setTimer((prev: number) => prev - 1);
-        }, 1000);
-        return function cleanUp() {
-          clearTimeout(sec);
-        };
-      } else {
-        setIsGameStart(false);
-      }
-    }
-    // eslint-disable-next-line
-  }, [timer, words]);
 
   const checkRightButton = () => {
     if (randomWord?.wordTranslate[0] === translateRandomWord) {
@@ -268,6 +232,7 @@ export const Game: React.FC<IGameProps> = ({
         setIsSoundOn={setIsSoundOn}
         isSoundOn={isSoundOn}
         setIsGameStart={setIsGameStart}
+        setRightAnswers={setRightAnswers}
       />
       <Typography variant="h3" style={{ color: 'green', marginBottom: '10px' }}>
         {score}{' '}
@@ -291,11 +256,10 @@ export const Game: React.FC<IGameProps> = ({
           getRandomWord={getRandomWord}
         />
       </StyledPaper>
-      <StyledTimerBox>
-        <StyledTypographyTimer variant="h3" align="center">
-          {timer}{' '}
-        </StyledTypographyTimer>
-      </StyledTimerBox>
+      <Timer
+        isWrongTranslationAdded={isWrongTranslationAdded}
+        setIsGameStart={setIsGameStart}
+      />
     </StyledGrid>
   );
 };

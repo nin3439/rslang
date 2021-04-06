@@ -26,12 +26,15 @@ interface IGameHeaderProps {
   isSoundOn: boolean;
   setIsSoundOn: (isSoundOn: boolean) => void;
   setIsGameStart: (isGameStart: boolean) => void;
+  // setWrongAnswers: (wrongAnswers: (IWord | null)[]) => void;
+  setRightAnswers: (rightAnswers: any) => void;
 }
 
 export const GameHeader: React.FC<IGameHeaderProps> = ({
   isSoundOn,
   setIsGameStart,
   setIsSoundOn,
+  setRightAnswers,
 }) => {
   return (
     <StyledGridHeader
@@ -40,7 +43,12 @@ export const GameHeader: React.FC<IGameHeaderProps> = ({
       justify="space-between"
       alignItems="center"
     >
-      <StyledIconButton onClick={() => setIsGameStart(false)}>
+      <StyledIconButton
+        onClick={() => {
+          setIsGameStart(false);
+          // setRightAnswers([]);
+        }}
+      >
         <ArrowBack fontSize="large" />
       </StyledIconButton>
       <StyledIconButton onClick={() => setIsSoundOn(!isSoundOn)}>

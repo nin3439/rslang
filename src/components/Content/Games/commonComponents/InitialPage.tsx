@@ -127,7 +127,7 @@ export const InitialPage: React.FC<IPageProps> = ({
             <Select
               value={level}
               onChange={changeLevel}
-              style={{ color: '#fff', width: '120px' }}
+              style={{ color: '#fff', width: '110px' }}
             >
               <MenuItem value={0} selected>
                 Уровень 1
