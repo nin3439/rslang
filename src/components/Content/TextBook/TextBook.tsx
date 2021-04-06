@@ -19,7 +19,6 @@ const SettingsBlock = styled.div`
   align-items: center;
   justify-content: center;
 `;
-
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     width: '100%',
@@ -37,7 +36,6 @@ export const TextBook = () => {
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
-
   const [options, setOptions] = React.useState({
     translate: true,
     buttons: true,
@@ -93,6 +91,6 @@ export const TextBook = () => {
           <Groups />
         </Route>
       </SwitchRouter>
-    </div >
+    </div>
   );
 };
