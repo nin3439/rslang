@@ -36,6 +36,7 @@ const Button = styled.button`
   border-radius: 10px;
   width: 150px;
   height: 50px;
+  align-self: center;
 
   &:focus {
     outline: none;
@@ -53,6 +54,12 @@ const Button = styled.button`
   }
 `;
 
+const InputBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`;
+
 const Login = ({ login }: any) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -64,43 +71,45 @@ const Login = ({ login }: any) => {
 
   return (
     <MenuBlock>
-      <ElementBlock>
-        <InputLabel>Адрес электронной почты</InputLabel>
-        <OutlinedInput
-          color="secondary"
-          placeholder="Введите адрес почты"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-        />
-      </ElementBlock>
-      <ElementBlock>
-        <InputLabel>Пароль</InputLabel>
-        <OutlinedInput
-          type={showPassword ? 'text' : 'password'}
-          color="secondary"
-          placeholder="Введите пароль"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={() => setShowPassword(!showPassword)}
-                onMouseDown={handleMouseDownPassword}
-              >
-                {showPassword ? <Visibility /> : <VisibilityOff />}
-              </IconButton>
-            </InputAdornment>
-          }
-        />
-      </ElementBlock>
-      <Button
-        onClick={() => {
-          login({ email, password });
-        }}
-      >
-        Войти
-      </Button>
+      <InputBlock>
+        <ElementBlock>
+          <InputLabel>Адрес электронной почты</InputLabel>
+          <OutlinedInput
+            color="secondary"
+            placeholder="Введите адрес почты"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+          />
+        </ElementBlock>
+        <ElementBlock>
+          <InputLabel>Пароль</InputLabel>
+          <OutlinedInput
+            type={showPassword ? 'text' : 'password'}
+            color="secondary"
+            placeholder="Введите пароль"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={() => setShowPassword(!showPassword)}
+                  onMouseDown={handleMouseDownPassword}
+                >
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+        </ElementBlock>
+        <Button
+          onClick={() => {
+            login({ email, password });
+          }}
+        >
+          Войти
+        </Button>
+      </InputBlock>
     </MenuBlock>
   );
 };

@@ -9,11 +9,6 @@ import { auth } from '../../redux/actions/user';
 import { connect } from 'react-redux';
 import { ChangeModalAuth } from '../../redux/actions/controllerActions';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
-import Switch from '@material-ui/core/Switch';
 
 const PopUpMenu = styled.div`
   position: fixed;
@@ -35,7 +30,6 @@ const PopUpMenuInner = styled.div`
   bottom: 5%;
   margin: auto;
   background: white;
-  padding: 40px 20px 10px 60px;
   text-align: justify;
   display: flex;
   justify-content: center;
@@ -43,20 +37,16 @@ const PopUpMenuInner = styled.div`
   align-items: flex-start;
 `;
 
-const OptionsHeader = styled.div`
-  margin-top: 20px;
-  margin-bottom: 20px;
-  font-size: 1.5rem;
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
-  font-weight: 400;
-  line-height: 1.5;
-  letter-spacing: 0.00938em;
+const TabsBlock = styled.div`
+  width: 100%;
+  height: 100%;
 `;
 
 const Button = styled.button`
+  position: absolute;
+  right: 0;
   cursor: pointer;
   margin-left: 5px;
-  margin-right: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -64,9 +54,8 @@ const Button = styled.button`
   background-color: #f3727b;
   color: #fff;
   border: 0;
-  border-radius: 5%;
-  width: 50px;
-  height: 50px;
+  width: 48px;
+  height: 48px;
 
   &:focus {
     outline: none;
@@ -79,8 +68,8 @@ const Button = styled.button`
   &:active {
     box-shadow: 0 5px 10px -3px rgba(0, 0, 0, 0.1), 0 1px 0px rgba(0, 0, 0, 0.1);
     cursor: pointer;
-    width: 49px;
-    heigth: 49px;
+    width: 47px;
+    heigth: 47px;
   }
 `;
 
@@ -92,14 +81,6 @@ const Menu: React.FC<any> = ({
 }) => {
   const [value, setValue] = React.useState(0);
   const [avatar, setAvatar] = React.useState<string | unknown>('');
-  const [options, setOptions] = React.useState({
-    translate: true,
-    buttons: true,
-  });
-
-  const optionsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setOptions({ ...options, [event.target.name]: event.target.checked });
-  };
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
@@ -120,43 +101,15 @@ const Menu: React.FC<any> = ({
     <PopUpMenu>
       <ClickAwayListener onClickAway={() => changeModalAuth()}>
         <PopUpMenuInner>
-          {isAuth ? (
-            <div>
-              <OptionsHeader>
-                Пользователь {localStorage.getItem('userName')} авторизован
-              </OptionsHeader>
-              <FormControl component="fieldset">
-                <FormLabel component="legend">Настройки пользователя</FormLabel>
-                <FormGroup>
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={options.translate}
-                        onChange={optionsChange}
-                        name="translate"
-                      />
-                    }
-                    label="Показывать перевод слов"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={options.buttons}
-                        onChange={optionsChange}
-                        name="buttons"
-                      />
-                    }
-                    label="Показывать кнопки словаря"
-                  />
-                </FormGroup>
-              </FormControl>
-            </div>
-          ) : (
-            <div>
+          {isAuth ? null : (
+            <TabsBlock>
               <AppBar position="static" color="default">
-                <Tabs value={value} onChange={handleChange}>
+                <Tabs value={value} onChange={handleChange} centered>
                   <Tab label="Регистрация" {...a11yProps(0)} />
                   <Tab label="Вход" {...a11yProps(1)} />
+                  <Button onClick={() => changeModalAuth()}>
+                    <CancelIcon />
+                  </Button>
                 </Tabs>
               </AppBar>
               <TabPanel value={value} index={0}>
@@ -168,11 +121,8 @@ const Menu: React.FC<any> = ({
               <TabPanel value={value} index={1}>
                 <Login />
               </TabPanel>
-            </div>
+            </TabsBlock>
           )}
-          <Button onClick={() => changeModalAuth()}>
-            <CancelIcon />
-          </Button>
         </PopUpMenuInner>
       </ClickAwayListener>
     </PopUpMenu>

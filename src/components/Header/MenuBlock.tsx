@@ -132,6 +132,11 @@ export const MenuBlock = () => {
                 <ListItemText primary={'Статистика'} />
               </ListItem>
             </Link>
+            <img
+              src="https://rangirangi.com/wp-content/uploads/2017/12/6731c3b8ea4c46570ee4fe0d6e6ddbbf.jpg"
+              alt="England"
+              style={{ maxWidth: '250px' }}
+            />
           </List>
         </Grid>
       </Drawer>
