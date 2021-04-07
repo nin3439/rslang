@@ -59,7 +59,7 @@ const HeaderBlockBottom = styled.div`
 const HeadImage = styled.img`
   margin-top: 25px;
   width: 25vw;
-  border: solid 8px #f3727b;
+  border: ${({ theme }) => theme.borderImage};
 `;
 
 const MiddleBlock = styled.div`
@@ -129,6 +129,13 @@ const ButtonInscription = styled.div`
   text-align: center;
   color: ${({ theme }) => theme.text};
   font-weight: 700;
+`;
+
+const StyledReactPlayer = styled.div`
+  border: ${({ theme }) => theme.borderVideo};
+  transform: rotate(1deg);
+  width: 70%;
+  height: 100vh;
 `;
 
 const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
@@ -226,14 +233,15 @@ const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
       <BottomBlock>
         <PlayerBlock>
           <MiddleHeader>Знакомство с приложением</MiddleHeader>
-          <ReactPlayer
-            url="https://www.youtube.com/watch?v=Xs-HbHCcK58"
-            controls={true}
-            loop={true}
-            width="70%"
-            height="100vh"
-            style={{ border: 'solid 16px #f3727b', transform: 'rotate(1deg)' }}
-          />
+          <StyledReactPlayer>
+            <ReactPlayer
+              url="https://www.youtube.com/watch?v=Xs-HbHCcK58"
+              controls={true}
+              loop={true}
+              width="100%"
+              height="100vh"
+            />
+          </StyledReactPlayer>
         </PlayerBlock>
         <BottomLowerBlock>
           {isAuth ? null : (
