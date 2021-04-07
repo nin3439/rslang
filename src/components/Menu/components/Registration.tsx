@@ -16,7 +16,7 @@ const MenuBlock = styled.div`
   justify-content: space-between;
 `;
 
-const Button = styled.button`
+const Button = styled(IconButton)`
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -30,19 +30,8 @@ const Button = styled.button`
   width: 250px;
   height: 50px;
 
-  &:focus {
-    outline: none;
-  }
-
   &:hover {
-    box-shadow: 0 5px 10px -3px rgba(0, 0, 0, 0.1), 0 1px 0px rgba(0, 0, 0, 0.1);
-  }
-
-  &:active {
-    box-shadow: 0 5px 10px -3px rgba(0, 0, 0, 0.1), 0 1px 0px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    width: 249px;
-    heigth: 49px;
+    background-color: #f3727b;
   }
 `;
 
@@ -53,14 +42,27 @@ const InputFile = styled.input`
 const ElementBlock = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 `;
 
 const InputBlock = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+`;
+
+const StyledInputLabel = styled(InputLabel)`
+  color: ${({ theme }) => theme.text};
+`;
+
+const StyledOutlinedInput = styled(OutlinedInput)`
+  height: '50px';
+  color: ${({ theme }) => theme.text};
+`;
+
+const StyledIconButton = styled(IconButton)`
+  color: ${({ theme }) => theme.text};
 `;
 
 const Registration: React.FC<any> = ({
@@ -81,8 +83,8 @@ const Registration: React.FC<any> = ({
     <MenuBlock>
       <InputBlock>
         <ElementBlock>
-          <InputLabel>Имя пользователя</InputLabel>
-          <OutlinedInput
+          <StyledInputLabel>Имя пользователя</StyledInputLabel>
+          <StyledOutlinedInput
             color="secondary"
             placeholder="Введите имя"
             style={{ height: '50px' }}
@@ -91,8 +93,8 @@ const Registration: React.FC<any> = ({
           />
         </ElementBlock>
         <ElementBlock>
-          <InputLabel>Адрес электронной почты</InputLabel>
-          <OutlinedInput
+          <StyledInputLabel>Адрес электронной почты</StyledInputLabel>
+          <StyledOutlinedInput
             color="secondary"
             placeholder="Введите адрес почты"
             style={{ height: '50px' }}
@@ -101,8 +103,8 @@ const Registration: React.FC<any> = ({
           />
         </ElementBlock>
         <ElementBlock>
-          <InputLabel>Пароль</InputLabel>
-          <OutlinedInput
+          <StyledInputLabel>Пароль</StyledInputLabel>
+          <StyledOutlinedInput
             type={showPassword ? 'text' : 'password'}
             placeholder="Введите пароль"
             style={{ height: '50px' }}
@@ -111,19 +113,19 @@ const Registration: React.FC<any> = ({
             onChange={(event) => setPassword(event.target.value)}
             endAdornment={
               <InputAdornment position="end">
-                <IconButton
+                <StyledIconButton
                   aria-label="toggle password visibility"
                   onClick={() => setShowPassword(!showPassword)}
                   onMouseDown={handleMouseDownPassword}
                 >
                   {showPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
+                </StyledIconButton>
               </InputAdornment>
             }
           />
         </ElementBlock>
         <ElementBlock>
-          <InputLabel>Загрузить аватар</InputLabel>
+          <StyledInputLabel>Загрузить аватар</StyledInputLabel>
           <InputFile
             placeholder="Upload avatar"
             type="file"

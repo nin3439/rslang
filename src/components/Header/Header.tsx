@@ -7,9 +7,26 @@ import { connect } from 'react-redux';
 import { ChangeModalAuth } from '../../redux/actions/controllerActions';
 import { logout } from '../../redux/reducers/userReducer';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import WbSunnyIcon from '@material-ui/icons/WbSunny';
+import Brightness2Icon from '@material-ui/icons/Brightness2';
 
 const StyledGrid = styled(Grid)`
   padding: 0 28px;
+`;
+
+const StyledIconButton = styled(IconButton)`
+  color: ${({ theme }) => theme.text};
+`;
+
+const StyledMenuBlock = styled(MenuBlock)`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background: ${({ theme }) => theme.backgroundImage};
+  background-size: cover;
+  height: 100vh;
+  background-position: center center;
 `;
 
 const Header: React.FC<any> = ({
@@ -18,6 +35,8 @@ const Header: React.FC<any> = ({
   isAuth,
   userAvatar,
   logout,
+  showNight,
+  updateMode,
 }) => {
   return (
     <StyledGrid
@@ -26,8 +45,11 @@ const Header: React.FC<any> = ({
       justify="space-between"
       alignItems="center"
     >
-      <MenuBlock />
+      <StyledMenuBlock />
       <Typography>RS Lang</Typography>
+      <StyledIconButton onClick={() => updateMode(showNight)}>
+        {showNight ? <Brightness2Icon /> : <WbSunnyIcon />}
+      </StyledIconButton>
       {isAuth ? (
         <Grid
           container
@@ -39,22 +61,22 @@ const Header: React.FC<any> = ({
         >
           <div>{localStorage.getItem('userName')}</div>
           <Avatar src={userAvatar} style={{ margin: '0 0 0 10px' }} />
-          <IconButton
+          <StyledIconButton
             onClick={() => {
               logout();
             }}
           >
             <ExitToAppIcon />
-          </IconButton>
+          </StyledIconButton>
         </Grid>
       ) : (
-        <IconButton
+        <StyledIconButton
           onClick={() => {
             changeModalAuth();
           }}
         >
           <AccountCircle />
-        </IconButton>
+        </StyledIconButton>
       )}
     </StyledGrid>
   );

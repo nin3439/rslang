@@ -20,7 +20,7 @@ const HeadBlock = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  background: url('https://images.unsplash.com/photo-1531685250784-7569952593d2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80');
+  background: ${({ theme }) => theme.backgroundImage};
   background-size: cover;
   height: 100vh;
   background-position: center center;
@@ -100,7 +100,7 @@ const PlayerBlock = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: url('https://images.unsplash.com/photo-1531685250784-7569952593d2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80');
+  background: ${({ theme }) => theme.backgroundImage};
   background-size: cover;
   background-position: center center;
   padding-top: 25px;
@@ -119,6 +119,18 @@ const BottomLowerBlock = styled.div`
   background-position: center center;
 `;
 
+const StyledCard = styled(Card)`
+  color: ${({ theme }) => theme.text};
+  background: ${({ theme }) => theme.body};
+  max-width: 250px;
+`;
+
+const ButtonInscription = styled.div`
+  text-align: center;
+  color: ${({ theme }) => theme.text};
+  font-weight: 700;
+`;
+
 const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
   return (
     <ChiefBlock>
@@ -130,13 +142,13 @@ const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
         </LeftHeadBlock>
         <RightHeadBlock>
           <HeadImage
-            src="https://images.unsplash.com/photo-1487001175664-86de872e3cd6?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=621&q=80"
+            src="https://images.unsplash.com/photo-1487001175664-86de872e3cd6?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
             alt="dog"
           />
         </RightHeadBlock>
       </HeadBlock>
       <MiddleBlock>
-        <Card style={{ maxWidth: '250px' }}>
+        <StyledCard>
           <CardActionArea>
             <img
               src="https://images.unsplash.com/photo-1574870111867-089730e5a72b?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
@@ -148,14 +160,14 @@ const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
               <Typography gutterBottom variant="h5" component="h2">
                 Запоминай
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
+              <Typography variant="body2" color="inherit" component="p">
                 Для лучшего запонимания сложных слов отмечай их и повторяй
                 отдельно
               </Typography>
             </CardContent>
           </CardActionArea>
-        </Card>
-        <Card style={{ maxWidth: '250px' }}>
+        </StyledCard>
+        <StyledCard>
           <CardActionArea>
             <img
               src="https://images.unsplash.com/photo-1449027627419-e46b1154169d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=632&q=80"
@@ -167,14 +179,14 @@ const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
               <Typography gutterBottom variant="h5" component="h2">
                 Изучай
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
+              <Typography variant="body2" color="inherit" component="p">
                 Библиотека из 4000 часто встречающихся слов. Изучай в своем
                 темпе
               </Typography>
             </CardContent>
           </CardActionArea>
-        </Card>
-        <Card style={{ maxWidth: '250px' }}>
+        </StyledCard>
+        <StyledCard>
           <CardActionArea>
             <img
               src="https://images.unsplash.com/photo-1549639457-2c41890d2db6?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=634&q=80"
@@ -186,13 +198,13 @@ const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
               <Typography gutterBottom variant="h5" component="h2">
                 Играй
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
+              <Typography variant="body2" color="inherit" component="p">
                 Для лучшего запоминания играй и делись результатами с другими
               </Typography>
             </CardContent>
           </CardActionArea>
-        </Card>
-        <Card style={{ maxWidth: '250px' }}>
+        </StyledCard>
+        <StyledCard>
           <CardActionArea>
             <img
               src="https://images.unsplash.com/photo-1609695001873-bf16717ba9db?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
@@ -204,12 +216,12 @@ const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
               <Typography gutterBottom variant="h5" component="h2">
                 Анализируй
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
+              <Typography variant="body2" color="inherit" component="p">
                 Подробная статистика твоих достижений, изученных слов и ошибок
               </Typography>
             </CardContent>
           </CardActionArea>
-        </Card>
+        </StyledCard>
       </MiddleBlock>
       <BottomBlock>
         <PlayerBlock>
@@ -230,9 +242,9 @@ const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
               color="secondary"
               onClick={() => changeModalAuth()}
             >
-              <div style={{ textAlign: 'center' }}>
+              <ButtonInscription>
                 Присоединяйся <br /> к DREAMLANG
-              </div>
+              </ButtonInscription>
             </Button>
           )}
         </BottomLowerBlock>

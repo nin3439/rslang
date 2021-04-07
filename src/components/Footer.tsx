@@ -7,11 +7,13 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 const StyledLink = styled(Link)`
   transform: scale(1);
   transition: all 0.5s;
+  color: ${({ theme }) => theme.text};
+
   &:hover {
     text-decoration: none;
     transition: all 0.5s;
     transform: scale(1.1);
-    color: #ccc;
+    color: #f3727b;
   }
 `;
 

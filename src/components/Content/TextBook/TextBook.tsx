@@ -19,10 +19,16 @@ const SettingsBlock = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
+const StyledAppBar = styled(AppBar)`
+  color: ${({ theme }) => theme.text};
+  background: ${({ theme }) => theme.body};
+`;
+
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     width: '100%',
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: 'inherit',
   },
   main: {
     marginTop: '20px',
@@ -47,7 +53,7 @@ export const TextBook = () => {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="default">
+      <StyledAppBar position="static" color="default">
         <Tabs value={value} onChange={handleChange}>
           <Tab label="Электронный учебник" component={Link} to="/textbook" />
           <Tab label="Словарь" component={Link} to={`${path}/dictionary`} />
@@ -78,7 +84,7 @@ export const TextBook = () => {
             </FormControl>
           </SettingsBlock>
         </Tabs>
-      </AppBar>
+      </StyledAppBar>
 
       <SwitchRouter>
         <Route path={`${path}/dictionary`}>
