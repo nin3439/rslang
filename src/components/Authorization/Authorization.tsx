@@ -9,6 +9,7 @@ import { auth } from '../../redux/actions/user';
 import { connect } from 'react-redux';
 import { ChangeModalAuth } from '../../redux/actions/controllerActions';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import IconButton from '@material-ui/core/IconButton';
 
 const PopUpMenu = styled.div`
   position: fixed;
@@ -29,7 +30,7 @@ const PopUpMenuInner = styled.div`
   top: 5%;
   bottom: 5%;
   margin: auto;
-  background: white;
+  background: ${({ theme }) => theme.menu};
   text-align: justify;
   display: flex;
   justify-content: center;
@@ -42,7 +43,7 @@ const TabsBlock = styled.div`
   height: 100%;
 `;
 
-const Button = styled.button`
+const Button = styled(IconButton)`
   position: absolute;
   right: 0;
   cursor: pointer;
@@ -56,21 +57,16 @@ const Button = styled.button`
   border: 0;
   width: 48px;
   height: 48px;
-
-  &:focus {
-    outline: none;
-  }
+  border-radius: 0px;
 
   &:hover {
-    box-shadow: 0 5px 10px -3px rgba(0, 0, 0, 0.1), 0 1px 0px rgba(0, 0, 0, 0.1);
+    background-color: #f3727b;
   }
+`;
 
-  &:active {
-    box-shadow: 0 5px 10px -3px rgba(0, 0, 0, 0.1), 0 1px 0px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    width: 47px;
-    heigth: 47px;
-  }
+const StyledAppBar = styled(AppBar)`
+  color: ${({ theme }) => theme.text};
+  background: ${({ theme }) => theme.body};
 `;
 
 const Menu: React.FC<any> = ({
@@ -103,7 +99,7 @@ const Menu: React.FC<any> = ({
         <PopUpMenuInner>
           {isAuth ? null : (
             <TabsBlock>
-              <AppBar position="static" color="default">
+              <StyledAppBar position="static" color="inherit">
                 <Tabs value={value} onChange={handleChange} centered>
                   <Tab label="Регистрация" {...a11yProps(0)} />
                   <Tab label="Вход" {...a11yProps(1)} />
@@ -111,7 +107,7 @@ const Menu: React.FC<any> = ({
                     <CancelIcon />
                   </Button>
                 </Tabs>
-              </AppBar>
+              </StyledAppBar>
               <TabPanel value={value} index={0}>
                 <Registration
                   avatar={avatar}

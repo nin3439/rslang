@@ -1,4 +1,3 @@
-import { Button } from '@material-ui/core';
 import { VolumeUp } from '@material-ui/icons';
 import React from 'react';
 import { API_URL } from '../../../../../config';
@@ -9,6 +8,7 @@ import {
   StyledPage,
   StyleWord,
   StyleButtons,
+  StyledButton,
 } from './style';
 interface IWordProps {
   word: IWord;
@@ -35,8 +35,8 @@ export const Word = ({ word }: IWordProps) => {
         <p>{word.textMeaningTranslate}</p>
         <p>{word.wordTranslate}</p>
         <StyleButtons>
-          <Button>Сохранить</Button>
-          <Button>Удалить</Button>
+          <StyledButton>Сохранить</StyledButton>
+          <StyledButton>Удалить</StyledButton>
         </StyleButtons>
       </StyledWords>
     </StyledPage>
