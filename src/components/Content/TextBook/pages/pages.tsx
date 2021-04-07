@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router';
 import { NavLink } from 'react-router-dom';
-import getWords from '../../../../redux/actions/actionTextbook';
+import { getWords } from '../../../../redux/actions/actionTextbook';
 import { IPropsLoadWords, IStatePage, IWord } from '../../../../types';
 import { Page } from './page/page';
 interface IPagesProps {

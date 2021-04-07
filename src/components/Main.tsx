@@ -15,6 +15,7 @@ import { auth } from '../redux/actions/user';
 const Main: React.FC<IMainProps> = ({ isModalActive, auth }) => {
   useEffect(() => {
     auth();
+    // eslint-disable-next-line
   }, []);
   return (
     <Router>

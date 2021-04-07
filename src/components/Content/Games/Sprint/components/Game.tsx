@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Paper, Typography, Grid } from '@material-ui/core';
-import getWords from '../../../../../api/words';
+import { getWords } from '../../../../../api/words';
 import { GameHeader } from '../components/GameHeader';
 import { PaperHeader } from '../components/PaperHeader';
 import { GameButtons } from '../components/GameButtons';
