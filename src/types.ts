@@ -41,3 +41,8 @@ export interface IMainProps {
   isModalActive: string;
   auth: () => void;
 }
+
+export interface IUpdateWord {
+  difficulty: string;
+  optional: {};
+}

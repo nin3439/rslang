@@ -19,6 +19,12 @@ const SettingsBlock = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
+const StyledMain = styled.div`
+  width: 100%;
+  height: 100%;
+  margin-top: 20px;
+`;
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     width: '100%',
@@ -79,18 +85,19 @@ export const TextBook = () => {
           </SettingsBlock>
         </Tabs>
       </AppBar>
-
-      <SwitchRouter>
-        <Route path={`${path}/dictionary`}>
-          <Dictionary />
-        </Route>
-        <Route path={`${path}/group/:groupNumber/page/:pageNumber`}>
-          <Pages />
-        </Route>
-        <Route exact path="/textbook">
-          <Groups />
-        </Route>
-      </SwitchRouter>
+      <StyledMain>
+        <SwitchRouter>
+          <Route path={`${path}/dictionary`}>
+            <Dictionary />
+          </Route>
+          <Route path={`${path}/group/:groupNumber/page/:pageNumber`}>
+            <Pages />
+          </Route>
+          <Route exact path="/textbook">
+            <Groups />
+          </Route>
+        </SwitchRouter>
+      </StyledMain>
     </div>
   );
 };

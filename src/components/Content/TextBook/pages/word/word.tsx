@@ -16,6 +16,12 @@ interface IWordProps {
 
 export const Word = ({ word }: IWordProps) => {
   const audio = new Audio(`${API_URL}/${word.audio}`);
+  const difficultWord = (word: string, id: string) => {
+    const body = {
+      difficulty: 'weak',
+      optional: {},
+    };
+  };
   return (
     <StyledPage>
       <StyledImg src={`${API_URL}/${word.image}`} alt="" />
@@ -35,7 +41,9 @@ export const Word = ({ word }: IWordProps) => {
         <p>{word.textMeaningTranslate}</p>
         <p>{word.wordTranslate}</p>
         <StyleButtons>
-          <Button>Сохранить</Button>
+          <Button onClick={() => difficultWord(word.word, word.id)}>
+            Сохранить
+          </Button>
           <Button>Удалить</Button>
         </StyleButtons>
       </StyledWords>
