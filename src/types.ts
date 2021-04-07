@@ -39,4 +39,5 @@ export interface IStatePage {
 
 export interface IMainProps {
   isModalActive: string;
+  auth: () => void;
 }
