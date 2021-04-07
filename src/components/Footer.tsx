@@ -7,11 +7,13 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 const StyledLink = styled(Link)`
   transform: scale(1);
   transition: all 0.5s;
+  color: ${({ theme }) => theme.text};
+
   &:hover {
     text-decoration: none;
     transition: all 0.5s;
     transform: scale(1.1);
-    color: #ccc;
+    color: #f3727b;
   }
 `;
 
@@ -29,7 +31,7 @@ export const Footer: React.FC = () => {
       wrap="nowrap"
     >
       <Grid container direction="row" justify="flex-start" alignItems="center">
-        <StyledLink href="https://rs.school/">
+        <StyledLink href="https://rs.school/react/">
           <img
             src="https://rs.school/images/rs_school.svg"
             alt="RSS Logo"

@@ -33,9 +33,6 @@ const StyledIconButton = styled(IconButton)`
     transform: scale(1.3);
     transition: transform 0.5s;
   }
-  &.MuiIconButton-root {
-    color: #fff;
-  }
 `;
 
 const StyledTypography = styled(Typography)`
@@ -53,14 +50,14 @@ const StyledLink = styled(Link)`
 `;
 
 const StyledButton = styled(Button)`
-  background: #2b4054;
   &.MuiButton-root {
+    background-color: #2b4054;
     color: #fff;
+    transform: scale(1);
+    transition: all 0.5s;
   }
-  transform: scale(1);
-  transition: all 0.5s;
   &:hover {
-    background: #2b4054;
+    background-color: #2b4054;
     transform: scale(1.1);
     transition: transform 0.5s;
   }
@@ -69,7 +66,7 @@ const StyledButton = styled(Button)`
 const StyledPaper = styled(Paper)`
   padding: 20px;
   width: 40vw;
-  height: 40vh;
+  height: 30vh;
   &.MuiPaper-root {
     background-color: #ffd6cfb0;
   }
@@ -78,6 +75,10 @@ const StyledPaper = styled(Paper)`
   align-items: center;
   justify-content: space-around;
   transition: height 0.5s;
+  @media (max-width: 1500px) {
+    width: 40vw;
+    height: 40vh;
+  }
 `;
 
 interface FullScreenHandle {
@@ -121,8 +122,8 @@ export const InitialPage: React.FC<IPageProps> = ({
         alignItems="center"
       >
         <StyledLink to="/games">
-          <IconButton style={{ color: '#fff' }}>
-            <Close fontSize="large" />
+          <IconButton>
+            <Close fontSize="large" style={{ color: '#fff' }} />
           </IconButton>
         </StyledLink>
         <StyledBox>
@@ -144,11 +145,11 @@ export const InitialPage: React.FC<IPageProps> = ({
           </FormControl>
           {!window.screenTop && !window.screenY ? (
             <StyledIconButton onClick={changeFullscreen.enter}>
-              <Fullscreen fontSize="large" />
+              <Fullscreen fontSize="large" style={{ color: '#fff' }} />
             </StyledIconButton>
           ) : (
             <StyledIconButton onClick={changeFullscreen.exit}>
-              <FullscreenExit fontSize="large" />{' '}
+              <FullscreenExit fontSize="large" style={{ color: '#fff' }} />{' '}
             </StyledIconButton>
           )}
         </StyledBox>
@@ -160,7 +161,11 @@ export const InitialPage: React.FC<IPageProps> = ({
         <StyledTypography variant="h5" align="center">
           {game.description}
         </StyledTypography>
-        <StyledButton variant="outlined" onClick={() => setIsGameStart(true)}>
+        <StyledButton
+          autoFocus
+          variant="outlined"
+          onClick={() => setIsGameStart(true)}
+        >
           Начать
         </StyledButton>
       </StyledPaper>

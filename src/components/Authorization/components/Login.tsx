@@ -23,7 +23,7 @@ const ElementBlock = styled.div`
   margin-bottom: 15px;
 `;
 
-const Button = styled.button`
+const Button = styled(IconButton)`
   margin-top: 30px;
   cursor: pointer;
   display: flex;
@@ -34,23 +34,12 @@ const Button = styled.button`
   color: #fff;
   border: 0;
   border-radius: 10px;
+  margin-top: 10px;
   width: 150px;
   height: 50px;
-  align-self: center;
-
-  &:focus {
-    outline: none;
-  }
 
   &:hover {
-    box-shadow: 0 5px 10px -3px rgba(0, 0, 0, 0.1), 0 1px 0px rgba(0, 0, 0, 0.1);
-  }
-
-  &:active {
-    box-shadow: 0 5px 10px -3px rgba(0, 0, 0, 0.1), 0 1px 0px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    width: 149px;
-    heigth: 49px;
+    background-color: #f3727b;
   }
 `;
 
@@ -58,6 +47,19 @@ const InputBlock = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+`;
+
+const StyledInputLabel = styled(InputLabel)`
+  color: ${({ theme }) => theme.text};
+`;
+
+const StyledOutlinedInput = styled(OutlinedInput)`
+  height: '50px';
+  color: ${({ theme }) => theme.text};
+`;
+
+const StyledIconButton = styled(IconButton)`
+  color: ${({ theme }) => theme.text};
 `;
 
 const Login = ({ login }: any) => {
@@ -73,8 +75,8 @@ const Login = ({ login }: any) => {
     <MenuBlock>
       <InputBlock>
         <ElementBlock>
-          <InputLabel>Адрес электронной почты</InputLabel>
-          <OutlinedInput
+          <StyledInputLabel>Адрес электронной почты</StyledInputLabel>
+          <StyledOutlinedInput
             color="secondary"
             placeholder="Введите адрес почты"
             value={email}
@@ -82,8 +84,8 @@ const Login = ({ login }: any) => {
           />
         </ElementBlock>
         <ElementBlock>
-          <InputLabel>Пароль</InputLabel>
-          <OutlinedInput
+          <StyledInputLabel>Пароль</StyledInputLabel>
+          <StyledOutlinedInput
             type={showPassword ? 'text' : 'password'}
             color="secondary"
             placeholder="Введите пароль"
@@ -91,13 +93,13 @@ const Login = ({ login }: any) => {
             onChange={(event) => setPassword(event.target.value)}
             endAdornment={
               <InputAdornment position="end">
-                <IconButton
+                <StyledIconButton
                   aria-label="toggle password visibility"
                   onClick={() => setShowPassword(!showPassword)}
                   onMouseDown={handleMouseDownPassword}
                 >
                   {showPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
+                </StyledIconButton>
               </InputAdornment>
             }
           />

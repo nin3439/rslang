@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Button } from '@material-ui/core';
 
 export const StyledPage = styled.div`
   width: 100%;
@@ -32,4 +33,8 @@ export const StyleButtons = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-end;
+`;
+
+export const StyledButton = styled(Button)`
+  color: ${({ theme }) => theme.text};
 `;

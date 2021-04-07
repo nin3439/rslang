@@ -8,35 +8,52 @@ import {
   ListItemIcon,
   ListItemText,
   Drawer,
-  Collapse,
 } from '@material-ui/core';
-import {
-  Menu,
-  Equalizer,
-  Games,
-  TextFormat,
-  Home,
-  ExpandLess,
-  ExpandMore,
-} from '@material-ui/icons';
+import { Menu, Equalizer, Games, TextFormat, Home } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
+import styled from 'styled-components';
 
 const useStyles = makeStyles({
   list: {
     width: 250,
-    marginTop: 80,
+    backgroundColor: 'inherit',
   },
 });
+
+const StyledIconButton = styled(IconButton)`
+  color: ${({ theme }) => theme.text};
+`;
+
+const StyledGrid = styled(Grid)`
+  color: ${({ theme }) => theme.text};
+  background: ${({ theme }) => theme.backgroundImage};
+  background-size: cover;
+  height: 100vh;
+  background-position: center center;
+`;
+
+const StyledListItemIcon = styled(ListItemIcon)`
+  color: ${({ theme }) => theme.text};
+`;
+
+const StyledListItemText = styled(ListItemText)`
+  color: ${({ theme }) => theme.text};
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const StyledListItem = styled(ListItem)`
+  text-decoration: none;
+  transform: rotate(-0.5deg);
+`;
 
 export const MenuBlock = () => {
   const classes = useStyles();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [openCollapse, setOpenCollapse] = useState(false);
   const [selectedItemIndex, setSelectedItemIndex] = useState(1);
-
-  const handleCollapseClick = () => {
-    setOpenCollapse(!openCollapse);
-  };
 
   const toggleDrawer = () => (event: React.MouseEvent) => {
     setIsMenuOpen(!isMenuOpen);
@@ -51,94 +68,69 @@ export const MenuBlock = () => {
 
   return (
     <div>
-      <IconButton onClick={toggleDrawer()}>
+      <StyledIconButton onClick={toggleDrawer()}>
         <Menu />
-      </IconButton>
+      </StyledIconButton>
 
-      <Drawer
-        anchor={'left'}
-        open={isMenuOpen}
-        onClose={toggleDrawer()}
-        // onOpen={toggleDrawer()}
-      >
-        <Grid className={classes.list} onClick={toggleDrawer()}>
+      <Drawer anchor={'left'} open={isMenuOpen} onClose={toggleDrawer()}>
+        <StyledGrid className={classes.list} onClick={toggleDrawer()}>
           <List>
             <Link to="/">
-              <ListItem
+              <StyledListItem
                 button
                 key={'Главная'}
                 selected={selectedItemIndex === 0}
                 onClick={(event) => handleListItemClick(event, 0)}
               >
-                <ListItemIcon>
+                <StyledListItemIcon>
                   <Home />
-                </ListItemIcon>
-                <ListItemText primary={'Главная'} />
-              </ListItem>
+                </StyledListItemIcon>
+                <StyledListItemText primary={'Главная'} />
+              </StyledListItem>
             </Link>
             <Link to="/textbook">
-              <ListItem
+              <StyledListItem
                 button
                 key={'Электронный учебник'}
                 selected={selectedItemIndex === 1}
                 onClick={(event) => {
-                  handleCollapseClick();
                   handleListItemClick(event, 1);
                 }}
               >
-                <ListItemIcon>
+                <StyledListItemIcon>
                   <TextFormat />
-                </ListItemIcon>
-                <ListItemText primary={'Электронный учебник'} />
-                {openCollapse ? <ExpandLess /> : <ExpandMore />}
-              </ListItem>
-              <Collapse in={openCollapse} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                  <ListItem button>
-                    <ListItemText primary="Раздел 1" />
-                  </ListItem>
-                  <ListItem button>
-                    <ListItemText primary="Раздел 2" />
-                  </ListItem>
-                  <ListItem button>
-                    <ListItemText primary="Раздел 3" />
-                  </ListItem>
-                </List>
-              </Collapse>
+                </StyledListItemIcon>
+                <StyledListItemText primary={'Электронный учебник'} />
+              </StyledListItem>
             </Link>
             <Link to="/games">
-              <ListItem
+              <StyledListItem
                 button
                 key={'Мини-игры'}
                 selected={selectedItemIndex === 2}
                 onClick={(event) => handleListItemClick(event, 2)}
               >
-                <ListItemIcon>
+                <StyledListItemIcon>
                   <Games />
-                </ListItemIcon>
-                <ListItemText primary={'Мини-игры'} />
-              </ListItem>
+                </StyledListItemIcon>
+                <StyledListItemText primary={'Мини-игры'} />
+              </StyledListItem>
             </Link>
             <Link to="/statistics">
-              <ListItem
+              <StyledListItem
                 button
                 key={'Статистика'}
                 selected={selectedItemIndex === 3}
                 onClick={(event) => handleListItemClick(event, 3)}
               >
-                <ListItemIcon>
+                <StyledListItemIcon>
                   <Equalizer />
-                </ListItemIcon>
-                <ListItemText primary={'Статистика'} />
-              </ListItem>
+                </StyledListItemIcon>
+                <StyledListItemText primary={'Статистика'} />
+              </StyledListItem>
             </Link>
-            <img
-              src="https://rangirangi.com/wp-content/uploads/2017/12/6731c3b8ea4c46570ee4fe0d6e6ddbbf.jpg"
-              alt="England"
-              style={{ maxWidth: '250px' }}
-            />
           </List>
-        </Grid>
+        </StyledGrid>
       </Drawer>
     </div>
   );
