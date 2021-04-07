@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { API_URL } from '../config';
 
-const getWords = async (groupNumber: number, pageNumber: number) => {
+export const getWords = async (groupNumber: number, pageNumber: number) => {
   try {
     const res = await axios.get(`${API_URL}/words`, {
       params: { group: groupNumber, page: pageNumber },
@@ -16,4 +16,8 @@ const getWords = async (groupNumber: number, pageNumber: number) => {
   }
 };
 
-export default getWords;
+export const uploadWords = async (group: string, page: string) => {
+  return await axios.get(`${API_URL}/words`, {
+    params: { group, page },
+  });
+};

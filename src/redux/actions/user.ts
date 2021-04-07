@@ -66,15 +66,22 @@ export const login = ({ email, password }: ILogin) => {
 };
 
 export const auth = () => {
-  return async (dispatch: any) => {
+  return async (dispatch: any, getState: any) => {
     try {
-      const response = await axios.get(`${API_URL}/`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+      const userId = localStorage.getItem('userId');
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${API_URL}/users/${userId}`, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
       });
-      localStorage.setItem('token', response.data.token);
-      dispatch(setUser(response.data.user));
+      const content = await response.json();
+      dispatch(setUser(content));
     } catch (e) {
-      localStorage.removeItem('token');
+      console.log(e);
     }
   };
 };

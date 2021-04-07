@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
 import Header from './Header/Header';
@@ -10,8 +10,13 @@ import { IMainProps } from '../types';
 import { Games } from './Content/Games/Games';
 import { Sprint } from './Content/Games/Sprint/Sprint';
 import Promo from './Promo/Promo';
+import { auth } from '../redux/actions/user';
 
-const Main: React.FC<IMainProps> = ({ isModalActive }) => {
+const Main: React.FC<IMainProps> = ({ isModalActive, auth }) => {
+  useEffect(() => {
+    auth();
+    // eslint-disable-next-line
+  }, []);
   return (
     <Router>
       <Switch>
@@ -62,4 +67,4 @@ const mapStateToProps = (state: any) => {
     isModalActive: state.controllers.isModalActive,
   };
 };
-export default connect(mapStateToProps)(Main);
+export default connect(mapStateToProps, { auth })(Main);

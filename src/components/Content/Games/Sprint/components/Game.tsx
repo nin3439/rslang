@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Paper, Typography, Grid } from '@material-ui/core';
-import getWords from '../../../../../api/words';
+import { getWords } from '../../../../../api/words';
 import { GameHeader } from '../components/GameHeader';
 import { PaperHeader } from '../components/PaperHeader';
 import { GameButtons } from '../components/GameButtons';
@@ -18,8 +18,8 @@ const StyledGrid = styled(Grid)`
 `;
 
 interface StyledProps {
-  isAnswerRight: boolean;
-  isBorderShow: boolean;
+  answer: string;
+  border: string;
 }
 
 const StyledPaper = styled(Paper)`
@@ -34,12 +34,22 @@ const StyledPaper = styled(Paper)`
   align-items: center;
   justify-content: space-between;
   &.MuiPaper-elevation1 {
-    box-shadow: ${(p: StyledProps) =>
-      p.isBorderShow
-        ? p.isAnswerRight
-          ? 'inset 0 0 0 5px #11a911'
-          : 'inset 0 0 0 5px #f13434'
-        : 'none'};
+    box-shadow: ${(p: StyledProps) => {
+      const border = p.border === 'true';
+      const isAnswerRight = p.answer === 'true';
+      if (border && isAnswerRight) {
+        return 'inset 0 0 0 5px #11a911';
+      }
+      if (border && !isAnswerRight) {
+        return 'inset 0 0 0 5px #f13434';
+      }
+      return 'none';
+      // p.isBorderShow
+      //   ? p.isAnswerRight
+      //     ? 'inset 0 0 0 5px #11a911'
+      //     : 'inset 0 0 0 5px #f13434'
+      //   : 'none';
+    }};
   }
 `;
 
@@ -236,7 +246,10 @@ export const Game: React.FC<IGameProps> = ({
       <Typography variant="h3" style={{ color: 'green', marginBottom: '10px' }}>
         {score}{' '}
       </Typography>
-      <StyledPaper isAnswerRight={isAnswerRight} isBorderShow={isBorderShow}>
+      <StyledPaper
+        answer={isAnswerRight.toString()}
+        border={isBorderShow.toString()}
+      >
         <PaperHeader
           numberConsecutiveRightAnswers={numberConsecutiveRightAnswers}
           isСolorHeaderShow={isСolorHeaderShow}

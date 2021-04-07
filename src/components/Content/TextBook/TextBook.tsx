@@ -3,7 +3,7 @@ import { AppBar, Tabs, Tab } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { Groups } from './groups/groups';
 import { Route, Switch as SwitchRouter, useRouteMatch } from 'react-router';
-import { Page } from './page/page';
+import Pages from './pages/pages';
 import { Link } from 'react-router-dom';
 import { Dictionary } from './dictionary/Dictionary';
 import styled from 'styled-components';
@@ -19,11 +19,13 @@ const SettingsBlock = styled.div`
   align-items: center;
   justify-content: center;
 `;
-
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     width: '100%',
     backgroundColor: theme.palette.background.paper,
+  },
+  main: {
+    marginTop: '20px',
   },
 }));
 
@@ -34,7 +36,6 @@ export const TextBook = () => {
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
-
   const [options, setOptions] = React.useState({
     translate: true,
     buttons: true,
@@ -83,8 +84,8 @@ export const TextBook = () => {
         <Route path={`${path}/dictionary`}>
           <Dictionary />
         </Route>
-        <Route path={`${path}/group/:numberGroup/page/:numberPage`}>
-          <Page />
+        <Route path={`${path}/group/:groupNumber/page/:pageNumber`}>
+          <Pages />
         </Route>
         <Route exact path="/textbook">
           <Groups />
