@@ -87,7 +87,6 @@ const Registration: React.FC<any> = ({
           <StyledOutlinedInput
             color="secondary"
             placeholder="Введите имя"
-            style={{ height: '50px' }}
             value={name}
             onChange={(event) => setName(event.target.value)}
           />
@@ -97,7 +96,6 @@ const Registration: React.FC<any> = ({
           <StyledOutlinedInput
             color="secondary"
             placeholder="Введите адрес почты"
-            style={{ height: '50px' }}
             value={email}
             onChange={(event) => setEmail(event.target.value)}
           />
@@ -107,7 +105,6 @@ const Registration: React.FC<any> = ({
           <StyledOutlinedInput
             type={showPassword ? 'text' : 'password'}
             placeholder="Введите пароль"
-            style={{ height: '50px' }}
             color="secondary"
             value={password}
             onChange={(event) => setPassword(event.target.value)}

@@ -4,7 +4,7 @@ import { Grid } from '@material-ui/core';
 import Header from './Header/Header';
 import { Footer } from './Footer';
 import { TextBook } from './Content/TextBook/TextBook';
-import Menu from './Menu/Menu';
+import Menu from './Authorization/Authorization';
 import { connect } from 'react-redux';
 import { IMainProps } from '../types';
 import { Games } from './Content/Games/Games';
@@ -12,7 +12,7 @@ import { Sprint } from './Content/Games/Sprint/Sprint';
 import Promo from './Promo/Promo';
 import { auth } from '../redux/actions/user';
 import { Audiocall } from './Content/Games/Audiocall/Audiocall';
-import styled, { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 import { GlobalStyles } from './globalStyles';
 import { lightTheme, darkTheme } from './Themes';
 

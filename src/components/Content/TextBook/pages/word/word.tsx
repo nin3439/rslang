@@ -1,4 +1,3 @@
-import { Button } from '@material-ui/core';
 import { VolumeUp } from '@material-ui/icons';
 import React from 'react';
 import { API_URL } from '../../../../../config';
