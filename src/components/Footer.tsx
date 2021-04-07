@@ -29,7 +29,7 @@ export const Footer: React.FC = () => {
       wrap="nowrap"
     >
       <Grid container direction="row" justify="flex-start" alignItems="center">
-        <StyledLink href="https://rs.school/">
+        <StyledLink href="https://rs.school/react/">
           <img
             src="https://rs.school/images/rs_school.svg"
             alt="RSS Logo"

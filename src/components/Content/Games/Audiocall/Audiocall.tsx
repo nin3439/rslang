@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
-import { GAMES } from 'constants/games';
+import { Game } from 'components/Content/Games/Audiocall/components/Game';
 import { InitialPage } from 'components/Content/Games/commonComponents/InitialPage';
 import { Results } from 'components/Content/Games/commonComponents/Results';
-import { Game } from 'components/Content/Games/Sprint/components/Game';
-import { IWord } from 'components/Content/Games/types';
+import { GAMES } from 'constants/games';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
+import { IWord } from 'components/Content/Games/types';
 import styled from 'styled-components';
 
 const StyledGrid = styled(Grid)`
-  background-image: url(https://storge.pic2.me/cm/3200x1800/734/580bbcdb34b56.jpg);
+  background-image: url(https://storge.pic2.me/cm/3840x2160/427/5bfd40cd5820c.jpg);
   height: 100vh;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 `;
 
-export const Sprint = () => {
+export const Audiocall = () => {
   const [isGameStart, setIsGameStart] = useState(false);
   const [level, setLevel] = useState(0);
   const changeFullscreen = useFullScreenHandle();
@@ -44,9 +44,9 @@ export const Sprint = () => {
             setIsGameStart={setIsGameStart}
             level={level}
             setRightAnswers={setRightAnswers}
-            setWrongAnswers={setWrongAnswers}
-            score={score}
-            setScore={setScore}
+            // setWrongAnswers={setWrongAnswers}
+            // score={score}
+            // setScore={setScore}
           />
         ) : (
           <InitialPage
@@ -54,10 +54,10 @@ export const Sprint = () => {
             level={level}
             setLevel={setLevel}
             changeFullscreen={changeFullscreen}
-            game={GAMES[0]}
+            game={GAMES[2]}
           />
         )}
-        {isResultsShow && (
+        {isResultsShow ? (
           <Results
             isResultsShow={isResultsShow}
             setIsResultsShow={setIsResultsShow}
@@ -68,6 +68,8 @@ export const Sprint = () => {
             score={score}
             setScore={setScore}
           />
+        ) : (
+          ''
         )}
       </StyledGrid>
     </FullScreen>

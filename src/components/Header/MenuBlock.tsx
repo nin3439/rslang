@@ -8,17 +8,8 @@ import {
   ListItemIcon,
   ListItemText,
   Drawer,
-  Collapse,
 } from '@material-ui/core';
-import {
-  Menu,
-  Equalizer,
-  Games,
-  TextFormat,
-  Home,
-  ExpandLess,
-  ExpandMore,
-} from '@material-ui/icons';
+import { Menu, Equalizer, Games, TextFormat, Home } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
@@ -31,12 +22,7 @@ const useStyles = makeStyles({
 export const MenuBlock = () => {
   const classes = useStyles();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [openCollapse, setOpenCollapse] = useState(false);
   const [selectedItemIndex, setSelectedItemIndex] = useState(1);
-
-  const handleCollapseClick = () => {
-    setOpenCollapse(!openCollapse);
-  };
 
   const toggleDrawer = () => (event: React.MouseEvent) => {
     setIsMenuOpen(!isMenuOpen);
@@ -55,12 +41,7 @@ export const MenuBlock = () => {
         <Menu />
       </IconButton>
 
-      <Drawer
-        anchor={'left'}
-        open={isMenuOpen}
-        onClose={toggleDrawer()}
-        // onOpen={toggleDrawer()}
-      >
+      <Drawer anchor={'left'} open={isMenuOpen} onClose={toggleDrawer()}>
         <Grid className={classes.list} onClick={toggleDrawer()}>
           <List>
             <Link to="/">
@@ -82,7 +63,6 @@ export const MenuBlock = () => {
                 key={'Электронный учебник'}
                 selected={selectedItemIndex === 1}
                 onClick={(event) => {
-                  handleCollapseClick();
                   handleListItemClick(event, 1);
                 }}
               >
@@ -90,21 +70,7 @@ export const MenuBlock = () => {
                   <TextFormat />
                 </ListItemIcon>
                 <ListItemText primary={'Электронный учебник'} />
-                {openCollapse ? <ExpandLess /> : <ExpandMore />}
               </ListItem>
-              <Collapse in={openCollapse} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                  <ListItem button>
-                    <ListItemText primary="Раздел 1" />
-                  </ListItem>
-                  <ListItem button>
-                    <ListItemText primary="Раздел 2" />
-                  </ListItem>
-                  <ListItem button>
-                    <ListItemText primary="Раздел 3" />
-                  </ListItem>
-                </List>
-              </Collapse>
             </Link>
             <Link to="/games">
               <ListItem

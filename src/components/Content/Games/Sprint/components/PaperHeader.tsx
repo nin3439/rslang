@@ -1,14 +1,16 @@
 import React from 'react';
 import { Typography, Grid, IconButton, Tooltip } from '@material-ui/core';
 import { CheckCircle, Lens, VolumeUp, MusicNote } from '@material-ui/icons';
+import { deer1, deer2, deer3, deer4 } from 'assets/icons';
 import {
   showFirstCheckIcon,
   showSecondCheckIcon,
   showThirdCheckIcon,
-} from '../utils';
-import { IWord } from '../../types';
+} from 'components/Content/Games/Sprint/utils';
+
 import useSound from 'use-sound';
 import styled from 'styled-components';
+import { IWord } from 'components/Content/Games/types';
 
 interface StyledProps {
   numberConsecutiveRightAnswers: number;
@@ -70,16 +72,18 @@ const StyledTooltip = styled((props) => (
 `;
 
 const StyledIconButton = styled(IconButton)`
-  position: absolute;
-  top: 10px;
-  transform: scale(1);
-  transition: transform 0.5s;
   &:hover {
     transform: scale(1.3);
     transition: transform 0.5s;
   }
+  &.MuiButtonBase-root {
+    position: absolute;
+    top: 10px;
+  }
   &.MuiIconButton-root {
     color: gray;
+    transform: scale(1);
+    transition: transform 0.5s;
   }
 `;
 
@@ -153,65 +157,36 @@ export const PaperHeader: React.FC<IPaperHeaderProps> = ({
           <StyledCheckCircle />
         )}
         {numberConsecutiveRightAnswers >= 4 &&
-        numberConsecutiveRightAnswers <= 7 ? (
-          <StyledTypography>+20 очков за слово</StyledTypography>
-        ) : (
-          ''
-        )}
+          numberConsecutiveRightAnswers <= 7 && (
+            <StyledTypography>+20 очков за слово</StyledTypography>
+          )}
         {numberConsecutiveRightAnswers >= 8 &&
-        numberConsecutiveRightAnswers <= 11 ? (
-          <StyledTypography>+40 очков за слово</StyledTypography>
-        ) : (
-          ''
-        )}
-        {numberConsecutiveRightAnswers > 11 ? (
+          numberConsecutiveRightAnswers <= 11 && (
+            <StyledTypography>+40 очков за слово</StyledTypography>
+          )}
+        {numberConsecutiveRightAnswers > 11 && (
           <StyledTypography>+80 очков за слово</StyledTypography>
-        ) : (
-          ''
         )}
       </StyledGrid>
-      {numberConsecutiveRightAnswers <= 3 ? (
-        <img
-          src="https://www.flaticon.com/svg/vstatic/svg/826/826949.svg?token=exp=1617375673~hmac=d430b9a90f60875cb6c7d67fdd60cb62"
-          alt="The Smallest Deer"
-          width="60px"
-          height="60px"
-        />
-      ) : (
-        ''
+      {numberConsecutiveRightAnswers <= 3 && (
+        <img src={deer1} alt="The Smallest Deer" width="60px" height="60px" />
       )}
       {numberConsecutiveRightAnswers >= 4 &&
-      numberConsecutiveRightAnswers <= 7 ? (
-        <img
-          src="https://www.flaticon.com/svg/vstatic/svg/3508/3508856.svg?token=exp=1617377594~hmac=c8d8a8a69f052512c5497c39bb5a8a41"
-          alt="Small Deer"
-          width="60px"
-          height="60px"
-          style={{ marginLeft: '10px' }}
-        />
-      ) : (
-        ''
-      )}
+        numberConsecutiveRightAnswers <= 7 && (
+          <img
+            src={deer2}
+            alt="Small Deer"
+            width="60px"
+            height="60px"
+            style={{ marginLeft: '10px' }}
+          />
+        )}
       {numberConsecutiveRightAnswers >= 8 &&
-      numberConsecutiveRightAnswers <= 11 ? (
-        <img
-          src="https://www.flaticon.com/svg/vstatic/svg/616/616530.svg?token=exp=1617377703~hmac=f3cda8729dfcdcb9405050ee41c4f81f"
-          alt="Adult Deer"
-          width="60px"
-          height="60px"
-        />
-      ) : (
-        ''
-      )}
-      {numberConsecutiveRightAnswers > 11 ? (
-        <img
-          src="https://www.flaticon.com/svg/vstatic/svg/667/667633.svg?token=exp=1617377767~hmac=1076b3088164f83edc72e7e0251f2e8a"
-          alt="Big Deer"
-          width="60px"
-          height="60px"
-        />
-      ) : (
-        ''
+        numberConsecutiveRightAnswers <= 11 && (
+          <img src={deer3} alt="Adult Deer" width="60px" height="60px" />
+        )}
+      {numberConsecutiveRightAnswers > 11 && (
+        <img src={deer4} alt="Big Deer" width="60px" height="60px" />
       )}
     </Grid>
   );

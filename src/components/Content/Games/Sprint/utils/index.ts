@@ -1,32 +1,16 @@
+import { PAGE_NUMBER } from 'constants/pageNumber';
+
 export const showFirstCheckIcon = (numberConsecutiveRightAnswers: number) => {
-  return (
-    numberConsecutiveRightAnswers === 1 ||
-    numberConsecutiveRightAnswers === 2 ||
-    numberConsecutiveRightAnswers === 3 ||
-    numberConsecutiveRightAnswers === 5 ||
-    numberConsecutiveRightAnswers === 6 ||
-    numberConsecutiveRightAnswers === 7 ||
-    numberConsecutiveRightAnswers === 9 ||
-    numberConsecutiveRightAnswers === 10 ||
-    numberConsecutiveRightAnswers === 11
-  );
+  return [1, 2, 3, 5, 6, 7, 9, 10, 11].includes(numberConsecutiveRightAnswers);
 };
 
 export const showSecondCheckIcon = (numberConsecutiveRightAnswers: number) => {
-  return (
-    numberConsecutiveRightAnswers === 2 ||
-    numberConsecutiveRightAnswers === 3 ||
-    numberConsecutiveRightAnswers === 6 ||
-    numberConsecutiveRightAnswers === 7 ||
-    numberConsecutiveRightAnswers === 10 ||
-    numberConsecutiveRightAnswers === 11
-  );
+  return [2, 3, 6, 7, 10, 11].includes(numberConsecutiveRightAnswers);
 };
 
 export const showThirdCheckIcon = (numberConsecutiveRightAnswers: number) => {
-  return (
-    numberConsecutiveRightAnswers === 3 ||
-    numberConsecutiveRightAnswers === 7 ||
-    numberConsecutiveRightAnswers === 11
-  );
+  return [3, 7, 11].includes(numberConsecutiveRightAnswers);
 };
+
+export const getRandomPageNumber = () =>
+  Math.floor(Math.random() * PAGE_NUMBER);
