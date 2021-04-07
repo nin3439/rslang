@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
-import { GAMES } from '../../../../constants/games';
-import { InitialPage } from '../commonComponents/InitialPage';
-import { Game } from './components/Game';
+import { GAMES } from 'constants/games';
+import { InitialPage } from 'components/Content/Games/commonComponents/InitialPage';
+import { Results } from 'components/Content/Games/commonComponents/Results';
+import { Game } from 'components/Content/Games/Sprint/components/Game';
+import { IWord } from 'components/Content/Games/types';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
-import { Results } from '../commonComponents/Results';
-import { IWord } from '../types';
 import styled from 'styled-components';
 
 const StyledGrid = styled(Grid)`
@@ -57,7 +57,7 @@ export const Sprint = () => {
             game={GAMES[0]}
           />
         )}
-        {isResultsShow ? (
+        {isResultsShow && (
           <Results
             isResultsShow={isResultsShow}
             setIsResultsShow={setIsResultsShow}
@@ -68,8 +68,6 @@ export const Sprint = () => {
             score={score}
             setScore={setScore}
           />
-        ) : (
-          ''
         )}
       </StyledGrid>
     </FullScreen>

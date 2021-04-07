@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Paper, Typography, Grid } from '@material-ui/core';
-import { getWords } from '../../../../../api/words';
-import { GameHeader } from '../components/GameHeader';
-import { PaperHeader } from '../components/PaperHeader';
-import { GameButtons } from '../components/GameButtons';
-import { Timer } from '../components/Timer';
-import { PAGE_NUMBER } from '../../../../../constants/pageNumber';
-import { IWord } from '../../types';
+import { getWords } from 'api/words';
+import { getRandomPageNumber } from 'components/Content/Games/Sprint/utils';
+import { GameHeader } from 'components/Content/Games/Sprint/components/GameHeader';
+import { PaperHeader } from 'components/Content/Games/Sprint/components/PaperHeader';
+import { GameButtons } from 'components/Content/Games/Sprint/components/GameButtons';
+import { Timer } from 'components/Content/Games/Sprint/components/Timer';
+import { IWord } from 'components/Content/Games/types';
 import useSound from 'use-sound';
 import styled from 'styled-components';
-const wrongAnswerSound = require('../../../../../assets/sounds/wrongAnswer.mp3');
-const rightAnswerSound = require('../../../../../assets/sounds/rightAnswer.mp3');
+
+const wrongAnswerSound = require('assets/sounds/wrongAnswer.mp3');
+const rightAnswerSound = require('assets/sounds/rightAnswer.mp3');
 
 const StyledGrid = styled(Grid)`
   position: relative;
@@ -44,12 +45,11 @@ const StyledPaper = styled(Paper)`
         return 'inset 0 0 0 5px #f13434';
       }
       return 'none';
-      // p.isBorderShow
-      //   ? p.isAnswerRight
-      //     ? 'inset 0 0 0 5px #11a911'
-      //     : 'inset 0 0 0 5px #f13434'
-      //   : 'none';
     }};
+  }
+  @media (max-width: 1300px) {
+    width: 400px;
+    height: 400px;
   }
 `;
 
@@ -97,22 +97,14 @@ export const Game: React.FC<IGameProps> = ({
   });
 
   const addWrongTranslation = (res: IWord[]) => {
-    const wordsWithWrongTranslate = res.map((word: IWord, index: number) => {
-      if (index !== 0) {
-        return {
-          ...word,
-          wordTranslate: [word.wordTranslate, res[index - 1].wordTranslate],
-        };
-      } else {
-        return {
-          ...word,
-          wordTranslate: [
-            word.wordTranslate,
-            res[res.length - 1].wordTranslate,
-          ],
-        };
-      }
-    });
+    const wordsWithWrongTranslate = res.map((word: IWord, index: number) => ({
+      ...word,
+      wordTranslate: [
+        word.wordTranslate,
+        res[(index !== 0 ? index : res.length) - 1].wordTranslate,
+      ],
+    }));
+    console.log(wordsWithWrongTranslate);
     setWords((prev: any) => {
       return [...prev, ...wordsWithWrongTranslate];
     });
@@ -120,14 +112,14 @@ export const Game: React.FC<IGameProps> = ({
   };
 
   useEffect(() => {
-    getWords(level, Math.floor(Math.random() * PAGE_NUMBER)).then((res) => {
+    getWords(level, getRandomPageNumber()).then((res) => {
       addWrongTranslation(res);
     });
   }, [level]);
 
   useEffect(() => {
     if (words.length === 5) {
-      getWords(level, Math.floor(Math.random() * PAGE_NUMBER)).then((res) => {
+      getWords(level, getRandomPageNumber()).then((res) => {
         addWrongTranslation(res);
       });
     }

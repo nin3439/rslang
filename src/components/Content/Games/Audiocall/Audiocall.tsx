@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
-import { GAMES } from '../../../../constants/games';
-import { InitialPage } from '../commonComponents/InitialPage';
-import { Game } from './components/Game';
+import { Game } from 'components/Content/Games/Audiocall/components/Game';
+import { InitialPage } from 'components/Content/Games/commonComponents/InitialPage';
+import { Results } from 'components/Content/Games/commonComponents/Results';
+import { GAMES } from 'constants/games';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
-import { Results } from '../commonComponents/Results';
-import { IWord } from '../types';
+import { IWord } from 'components/Content/Games/types';
 import styled from 'styled-components';
 
 const StyledGrid = styled(Grid)`

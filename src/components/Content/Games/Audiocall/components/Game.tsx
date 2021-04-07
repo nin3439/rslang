@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, IconButton, Button } from '@material-ui/core';
 import { ArrowBack, VolumeUp } from '@material-ui/icons';
-import { PAGE_NUMBER } from '../../../../../constants/pageNumber';
+import { PAGE_NUMBER } from 'constants/pageNumber';
+import getWords from 'api/words';
 import useSound from 'use-sound';
-import getWords from '../../../../../api/words';
-import { IWord } from '../../../../../types';
+import { IWord } from 'components/Content/Games/types';
 import styled from 'styled-components';
 
 const StyledIconButton = styled(IconButton)`
@@ -96,7 +96,7 @@ export const Game: React.FC<IGameProps> = ({
   };
 
   const getResponseOptions = (randomWord: IWord) => {
-    let arrResponse = [randomWord?.wordTranslate];
+    let arrResponse: any = [randomWord?.wordTranslate];
     for (let i = 0; i < 4; i++) {
       let randomResponse = words[Math.floor(Math.random() * words.length)];
       console.log(arrResponse, randomResponse.wordTranslate);

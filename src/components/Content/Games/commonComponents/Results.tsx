@@ -8,7 +8,7 @@ import {
   Grid,
 } from '@material-ui/core';
 import { VolumeUp } from '@material-ui/icons';
-import { IWord } from '../../Games/types';
+import { IWord } from 'components/Content/Games/types';
 import styled from 'styled-components';
 
 const StyledGrid = styled(Grid)`
