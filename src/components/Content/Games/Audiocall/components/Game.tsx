@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Grid, IconButton, Button } from '@material-ui/core';
 import { ArrowBack, VolumeUp } from '@material-ui/icons';
 import { PAGE_NUMBER } from 'constants/pageNumber';
-import getWords from 'api/words';
+import { getWords } from 'api/words';
 import useSound from 'use-sound';
 import { IWord } from 'components/Content/Games/types';
 import styled from 'styled-components';

@@ -41,12 +41,7 @@ export const MenuBlock = () => {
         <Menu />
       </IconButton>
 
-      <Drawer
-        anchor={'left'}
-        open={isMenuOpen}
-        onClose={toggleDrawer()}
-        // onOpen={toggleDrawer()}
-      >
+      <Drawer anchor={'left'} open={isMenuOpen} onClose={toggleDrawer()}>
         <Grid className={classes.list} onClick={toggleDrawer()}>
           <List>
             <Link to="/">

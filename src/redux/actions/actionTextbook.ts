@@ -7,7 +7,6 @@ export const getWords = ({ groupNumber, pageNumber }: IPropsLoadWords) => {
   return async (dispatch: any) => {
     try {
       const res = await uploadWords(groupNumber, pageNumber);
-
       dispatch(LoadWords(res.data));
       return res.data;
     } catch (e) {
