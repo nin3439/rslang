@@ -155,7 +155,6 @@ const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
           <RightTeamBlock>
             <a
               href="https://www.linkedin.com/in/nina-viter-8b4459202/"
-              target="_blank"
               style={{ textDecoration: 'none' }}
             >
               <TeamCard>
@@ -179,7 +178,6 @@ const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
             </a>
             <a
               href="https://www.linkedin.com/in/anton-lappo-5a9ba4197/"
-              target="_blank"
               style={{ textDecoration: 'none' }}
             >
               <TeamCard>
@@ -203,7 +201,6 @@ const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
             </a>
             <a
               href="https://www.linkedin.com/in/andrei-roh-85086b204/"
-              target="_blank"
               style={{ textDecoration: 'none' }}
             >
               <TeamCard>
