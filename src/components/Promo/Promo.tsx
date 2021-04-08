@@ -1,6 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
-import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
@@ -8,135 +6,32 @@ import ReactPlayer from 'react-player/lazy';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { ChangeModalAuth } from '../../redux/actions/controllerActions';
-
-const ChiefBlock = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
-
-const HeadBlock = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  background: ${({ theme }) => theme.backgroundImage};
-  background-size: cover;
-  height: 100vh;
-  background-position: center center;
-`;
-
-const LeftHeadBlock = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-self: center;
-  transform: rotate(-3deg);
-  padding-top: 20px;
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
-  font-weight: 700;
-  line-height: 1.5;
-  letter-spacing: 0.00938em;
-`;
-
-const RightHeadBlock = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const HeaderBlockTop = styled.div`
-  font-size: 2.8rem;
-`;
-
-const HeaderBlockMiddle = styled.div`
-  font-size: 2.4rem;
-  padding-top: 20px;
-`;
-
-const HeaderBlockBottom = styled.div`
-  font-size: 2.2rem;
-`;
-
-const HeadImage = styled.img`
-  margin-top: 25px;
-  width: 25vw;
-  border: ${({ theme }) => theme.borderImage};
-`;
-
-const MiddleBlock = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  background: #f3727b;
-  padding-top: 25px;
-  padding-bottom: 25px;
-`;
-
-const MiddleHeader = styled.div`
-  font-size: 2rem;
-  display: flex;
-  flex-direction: column;
-  align-self: center;
-  padding-top: 20px;
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
-  font-weight: 400;
-  line-height: 1.5;
-  letter-spacing: 0.00938em;
-  transform: rotate(1deg);
-`;
-
-const BottomBlock = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  padding-bottom: 25px;
-`;
-
-const PlayerBlock = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: ${({ theme }) => theme.backgroundImage};
-  background-size: cover;
-  background-position: center center;
-  padding-top: 25px;
-  padding-bottom: 50px;
-`;
-
-const BottomLowerBlock = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: bottom;
-  background: url('https://images.unsplash.com/photo-1551098930-dbd128bd7489?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1000&q=80');
-  background-size: cover;
-  height: 100vh;
-  background-position: center center;
-`;
-
-const StyledCard = styled(Card)`
-  color: ${({ theme }) => theme.text};
-  background: ${({ theme }) => theme.body};
-  max-width: 250px;
-`;
-
-const ButtonInscription = styled.div`
-  text-align: center;
-  color: ${({ theme }) => theme.text};
-  font-weight: 700;
-`;
-
-const StyledReactPlayer = styled.div`
-  border: ${({ theme }) => theme.borderVideo};
-  transform: rotate(1deg);
-  width: 70%;
-  height: 100vh;
-`;
+import { nina, anton, andrei } from 'assets/team';
+import {
+  ChiefBlock,
+  HeadBlock,
+  LeftHeadBlock,
+  RightHeadBlock,
+  HeaderBlockTop,
+  HeaderBlockMiddle,
+  HeaderBlockBottom,
+  HeadImage,
+  MiddleBlock,
+  MiddleHeader,
+  BottomBlock,
+  PlayerBlock,
+  BottomLowerBlock,
+  StyledCard,
+  ButtonInscription,
+  StyledReactPlayer,
+  TeamBlock,
+  LeftTeamBlock,
+  CenterTeamBlock,
+  RightTeamBlock,
+  TeamCard,
+  TeamCardActionArea,
+  TeamImage,
+} from './style';
 
 const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
   return (
@@ -243,6 +138,92 @@ const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
             />
           </StyledReactPlayer>
         </PlayerBlock>
+        <TeamBlock>
+          <LeftTeamBlock>
+            <TeamImage
+              src="https://images.unsplash.com/photo-1606425271394-c3ca9aa1fc06?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=675&q=80"
+              title="Statistic"
+              style={{ maxWidth: '250px' }}
+              alt="Team"
+            />
+          </LeftTeamBlock>
+          <CenterTeamBlock>
+            <MiddleHeader>Знакомство</MiddleHeader>
+            <MiddleHeader>с нашей командой</MiddleHeader>
+            <MiddleHeader>DreamTeam</MiddleHeader>
+          </CenterTeamBlock>
+          <RightTeamBlock>
+            <a
+              href="https://www.linkedin.com/in/nina-viter-8b4459202/"
+              style={{ textDecoration: 'none' }}
+            >
+              <TeamCard>
+                <TeamCardActionArea>
+                  <img
+                    src={nina}
+                    title="Nina"
+                    style={{ maxWidth: '120px' }}
+                    alt="Nina"
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h6" component="h2">
+                      Nina
+                    </Typography>
+                    <Typography variant="body2" color="inherit" component="p">
+                      Team Lead
+                    </Typography>
+                  </CardContent>
+                </TeamCardActionArea>
+              </TeamCard>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/anton-lappo-5a9ba4197/"
+              style={{ textDecoration: 'none' }}
+            >
+              <TeamCard>
+                <TeamCardActionArea>
+                  <img
+                    src={anton}
+                    title="Anton"
+                    style={{ maxWidth: '120px' }}
+                    alt="Anton"
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h6" component="h2">
+                      Anton
+                    </Typography>
+                    <Typography variant="body2" color="inherit" component="p">
+                      Full stack developer
+                    </Typography>
+                  </CardContent>
+                </TeamCardActionArea>
+              </TeamCard>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/andrei-roh-85086b204/"
+              style={{ textDecoration: 'none' }}
+            >
+              <TeamCard>
+                <TeamCardActionArea>
+                  <img
+                    src={andrei}
+                    title="Andrei"
+                    style={{ maxWidth: '120px' }}
+                    alt="Andrei"
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h6" component="h2">
+                      Andrei
+                    </Typography>
+                    <Typography variant="body2" color="inherit" component="p">
+                      Frontend developer
+                    </Typography>
+                  </CardContent>
+                </TeamCardActionArea>
+              </TeamCard>
+            </a>
+          </RightTeamBlock>
+        </TeamBlock>
         <BottomLowerBlock>
           {isAuth ? null : (
             <Button
