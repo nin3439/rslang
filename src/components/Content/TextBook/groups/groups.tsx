@@ -1,8 +1,8 @@
 import React from 'react';
-import { parametrGroupsWords } from '../../../../constants/groupsWords';
-import { IGroupParametr } from '../../../../types';
-import { Group } from './group';
+import { parametrGroupsWords } from 'constants/groupsWords';
+import { IGroupParametr } from 'types';
 import styled from 'styled-components';
+import { Group } from 'components/Content/TextBook/groups/group';
 
 const StyledGroups = styled.div`
   width: 100%;

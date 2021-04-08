@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { IGroupParametr } from '../../../../types';
+import { IGroupParametr } from 'types';
 const StyledGroup = styled.div`
   width: 200px;
   height: 300px;

@@ -1,7 +1,10 @@
-import { AnyAaaaRecord } from 'node:dns';
-import { Dispatch } from 'react';
-import { changeWord, uploadWords } from '../../api/words';
-import { IPropsLoadWords, IUpdateWord, IWord } from '../../types';
+import { changeWord, uploadAuthWords, uploadWords } from '../../api/words';
+import {
+  IPropsLoadWords,
+  IUpdateWord,
+  IWord,
+  IPropsLoadWordsAuth,
+} from '../../types';
 import { LOAD_WORDS } from '../constants';
 const LoadWords = (words: IWord[]) => ({ type: LOAD_WORDS, words });
 
@@ -10,7 +13,33 @@ export const getWords = ({ groupNumber, pageNumber }: IPropsLoadWords) => {
     try {
       const res = await uploadWords(groupNumber, pageNumber);
       dispatch(LoadWords(res.data));
-      return res.data;
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
+
+// export const getWords = ({ groupNumber, pageNumber }: IPropsLoadWords) => {
+//   return async (dispatch: any) => {
+//     try {
+//       const res = await uploadWords(groupNumber, pageNumber);
+//       dispatch(LoadWords(res.data));
+//       return res.data;
+//     } catch (e) {
+//       console.log(e);
+//     }
+//   };
+// };
+export const getAuthWords = ({
+  userId,
+  groupNumber,
+  pageNumber,
+}: IPropsLoadWordsAuth) => {
+  return async (dispatch: any) => {
+    try {
+      const res = await uploadAuthWords(userId, groupNumber, pageNumber);
+      const data = res.data[0].paginatedResults;
+      dispatch(LoadWords(data));
     } catch (e) {
       console.log(e);
     }

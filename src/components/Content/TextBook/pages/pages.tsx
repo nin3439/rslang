@@ -2,19 +2,44 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router';
 import { NavLink } from 'react-router-dom';
-import { getWords, updateWord } from '../../../../redux/actions/actionTextbook';
-import { IPropsLoadWords, IStatePage, IWord } from '../../../../types';
-import { Page } from './page/page';
+import {
+  getAuthWords,
+  getWords,
+  updateWord,
+} from 'redux/actions/actionTextbook';
+import {
+  IPropsLoadWordsAuth,
+  IStatePage,
+  IUpdateWord,
+  IWord,
+  IPropsLoadWords,
+} from 'types';
+import { Page } from 'components/Content/TextBook/pages/page/page';
+
 interface IPagesProps {
   currentWords: IWord[];
   getWords: (value: IPropsLoadWords) => void;
+  updateWord: (body: IUpdateWord, idWord: string) => void;
+  getAuthWords: (value: IPropsLoadWordsAuth) => void;
+  isAuth: boolean;
 }
-const Pages = ({ currentWords, getWords }: IPagesProps) => {
+const Pages = ({
+  currentWords,
+  getWords,
+  updateWord,
+  isAuth,
+  getAuthWords,
+}: IPagesProps) => {
   const numberGroup: IPropsLoadWords = useParams();
   const [currentPage, setCurrentPage] = useState(0);
   useEffect(() => {
-    getWords(numberGroup);
-  }, [currentPage, getWords, numberGroup]);
+    if (isAuth) {
+      const userId = localStorage.getItem('userId') || '';
+      getAuthWords({ userId, ...numberGroup });
+    } else {
+      getWords(numberGroup);
+    }
+  }, [currentPage, getWords, numberGroup, isAuth]);
   return (
     <>
       {currentWords.length > 1 ? (
@@ -28,7 +53,7 @@ const Pages = ({ currentWords, getWords }: IPagesProps) => {
               prev
             </div>
           </NavLink>
-          This is Page <Page words={currentWords} />
+          This is Page <Page words={currentWords} updateWord={updateWord} />
           <NavLink to={`./${currentPage + 1}`}>
             <div
               onClick={() => {
@@ -47,7 +72,10 @@ const Pages = ({ currentWords, getWords }: IPagesProps) => {
 const MapStateToProps = (state: IStatePage) => {
   return {
     currentWords: state.textbook.currentWords,
+    isAuth: state.userReducer.isAuth,
   };
 };
 
-export default connect(MapStateToProps, { getWords, updateWord })(Pages);
+export default connect(MapStateToProps, { getWords, updateWord, getAuthWords })(
+  Pages
+);

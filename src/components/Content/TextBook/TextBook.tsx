@@ -1,16 +1,16 @@
 import React from 'react';
 import { AppBar, Tabs, Tab } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { Groups } from './groups/groups';
 import { Route, Switch as SwitchRouter, useRouteMatch } from 'react-router';
-import Pages from './pages/pages';
 import { Link } from 'react-router-dom';
-import { Dictionary } from './dictionary/Dictionary';
 import styled from 'styled-components';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import Switch from '@material-ui/core/Switch';
+import Pages from 'components/Content/TextBook/pages/pages';
+import { Dictionary } from 'components/Content/TextBook/dictionary/Dictionary';
+import { Groups } from 'components/Content/TextBook/groups/groups';
 
 const SettingsBlock = styled.div`
   display: flex;

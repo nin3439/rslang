@@ -22,16 +22,45 @@ export const uploadWords = async (group: string, page: string) => {
     params: { group, page },
   });
 };
+export const uploadAuthWords = async (
+  userId: string,
+  group: string,
+  page: string
+) => {
+  const token = localStorage.getItem('token');
+  return await axios.get(
+    `${API_URL}/users/${userId}/aggregatedWords?group=${group}&page=${page}&wordsPerPage=${20}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      params: { group, page },
+    }
+  );
+};
+// await fetch(`${API_URL}/users/${userId}/aggregatedWords?group=${group}&page=${page}`, {
+//   method: 'PUT',
+//   headers: {
+//     Authorization: `Bearer ${token}`,
+//     Accept: 'application/json',
+//     'Content-Type': 'application/json',
+//   },
+// });
 
 export const changeWord = async (body: IUpdateWord, wordId: string) => {
   const userId = localStorage.getItem('userId');
   const token = localStorage.getItem('token');
-  return await axios.put(`${API_URL}/users/${userId}/words/${wordId}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body),
-  });
+  return await axios.post(
+    `${API_URL}/users/${userId}/words/${wordId}`,
+    { ...body },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    }
+  );
 };

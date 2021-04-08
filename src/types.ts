@@ -1,4 +1,5 @@
 export interface IWord {
+  _id: string;
   id: string;
   group: number;
   page: number;
@@ -24,6 +25,11 @@ export interface IPropsLoadWords {
   groupNumber: string;
   pageNumber: string;
 }
+export interface IPropsLoadWordsAuth {
+  userId: string;
+  groupNumber: string;
+  pageNumber: string;
+}
 
 export interface IGroupParametr {
   numberGroup: number;
@@ -35,8 +41,24 @@ export interface IStatePage {
   textbook: {
     currentWords: IWord[];
   };
+  userReducer: {
+    currentUser: ICurrentUser;
+    isAuth: boolean;
+  };
+  controllers: {
+    isModalActive: boolean;
+  };
 }
 
+export interface ICurrentUser {
+  message?: string;
+  userId: string;
+  email: string;
+  name: string;
+  avatar: string;
+  token?: string;
+  refreshToken?: string;
+}
 export interface IMainProps {
   isModalActive: string;
   auth: () => void;

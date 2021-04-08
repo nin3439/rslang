@@ -1,7 +1,7 @@
-import { VolumeUp } from '@material-ui/icons';
 import React from 'react';
-import { API_URL } from '../../../../../config';
-import { IWord } from '../../../../../types';
+import { API_URL } from 'config';
+import { VolumeUp } from '@material-ui/icons';
+import { IUpdateWord, IWord } from 'types';
 import {
   StyledImg,
   StyledWords,
@@ -9,18 +9,23 @@ import {
   StyleWord,
   StyleButtons,
   StyledButton,
-} from './style';
+} from 'components/Content/TextBook/pages/word/style';
+
 interface IWordProps {
   word: IWord;
+  updateWord: (body: IUpdateWord, idWord: string) => void;
 }
 
-export const Word = ({ word }: IWordProps) => {
+export const Word = ({ word, updateWord }: IWordProps) => {
   const audio = new Audio(`${API_URL}/${word.audio}`);
   const difficultWord = (word: string, id: string) => {
     const body = {
-      difficulty: 'weak',
-      optional: {},
+      difficulty: 'hard',
+      optional: {
+        delete: false,
+      },
     };
+    updateWord(body, id);
   };
   return (
     <StyledPage>
@@ -41,15 +46,14 @@ export const Word = ({ word }: IWordProps) => {
         <p>{word.textMeaningTranslate}</p>
         <p>{word.wordTranslate}</p>
         <StyleButtons>
-<<<<<<< HEAD
-          <Button onClick={() => difficultWord(word.word, word.id)}>
-            Сохранить
-          </Button>
-          <Button>Удалить</Button>
-=======
-          <StyledButton>Сохранить</StyledButton>
+          <StyledButton
+            onClick={() => {
+              difficultWord(word.word, word['_id']);
+            }}
+          >
+            Сложное слово
+          </StyledButton>
           <StyledButton>Удалить</StyledButton>
->>>>>>> develop
         </StyleButtons>
       </StyledWords>
     </StyledPage>
