@@ -34,7 +34,6 @@ const Main: React.FC<IMainProps> = ({ isModalActive, auth }) => {
         <Switch>
           <Route path="/games/sprint" render={() => <Sprint />} />
           <Route path="/games/savannah" render={() => <div>Savannah</div>} />
-          <Route path="/games/audiocall" render={() => <div>audiocall</div>} />
           <Route path="/games/audiocall" render={() => <Audiocall />} />
           <Route path="/games/game" render={() => <div>game</div>} />
           <React.Fragment>

@@ -56,17 +56,17 @@ const StyledSpan = styled.span`
 `;
 
 const StyledButton = styled(Button)`
-  margin: 5px 20px;
-  background: #37516a;
-  &.MuiButton-contained {
-    color: #fff;
-  }
-  transform: scale(1);
-  transition: all 0.5s;
-  &:hover {
+  &.MuiButton-root {
+    margin: 5px 20px;
     background: #37516a;
-    transform: scale(1.1);
-    transition: transform 0.5s;
+    color: #fff;
+    transform: scale(1);
+    transition: all 0.5s;
+    &:hover {
+      background: #37516a;
+      transform: scale(1.1);
+      transition: transform 0.5s;
+    }
   }
 `;
 

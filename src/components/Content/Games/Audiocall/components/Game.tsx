@@ -8,36 +8,43 @@ import { IWord } from 'components/Content/Games/types';
 import styled from 'styled-components';
 
 const StyledIconButton = styled(IconButton)`
-  transform: scale(1);
-  transition: transform 0.5s;
-  &:hover {
-    transform: scale(1.3);
-    transition: transform 0.5s;
-  }
   &.MuiIconButton-root {
-    color: #fff;
+    transform: scale(1);
+    transition: transform 0.5s;
+    &:hover {
+      transform: scale(1.3);
+      transition: transform 0.5s;
+    }
   }
 `;
 
 const StyledButtonResponses = styled(Button)`
-  background: #2b4054;
   &.MuiButton-root {
+    min-height: 50px;
+    min-width: 180px;
+    margin: 10px;
+    background: #2b40542e;
     color: #fff;
-  }
-  transform: scale(1);
-  transition: all 0.5s;
-  &:hover {
-    background: #2b4054;
-    transform: scale(1.1);
-    transition: transform 0.5s;
+    transform: scale(1);
+    transition: all 0.5s;
+    &:hover {
+      background: #2b40542e;
+      transform: scale(1.1);
+      transition: transform 0.5s;
+    }
+    &.MuiButton-outlined {
+      border: 3px solid #ffab00;
+    }
   }
 `;
 
 const StyledButtonAudio = styled(Button)`
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  margin-bottom: 100px;
+  &.MuiButton-root {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 100px;
+  }
 `;
 
 const StyledVolumeUp = styled(VolumeUp)`
@@ -117,14 +124,19 @@ export const Game: React.FC<IGameProps> = ({
       justify="flex-start"
       style={{ height: '100vh' }}
     >
-      <Grid container alignItems="center" justify="flex-start">
+      <Grid
+        container
+        alignItems="center"
+        justify="flex-start"
+        style={{ padding: '30px 50px', marginBottom: '-70px' }}
+      >
         <StyledIconButton
           onClick={() => {
             setIsGameStart(false);
             setRightAnswers([]);
           }}
         >
-          <ArrowBack fontSize="large" />
+          <ArrowBack fontSize="large" style={{ color: '#fff' }} />
         </StyledIconButton>
       </Grid>
 
@@ -143,16 +155,17 @@ export const Game: React.FC<IGameProps> = ({
         >
           <StyledVolumeUp />
         </StyledButtonAudio>
-        <Grid container alignItems="center" justify="center" spacing={3}>
+        <Grid container alignItems="center" justify="center">
           {responseOptions.map((response, index) => {
             return (
-              <Grid item key={response}>
-                <StyledButtonResponses variant="outlined">
-                  {index + 1} {response}{' '}
-                </StyledButtonResponses>
-              </Grid>
+              <StyledButtonResponses variant="outlined" key={response}>
+                {index + 1} {response}{' '}
+              </StyledButtonResponses>
             );
           })}
+        </Grid>
+        <Grid container alignItems="center" justify="center">
+          <Button variant="contained">Не знаю</Button>
         </Grid>
       </Grid>
     </Grid>

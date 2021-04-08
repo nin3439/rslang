@@ -9,9 +9,9 @@ import { Timer } from 'components/Content/Games/Sprint/components/Timer';
 import { IWord } from 'components/Content/Games/types';
 import useSound from 'use-sound';
 import styled from 'styled-components';
-
 const wrongAnswerSound = require('assets/sounds/wrongAnswer.mp3');
 const rightAnswerSound = require('assets/sounds/rightAnswer.mp3');
+const inRange = require('lodash.inrange');
 
 const StyledGrid = styled(Grid)`
   position: relative;
@@ -82,8 +82,6 @@ export const Game: React.FC<IGameProps> = ({
   const [isWrongTranslationAdded, setIsWrongTranslationAdded] = useState(false);
   const [isAnswerRight, setIsAnswerRight] = useState(true);
   const [isBorderShow, setIsBorderShow] = useState(false);
-  const [isСolorHeaderShow, setIsColorHeaderShow] = useState(false);
-  const [isHeaderYellow, setIsHeaderYellow] = useState(false);
   const [
     numberConsecutiveRightAnswers,
     setNumberConsecutiveRightAnswers,
@@ -192,33 +190,18 @@ export const Game: React.FC<IGameProps> = ({
   const updateScore = ({ isRight }: any) => {
     if (isRight) {
       setNumberConsecutiveRightAnswers((prev: number) => prev + 1);
-      if (
-        numberConsecutiveRightAnswers >= 3 &&
-        numberConsecutiveRightAnswers <= 6
-      ) {
-        setScore((prev: number) => prev + 20);
-        setIsColorHeaderShow(true);
-        setIsHeaderYellow(true);
-      } else if (
-        numberConsecutiveRightAnswers >= 7 &&
-        numberConsecutiveRightAnswers <= 10
-      ) {
-        setScore((prev: number) => prev + 40);
-        setIsColorHeaderShow(true);
-        setIsHeaderYellow(false);
-      } else if (numberConsecutiveRightAnswers > 10) {
-        setScore((prev: number) => prev + 80);
-        setIsColorHeaderShow(true);
-        setIsHeaderYellow(false);
-      } else {
-        setScore((prev: number) => prev + 10);
-        setIsColorHeaderShow(false);
-        setIsHeaderYellow(false);
+      switch (true) {
+        case inRange(numberConsecutiveRightAnswers, 3, 7):
+          return setScore((prev: number) => prev + 20);
+        case inRange(numberConsecutiveRightAnswers, 7, 11):
+          return setScore((prev: number) => prev + 40);
+        case numberConsecutiveRightAnswers > 10:
+          return setScore((prev: number) => prev + 80);
+        default:
+          return setScore((prev: number) => prev + 10);
       }
     } else {
       setNumberConsecutiveRightAnswers(0);
-      setIsColorHeaderShow(false);
-      setIsHeaderYellow(false);
     }
   };
 
@@ -244,8 +227,6 @@ export const Game: React.FC<IGameProps> = ({
       >
         <PaperHeader
           numberConsecutiveRightAnswers={numberConsecutiveRightAnswers}
-          isСolorHeaderShow={isСolorHeaderShow}
-          isHeaderYellow={isHeaderYellow}
           randomWord={randomWord}
         />
         <Typography variant="h4" align="center" style={{ color: '#2a3c4d' }}>

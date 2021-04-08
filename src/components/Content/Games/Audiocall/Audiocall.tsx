@@ -9,7 +9,7 @@ import { IWord } from 'components/Content/Games/types';
 import styled from 'styled-components';
 
 const StyledGrid = styled(Grid)`
-  background-image: url(https://storge.pic2.me/cm/3840x2160/427/5bfd40cd5820c.jpg);
+  background-image: url(https://images7.alphacoders.com/958/958598.jpg);
   height: 100vh;
   background-position: center;
   background-repeat: no-repeat;

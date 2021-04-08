@@ -27,11 +27,13 @@ const StyledGrid = styled(Grid)`
 `;
 
 const StyledIconButton = styled(IconButton)`
-  transform: scale(1);
-  transition: transform 0.5s;
-  &:hover {
-    transform: scale(1.3);
+  &.MuiIconButton-root {
+    transform: scale(1);
     transition: transform 0.5s;
+    &:hover {
+      transform: scale(1.3);
+      transition: transform 0.5s;
+    }
   }
 `;
 
@@ -55,11 +57,11 @@ const StyledButton = styled(Button)`
     color: #fff;
     transform: scale(1);
     transition: all 0.5s;
-  }
-  &:hover {
-    background-color: #2b4054;
-    transform: scale(1.1);
-    transition: transform 0.5s;
+    &:hover {
+      background-color: #2b4054;
+      transform: scale(1.1);
+      transition: transform 0.5s;
+    }
   }
 `;
 
@@ -78,6 +80,9 @@ const StyledPaper = styled(Paper)`
   @media (max-width: 1500px) {
     width: 40vw;
     height: 40vh;
+  }
+  @media (max-width: 800px) {
+    width: 70vw;
   }
 `;
 
