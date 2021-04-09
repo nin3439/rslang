@@ -8,6 +8,7 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import IconButton from '@material-ui/core/IconButton';
+import { BigLoader } from './BigLoader';
 
 const MenuBlock = styled.div`
   display: flex;
@@ -69,6 +70,8 @@ const Registration: React.FC<any> = ({
   registration,
   uploadUserAvatar,
   avatar,
+  showLoader,
+  setShowLoader,
 }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -134,11 +137,13 @@ const Registration: React.FC<any> = ({
       </InputBlock>
       <Button
         onClick={() => {
+          setShowLoader(!showLoader);
           registration({ name, email, password, avatar });
         }}
       >
         Зарегистрироваться
       </Button>
+      {showLoader ? <BigLoader /> : null}
     </MenuBlock>
   );
 };

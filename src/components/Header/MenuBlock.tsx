@@ -12,6 +12,7 @@ import {
 import { Menu, Equalizer, Games, TextFormat, Home } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
 import styled from 'styled-components';
+import { dreamteam } from 'assets/team';
 
 const useStyles = makeStyles({
   list: {
@@ -26,7 +27,7 @@ const StyledIconButton = styled(IconButton)`
 
 const StyledGrid = styled(Grid)`
   color: ${({ theme }) => theme.text};
-  background: ${({ theme }) => theme.backgroundImage};
+  background: ${({ theme }) => theme.body};
   background-size: cover;
   height: 100vh;
   background-position: center center;
@@ -48,6 +49,12 @@ const StyledListItemText = styled(ListItemText)`
 const StyledListItem = styled(ListItem)`
   text-decoration: none;
   transform: rotate(-0.5deg);
+`;
+
+const DreamImg = styled.img`
+  width: 230px;
+  border: ${({ theme }) => theme.borderTeamImage};\
+  margin-top: 50px;
 `;
 
 export const MenuBlock = () => {
@@ -129,6 +136,7 @@ export const MenuBlock = () => {
                 <StyledListItemText primary={'Статистика'} />
               </StyledListItem>
             </Link>
+            <DreamImg src={dreamteam} />
           </List>
         </StyledGrid>
       </Drawer>

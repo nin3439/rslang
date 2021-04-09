@@ -8,6 +8,9 @@ export const lightTheme = {
   menu: '#FFF',
   borderImage: 'solid 8px #f3727b',
   borderVideo: 'solid 16px #f3727b',
+  middleBlock: '#f3727b',
+  card: '#FFF',
+  borderTeamImage: 'solid 8px #FFF',
 };
 
 export const darkTheme = {
@@ -20,4 +23,7 @@ export const darkTheme = {
   menu: '#363537',
   borderImage: 'solid 8px #363537',
   borderVideo: 'solid 16px #363537',
+  middleBlock: '#363537',
+  card: '#482182',
+  borderTeamImage: 'solid 8px #482182',
 };

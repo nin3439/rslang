@@ -4,11 +4,9 @@ import { AccountCircle } from '@material-ui/icons';
 import { MenuBlock } from './MenuBlock';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { ChangeModalAuth } from '../../redux/actions/controllerActions';
+import { changeModalAuth } from '../../redux/actions/controllerActions';
 import { logout } from '../../redux/reducers/userReducer';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import WbSunnyIcon from '@material-ui/icons/WbSunny';
-import Brightness2Icon from '@material-ui/icons/Brightness2';
+import { ExitToApp, WbSunny, Brightness2 } from '@material-ui/icons';
 
 const StyledGrid = styled(Grid)`
   padding: 0 28px;
@@ -48,7 +46,7 @@ const Header: React.FC<any> = ({
       <StyledMenuBlock />
       <Typography>RS Lang</Typography>
       <StyledIconButton onClick={() => updateMode(showNight)}>
-        {showNight ? <Brightness2Icon /> : <WbSunnyIcon />}
+        {showNight ? <Brightness2 /> : <WbSunny />}
       </StyledIconButton>
       {isAuth ? (
         <Grid
@@ -66,7 +64,7 @@ const Header: React.FC<any> = ({
               logout();
             }}
           >
-            <ExitToAppIcon />
+            <ExitToApp />
           </StyledIconButton>
         </Grid>
       ) : (
@@ -91,7 +89,7 @@ const mapStateToProps = (state: any) => {
 const mapStateToDispatch = (dispatch: any) => {
   return {
     changeModalAuth() {
-      const action = ChangeModalAuth();
+      const action = changeModalAuth();
       dispatch(action);
     },
     logout: () => {

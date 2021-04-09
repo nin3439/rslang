@@ -3,10 +3,12 @@ import { Typography, Box } from '@material-ui/core';
 import styled from 'styled-components';
 
 const StyledTypographyTimer = styled(Typography)`
-  width: 55px;
-  @media (max-width: 980px) {
-    width: 35px;
-    font-size: 26px;
+  &.MuiTypography-root {
+    width: 55px;
+    @media (max-width: 980px) {
+      width: 35px;
+      font-size: 26px;
+    }
   }
 `;
 

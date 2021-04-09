@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
 import { GAMES } from 'constants/games';
-import { InitialPage } from 'components/Content/Games/commonComponents/InitialPage';
-import { Results } from 'components/Content/Games/commonComponents/Results';
+import InitialPage from 'components/Content/Games/commonComponents/InitialPage';
+import Results from 'components/Content/Games/commonComponents/Results';
 import { Game } from 'components/Content/Games/Sprint/components/Game';
 import { IWord } from 'components/Content/Games/types';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
+import { changeNameMiniGame } from 'redux/actions/controllerActions';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 const StyledGrid = styled(Grid)`
@@ -16,7 +18,11 @@ const StyledGrid = styled(Grid)`
   background-size: cover;
 `;
 
-export const Sprint = () => {
+interface ISprintProps {
+  changeNameGame: (name: string) => void;
+}
+
+const Sprint: React.FC<ISprintProps> = ({ changeNameGame }) => {
   const [isGameStart, setIsGameStart] = useState(false);
   const [level, setLevel] = useState(0);
   const changeFullscreen = useFullScreenHandle();
@@ -24,6 +30,11 @@ export const Sprint = () => {
   const [wrongAnswers, setWrongAnswers] = useState<(IWord | null)[] | []>([]);
   const [score, setScore] = useState(0);
   const [isResultsShow, setIsResultsShow] = useState(false);
+
+  useEffect(() => {
+    changeNameGame('sprint');
+    // eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     if (!isGameStart && rightAnswers.length) {
@@ -73,3 +84,13 @@ export const Sprint = () => {
     </FullScreen>
   );
 };
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    changeNameGame(name: string) {
+      dispatch(changeNameMiniGame(name));
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Sprint);

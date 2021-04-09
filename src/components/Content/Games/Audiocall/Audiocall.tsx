@@ -1,35 +1,49 @@
 import React, { useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
 import { Game } from 'components/Content/Games/Audiocall/components/Game';
-import { InitialPage } from 'components/Content/Games/commonComponents/InitialPage';
-import { Results } from 'components/Content/Games/commonComponents/Results';
+import InitialPage from 'components/Content/Games/commonComponents/InitialPage';
+import Results from 'components/Content/Games/commonComponents/Results';
 import { GAMES } from 'constants/games';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import { IWord } from 'components/Content/Games/types';
+import { changeNameMiniGame } from 'redux/actions/controllerActions';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 const StyledGrid = styled(Grid)`
-  background-image: url(https://storge.pic2.me/cm/3840x2160/427/5bfd40cd5820c.jpg);
+  background-image: url(https://images7.alphacoders.com/958/958598.jpg);
   height: 100vh;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 `;
 
-export const Audiocall = () => {
+interface IAudiocallProps {
+  changeNameGame: (name: string) => void;
+}
+
+const Audiocall: React.FC<IAudiocallProps> = ({ changeNameGame }) => {
   const [isGameStart, setIsGameStart] = useState(false);
   const [level, setLevel] = useState(0);
   const changeFullscreen = useFullScreenHandle();
-  const [rightAnswers, setRightAnswers] = useState<(IWord | null)[] | []>([]);
-  const [wrongAnswers, setWrongAnswers] = useState<(IWord | null)[] | []>([]);
-  const [score, setScore] = useState(0);
+  const [allRightAnswers, setAllRightAnswers] = useState<(IWord | null)[] | []>(
+    []
+  );
+  const [allWrongAnswers, setAllWrongAnswers] = useState<(IWord | null)[] | []>(
+    []
+  );
   const [isResultsShow, setIsResultsShow] = useState(false);
 
   useEffect(() => {
-    if (!isGameStart && rightAnswers.length) {
+    changeNameGame('audiocall');
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    if (!isGameStart && allRightAnswers.length) {
       setIsResultsShow(true);
     }
-  }, [isGameStart, rightAnswers]);
+  }, [isGameStart, allRightAnswers]);
 
   return (
     <FullScreen handle={changeFullscreen}>
@@ -43,10 +57,8 @@ export const Audiocall = () => {
           <Game
             setIsGameStart={setIsGameStart}
             level={level}
-            setRightAnswers={setRightAnswers}
-            // setWrongAnswers={setWrongAnswers}
-            // score={score}
-            // setScore={setScore}
+            setAllRightAnswers={setAllRightAnswers}
+            setAllWrongAnswers={setAllWrongAnswers}
           />
         ) : (
           <InitialPage
@@ -57,21 +69,27 @@ export const Audiocall = () => {
             game={GAMES[2]}
           />
         )}
-        {isResultsShow ? (
+        {isResultsShow && (
           <Results
             isResultsShow={isResultsShow}
             setIsResultsShow={setIsResultsShow}
-            rightAnswers={rightAnswers}
-            wrongAnswers={wrongAnswers}
-            setRightAnswers={setRightAnswers}
-            setWrongAnswers={setWrongAnswers}
-            score={score}
-            setScore={setScore}
+            rightAnswers={allRightAnswers}
+            wrongAnswers={allWrongAnswers}
+            setRightAnswers={setAllRightAnswers}
+            setWrongAnswers={setAllWrongAnswers}
           />
-        ) : (
-          ''
         )}
       </StyledGrid>
     </FullScreen>
   );
 };
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    changeNameGame(name: string) {
+      dispatch(changeNameMiniGame(name));
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Audiocall);
