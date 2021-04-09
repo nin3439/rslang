@@ -102,7 +102,6 @@ export const Game: React.FC<IGameProps> = ({
         res[(index !== 0 ? index : res.length) - 1].wordTranslate,
       ],
     }));
-    console.log(wordsWithWrongTranslate);
     setWords((prev: any) => {
       return [...prev, ...wordsWithWrongTranslate];
     });

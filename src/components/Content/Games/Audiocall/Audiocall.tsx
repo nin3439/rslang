@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
 import { Game } from 'components/Content/Games/Audiocall/components/Game';
 import { InitialPage } from 'components/Content/Games/commonComponents/InitialPage';
-import { Results } from 'components/Content/Games/commonComponents/Results';
+import Results from 'components/Content/Games/commonComponents/Results';
 import { GAMES } from 'constants/games';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import { IWord } from 'components/Content/Games/types';
+import { changeNameMiniGame } from 'redux/actions/controllerActions';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 const StyledGrid = styled(Grid)`
@@ -16,14 +18,18 @@ const StyledGrid = styled(Grid)`
   background-size: cover;
 `;
 
-export const Audiocall = () => {
+const Audiocall: React.FC = () => {
   const [isGameStart, setIsGameStart] = useState(false);
   const [level, setLevel] = useState(0);
   const changeFullscreen = useFullScreenHandle();
   const [rightAnswers, setRightAnswers] = useState<(IWord | null)[] | []>([]);
   const [wrongAnswers, setWrongAnswers] = useState<(IWord | null)[] | []>([]);
-  const [score, setScore] = useState(0);
   const [isResultsShow, setIsResultsShow] = useState(false);
+
+  useEffect(() => {
+    changeNameMiniGame('audiocall');
+    // eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     if (!isGameStart && rightAnswers.length) {
@@ -44,9 +50,7 @@ export const Audiocall = () => {
             setIsGameStart={setIsGameStart}
             level={level}
             setRightAnswers={setRightAnswers}
-            // setWrongAnswers={setWrongAnswers}
-            // score={score}
-            // setScore={setScore}
+            setWrongAnswers={setWrongAnswers}
           />
         ) : (
           <InitialPage
@@ -57,7 +61,7 @@ export const Audiocall = () => {
             game={GAMES[2]}
           />
         )}
-        {isResultsShow ? (
+        {isResultsShow && (
           <Results
             isResultsShow={isResultsShow}
             setIsResultsShow={setIsResultsShow}
@@ -65,13 +69,11 @@ export const Audiocall = () => {
             wrongAnswers={wrongAnswers}
             setRightAnswers={setRightAnswers}
             setWrongAnswers={setWrongAnswers}
-            score={score}
-            setScore={setScore}
           />
-        ) : (
-          ''
         )}
       </StyledGrid>
     </FullScreen>
   );
 };
+
+export default connect(null, { changeNameMiniGame })(Audiocall);

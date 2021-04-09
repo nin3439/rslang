@@ -5,7 +5,7 @@ import {
   changeErrorRegistration,
   setUser,
 } from '../reducers/userReducer';
-import { ChangeModalAuth } from './controllerActions';
+import { changeModalAuth } from './controllerActions';
 
 interface IRegistration {
   email: string;
@@ -36,7 +36,7 @@ export const registration = ({
       localStorage.setItem('userName', responseLogin.data.name);
       localStorage.setItem('userId', responseLogin.data.userId);
       dispatch(setUser(responseLogin.data));
-      dispatch(ChangeModalAuth());
+      dispatch(changeModalAuth());
     } catch (e) {
       dispatch(changeErrorRegistration(e.response.data.message));
     }
@@ -58,7 +58,7 @@ export const login = ({ email, password }: ILogin) => {
       localStorage.setItem('userName', response.data.name);
       localStorage.setItem('userId', response.data.userId);
       dispatch(setUser(response.data));
-      dispatch(ChangeModalAuth());
+      dispatch(changeModalAuth());
     } catch (e) {
       dispatch(changeErrorLogin(true));
     }

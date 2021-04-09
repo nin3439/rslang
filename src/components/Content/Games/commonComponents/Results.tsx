@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 import { VolumeUp } from '@material-ui/icons';
 import { IWord } from 'components/Content/Games/types';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 const StyledGrid = styled(Grid)`
@@ -77,11 +78,12 @@ interface IResultsProps {
   rightAnswers: (IWord | null)[];
   setWrongAnswers: (wrongAnswers: (IWord | null)[]) => void;
   setRightAnswers: (rightAnswers: (IWord | null)[]) => void;
-  score: number;
-  setScore: (score: number) => void;
+  score?: number;
+  setScore?: (score: number) => void;
+  nameMiniGame: string;
 }
 
-export const Results: React.FC<IResultsProps> = ({
+const Results: React.FC<IResultsProps> = ({
   isResultsShow,
   setIsResultsShow,
   score,
@@ -90,6 +92,7 @@ export const Results: React.FC<IResultsProps> = ({
   rightAnswers,
   setRightAnswers,
   setWrongAnswers,
+  nameMiniGame,
 }) => {
   const playEnglishWord = (name: string | undefined) => {
     const audio = new Audio();
@@ -108,9 +111,12 @@ export const Results: React.FC<IResultsProps> = ({
           >
             Результаты
           </StyledTypography>
-          <StyledTypography gutterBottom variant="h5">
-            Вы набрали <span style={{ color: '#11a911' }}>{score}</span> очков.
-          </StyledTypography>
+          {nameMiniGame === 'sprint' && (
+            <StyledTypography gutterBottom variant="h5">
+              Вы набрали <span style={{ color: '#11a911' }}>{score}</span>{' '}
+              очков.
+            </StyledTypography>
+          )}
         </Grid>
       </StyledDialogContent>
       <StyledDialogContent dividers>
@@ -140,7 +146,10 @@ export const Results: React.FC<IResultsProps> = ({
                   variant="subtitle1"
                   style={{ letterSpacing: 1 }}
                 >
-                  {rightAnswer?.word} - {rightAnswer?.wordTranslate[0]}{' '}
+                  {rightAnswer?.word} -{' '}
+                  {nameMiniGame === 'sprint'
+                    ? rightAnswer?.wordTranslate[0]
+                    : rightAnswer?.wordTranslate}{' '}
                 </StyledTypography>
               </Grid>
             );
@@ -174,7 +183,10 @@ export const Results: React.FC<IResultsProps> = ({
                   variant="subtitle1"
                   style={{ letterSpacing: 1 }}
                 >
-                  {wrongAnswer?.word} - {wrongAnswer?.wordTranslate[0]}{' '}
+                  {wrongAnswer?.word} -{' '}
+                  {nameMiniGame === 'sprint'
+                    ? wrongAnswer?.wordTranslate[0]
+                    : wrongAnswer?.wordTranslate}{' '}
                 </StyledTypography>
               </Grid>
             );
@@ -187,7 +199,9 @@ export const Results: React.FC<IResultsProps> = ({
           variant="contained"
           onClick={() => {
             setIsResultsShow(false);
-            setScore(0);
+            if (setScore) {
+              setScore(0);
+            }
             setRightAnswers([]);
             setWrongAnswers([]);
           }}
@@ -198,3 +212,9 @@ export const Results: React.FC<IResultsProps> = ({
     </Dialog>
   );
 };
+
+const mapStateToProps = (state: any) => ({
+  nameMiniGame: state.controllers.nameMiniGame,
+});
+
+export default connect(mapStateToProps)(Results);
