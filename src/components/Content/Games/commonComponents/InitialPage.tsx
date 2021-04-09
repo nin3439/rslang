@@ -12,7 +12,10 @@ import {
 } from '@material-ui/core';
 import { Close, Fullscreen, FullscreenExit } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
+import useSound from 'use-sound';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+const count = require('assets/sounds/count.mp3');
 
 const StyledBox = styled(Box)`
   display: flex;
@@ -105,18 +108,24 @@ interface IPageProps {
   setLevel: (level: number) => void;
   changeFullscreen: FullScreenHandle;
   game: IGame;
+  nameMiniGame: string;
 }
 
-export const InitialPage: React.FC<IPageProps> = ({
+const InitialPage: React.FC<IPageProps> = ({
   setIsGameStart,
   level,
   setLevel,
   changeFullscreen,
   game,
+  nameMiniGame,
 }) => {
   const changeLevel = (event: React.ChangeEvent<{ value: unknown }>) => {
     setLevel(event.target.value as number);
   };
+
+  const [playCount] = useSound(count.default, {
+    volume: 0.35,
+  });
 
   return (
     <Grid>
@@ -169,7 +178,12 @@ export const InitialPage: React.FC<IPageProps> = ({
         <StyledButton
           autoFocus
           variant="outlined"
-          onClick={() => setIsGameStart(true)}
+          onClick={() => {
+            setIsGameStart(true);
+            if (nameMiniGame === 'sprint') {
+              playCount();
+            }
+          }}
         >
           Начать
         </StyledButton>
@@ -177,3 +191,9 @@ export const InitialPage: React.FC<IPageProps> = ({
     </Grid>
   );
 };
+
+const mapStateToProps = (state: any) => ({
+  nameMiniGame: state.controllers.nameMiniGame,
+});
+
+export default connect(mapStateToProps)(InitialPage);

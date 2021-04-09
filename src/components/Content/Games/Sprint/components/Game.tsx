@@ -6,6 +6,7 @@ import { GameHeader } from 'components/Content/Games/Sprint/components/GameHeade
 import { PaperHeader } from 'components/Content/Games/Sprint/components/PaperHeader';
 import { GameButtons } from 'components/Content/Games/Sprint/components/GameButtons';
 import { Timer } from 'components/Content/Games/Sprint/components/Timer';
+import { Start } from 'components/Content/Games/Sprint/components/Start';
 import { IWord } from 'components/Content/Games/types';
 import useSound from 'use-sound';
 import styled from 'styled-components';
@@ -80,12 +81,13 @@ export const Game: React.FC<IGameProps> = ({
   const [translateRandomWord, setTranslateRandomWord] = useState('');
   const [isSoundOn, setIsSoundOn] = useState(true);
   const [isWrongTranslationAdded, setIsWrongTranslationAdded] = useState(false);
-  const [isAnswerRight, setIsAnswerRight] = useState(true);
+  const [isAnswerRight, setIsAnswerRight] = useState(false);
   const [isBorderShow, setIsBorderShow] = useState(false);
   const [
     numberConsecutiveRightAnswers,
     setNumberConsecutiveRightAnswers,
   ] = useState(0);
+  const [isStartProgresShown, setIsStartProgresShown] = useState(true);
 
   const [playWrongAnswer] = useSound(wrongAnswerSound.default, {
     volume: 0.45,
@@ -211,39 +213,56 @@ export const Game: React.FC<IGameProps> = ({
       alignItems="center"
       justify="center"
     >
-      <GameHeader
-        setIsSoundOn={setIsSoundOn}
-        isSoundOn={isSoundOn}
-        setIsGameStart={setIsGameStart}
-        setRightAnswers={setRightAnswers}
-      />
-      <Typography variant="h3" style={{ color: 'green', marginBottom: '10px' }}>
-        {score}{' '}
-      </Typography>
-      <StyledPaper
-        answer={isAnswerRight.toString()}
-        border={isBorderShow.toString()}
-      >
-        <PaperHeader
-          numberConsecutiveRightAnswers={numberConsecutiveRightAnswers}
-          randomWord={randomWord}
-        />
-        <Typography variant="h4" align="center" style={{ color: '#2a3c4d' }}>
-          {randomWord?.word}
-        </Typography>
-        <Typography variant="h5" align="center" style={{ color: '#2a3c4d' }}>
-          {translateRandomWord}
-        </Typography>
-        <GameButtons
-          checkRightButton={checkRightButton}
-          checkWrongButton={checkWrongButton}
-          getRandomWord={getRandomWord}
-        />
-      </StyledPaper>
-      <Timer
-        isWrongTranslationAdded={isWrongTranslationAdded}
-        setIsGameStart={setIsGameStart}
-      />
+      {isStartProgresShown ? (
+        <Start setIsStartProgresShown={setIsStartProgresShown} />
+      ) : (
+        <>
+          <GameHeader
+            setIsSoundOn={setIsSoundOn}
+            isSoundOn={isSoundOn}
+            setIsGameStart={setIsGameStart}
+            setRightAnswers={setRightAnswers}
+          />
+          <Typography
+            variant="h3"
+            style={{ color: 'green', marginBottom: '10px' }}
+          >
+            {score}{' '}
+          </Typography>
+          <StyledPaper
+            answer={isAnswerRight.toString()}
+            border={isBorderShow.toString()}
+          >
+            <PaperHeader
+              numberConsecutiveRightAnswers={numberConsecutiveRightAnswers}
+              randomWord={randomWord}
+            />
+            <Typography
+              variant="h4"
+              align="center"
+              style={{ color: '#2a3c4d' }}
+            >
+              {randomWord?.word}
+            </Typography>
+            <Typography
+              variant="h5"
+              align="center"
+              style={{ color: '#2a3c4d' }}
+            >
+              {translateRandomWord}
+            </Typography>
+            <GameButtons
+              checkRightButton={checkRightButton}
+              checkWrongButton={checkWrongButton}
+              getRandomWord={getRandomWord}
+            />
+          </StyledPaper>
+          <Timer
+            isWrongTranslationAdded={isWrongTranslationAdded}
+            setIsGameStart={setIsGameStart}
+          />
+        </>
+      )}
     </StyledGrid>
   );
 };

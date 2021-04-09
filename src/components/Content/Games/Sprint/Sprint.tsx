@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
 import { GAMES } from 'constants/games';
-import { InitialPage } from 'components/Content/Games/commonComponents/InitialPage';
+import InitialPage from 'components/Content/Games/commonComponents/InitialPage';
 import Results from 'components/Content/Games/commonComponents/Results';
 import { Game } from 'components/Content/Games/Sprint/components/Game';
 import { IWord } from 'components/Content/Games/types';
@@ -18,7 +18,11 @@ const StyledGrid = styled(Grid)`
   background-size: cover;
 `;
 
-const Sprint: React.FC = () => {
+interface ISprintProps {
+  changeNameGame: (name: string) => void;
+}
+
+const Sprint: React.FC<ISprintProps> = ({ changeNameGame }) => {
   const [isGameStart, setIsGameStart] = useState(false);
   const [level, setLevel] = useState(0);
   const changeFullscreen = useFullScreenHandle();
@@ -28,7 +32,7 @@ const Sprint: React.FC = () => {
   const [isResultsShow, setIsResultsShow] = useState(false);
 
   useEffect(() => {
-    changeNameMiniGame('sprint');
+    changeNameGame('sprint');
     // eslint-disable-next-line
   }, []);
 
@@ -81,4 +85,12 @@ const Sprint: React.FC = () => {
   );
 };
 
-export default connect(null, { changeNameMiniGame })(Sprint);
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    changeNameGame(name: string) {
+      dispatch(changeNameMiniGame(name));
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Sprint);

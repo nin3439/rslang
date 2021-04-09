@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
 import { Game } from 'components/Content/Games/Audiocall/components/Game';
-import { InitialPage } from 'components/Content/Games/commonComponents/InitialPage';
+import InitialPage from 'components/Content/Games/commonComponents/InitialPage';
 import Results from 'components/Content/Games/commonComponents/Results';
 import { GAMES } from 'constants/games';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
@@ -18,24 +18,32 @@ const StyledGrid = styled(Grid)`
   background-size: cover;
 `;
 
-const Audiocall: React.FC = () => {
+interface IAudiocallProps {
+  changeNameGame: (name: string) => void;
+}
+
+const Audiocall: React.FC<IAudiocallProps> = ({ changeNameGame }) => {
   const [isGameStart, setIsGameStart] = useState(false);
   const [level, setLevel] = useState(0);
   const changeFullscreen = useFullScreenHandle();
-  const [rightAnswers, setRightAnswers] = useState<(IWord | null)[] | []>([]);
-  const [wrongAnswers, setWrongAnswers] = useState<(IWord | null)[] | []>([]);
+  const [allRightAnswers, setAllRightAnswers] = useState<(IWord | null)[] | []>(
+    []
+  );
+  const [allWrongAnswers, setAllWrongAnswers] = useState<(IWord | null)[] | []>(
+    []
+  );
   const [isResultsShow, setIsResultsShow] = useState(false);
 
   useEffect(() => {
-    changeNameMiniGame('audiocall');
+    changeNameGame('audiocall');
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
-    if (!isGameStart && rightAnswers.length) {
+    if (!isGameStart && allRightAnswers.length) {
       setIsResultsShow(true);
     }
-  }, [isGameStart, rightAnswers]);
+  }, [isGameStart, allRightAnswers]);
 
   return (
     <FullScreen handle={changeFullscreen}>
@@ -49,8 +57,8 @@ const Audiocall: React.FC = () => {
           <Game
             setIsGameStart={setIsGameStart}
             level={level}
-            setRightAnswers={setRightAnswers}
-            setWrongAnswers={setWrongAnswers}
+            setAllRightAnswers={setAllRightAnswers}
+            setAllWrongAnswers={setAllWrongAnswers}
           />
         ) : (
           <InitialPage
@@ -65,10 +73,10 @@ const Audiocall: React.FC = () => {
           <Results
             isResultsShow={isResultsShow}
             setIsResultsShow={setIsResultsShow}
-            rightAnswers={rightAnswers}
-            wrongAnswers={wrongAnswers}
-            setRightAnswers={setRightAnswers}
-            setWrongAnswers={setWrongAnswers}
+            rightAnswers={allRightAnswers}
+            wrongAnswers={allWrongAnswers}
+            setRightAnswers={setAllRightAnswers}
+            setWrongAnswers={setAllWrongAnswers}
           />
         )}
       </StyledGrid>
@@ -76,4 +84,12 @@ const Audiocall: React.FC = () => {
   );
 };
 
-export default connect(null, { changeNameMiniGame })(Audiocall);
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    changeNameGame(name: string) {
+      dispatch(changeNameMiniGame(name));
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Audiocall);
