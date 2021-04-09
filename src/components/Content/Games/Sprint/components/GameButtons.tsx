@@ -4,17 +4,17 @@ import { TrendingFlat } from '@material-ui/icons';
 import styled from 'styled-components';
 
 const StyledButton = styled(Button)`
+&.MuiButton-root  {
   height 45px;
   width: 110px;
-  &.MuiButton-contained {
-    color: #f3f5f7;
-  }
+  color: #f3f5f7;
   transform: scale(1);
   transition: all 0.5s;
   &:hover {
     transform: scale(1.1);
     transition: transform 0.5s;
   }
+}
 `;
 
 interface IButtonsprops {

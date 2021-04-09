@@ -3,19 +3,18 @@ import { Typography, Grid, IconButton, Tooltip } from '@material-ui/core';
 import { CheckCircle, Lens, VolumeUp, MusicNote } from '@material-ui/icons';
 import { deer1, deer2, deer3, deer4 } from 'assets/icons';
 import {
+  getHeaderColor,
   showFirstCheckIcon,
   showSecondCheckIcon,
   showThirdCheckIcon,
 } from 'components/Content/Games/Sprint/utils';
-
 import useSound from 'use-sound';
 import styled from 'styled-components';
 import { IWord } from 'components/Content/Games/types';
+const inRange = require('lodash.inrange');
 
 interface StyledProps {
-  numberConsecutiveRightAnswers: number;
-  isСolorHeaderShow: boolean;
-  isHeaderYellow: boolean;
+  number: string;
 }
 
 const StyledGrid = styled(Grid)`
@@ -25,17 +24,16 @@ const StyledGrid = styled(Grid)`
   margin-bottom: 30px;
   padding: 10px;
   border-radius: 4px 4px 0 0;
-  box-shadow: ${(p: StyledProps) =>
-    p.isСolorHeaderShow ? '0 4px 2px -3px #b1b1b1' : 'none'};
-  background-color: ${(p: StyledProps) =>
-    p.isСolorHeaderShow
-      ? p.isHeaderYellow
-        ? '#fccc00'
-        : p.numberConsecutiveRightAnswers >= 8 &&
-          p.numberConsecutiveRightAnswers <= 11
-        ? 'orange'
-        : '#ff8da2'
-      : 'transparent'};
+  box-shadow: ${(p: StyledProps) => {
+    const numberRightAnswers = +p.number > 3;
+    if (numberRightAnswers) {
+      return '0 4px 2px -3px #b1b1b1';
+    }
+    return 'none';
+  }};
+  background-color: ${(p: StyledProps) => {
+    return getHeaderColor(p.number);
+  }};
 `;
 
 const StyledTypography = styled(Typography)`
@@ -67,37 +65,27 @@ const StyledTooltip = styled((props) => (
     color: #fff;
     width: 120px;
     text-align: center;
-    margin-top: -5px;
+    margin-top: 0;
   }
 `;
 
 const StyledIconButton = styled(IconButton)`
-  &:hover {
-    transform: scale(1.3);
-    transition: transform 0.5s;
-  }
   &.MuiButtonBase-root {
     position: absolute;
     top: 10px;
   }
   &.MuiIconButton-root {
     color: gray;
-    transform: scale(1);
-    transition: transform 0.5s;
   }
 `;
 
 interface IPaperHeaderProps {
   numberConsecutiveRightAnswers: number;
-  isСolorHeaderShow: boolean;
-  isHeaderYellow: boolean;
   randomWord: IWord | null;
 }
 
 export const PaperHeader: React.FC<IPaperHeaderProps> = ({
   numberConsecutiveRightAnswers,
-  isСolorHeaderShow,
-  isHeaderYellow,
   randomWord,
 }) => {
   const [playEnglishWord] = useSound(
@@ -115,9 +103,7 @@ export const PaperHeader: React.FC<IPaperHeaderProps> = ({
         direction="column"
         alignItems="center"
         justify="center"
-        numberConsecutiveRightAnswers={numberConsecutiveRightAnswers}
-        isСolorHeaderShow={isСolorHeaderShow}
-        isHeaderYellow={isHeaderYellow}
+        number={numberConsecutiveRightAnswers.toString()}
       >
         <StyledTooltip title="Прослушать произношение слова">
           <StyledIconButton
@@ -135,7 +121,7 @@ export const PaperHeader: React.FC<IPaperHeaderProps> = ({
             <MusicNote fontSize="small" />
           </StyledIconButton>
         </StyledTooltip>
-        {numberConsecutiveRightAnswers < 12 ? (
+        {inRange(numberConsecutiveRightAnswers, 12) ? (
           <Grid>
             {showFirstCheckIcon(numberConsecutiveRightAnswers) ? (
               <StyledCheckCircle />
@@ -156,35 +142,31 @@ export const PaperHeader: React.FC<IPaperHeaderProps> = ({
         ) : (
           <StyledCheckCircle />
         )}
-        {numberConsecutiveRightAnswers >= 4 &&
-          numberConsecutiveRightAnswers <= 7 && (
-            <StyledTypography>+20 очков за слово</StyledTypography>
-          )}
-        {numberConsecutiveRightAnswers >= 8 &&
-          numberConsecutiveRightAnswers <= 11 && (
-            <StyledTypography>+40 очков за слово</StyledTypography>
-          )}
+        {inRange(numberConsecutiveRightAnswers, 4, 8) && (
+          <StyledTypography>+20 очков за слово</StyledTypography>
+        )}
+        {inRange(numberConsecutiveRightAnswers, 8, 12) && (
+          <StyledTypography>+40 очков за слово</StyledTypography>
+        )}
         {numberConsecutiveRightAnswers > 11 && (
           <StyledTypography>+80 очков за слово</StyledTypography>
         )}
       </StyledGrid>
-      {numberConsecutiveRightAnswers <= 3 && (
+      {inRange(numberConsecutiveRightAnswers, 4) && (
         <img src={deer1} alt="The Smallest Deer" width="60px" height="60px" />
       )}
-      {numberConsecutiveRightAnswers >= 4 &&
-        numberConsecutiveRightAnswers <= 7 && (
-          <img
-            src={deer2}
-            alt="Small Deer"
-            width="60px"
-            height="60px"
-            style={{ marginLeft: '10px' }}
-          />
-        )}
-      {numberConsecutiveRightAnswers >= 8 &&
-        numberConsecutiveRightAnswers <= 11 && (
-          <img src={deer3} alt="Adult Deer" width="60px" height="60px" />
-        )}
+      {inRange(numberConsecutiveRightAnswers, 4, 8) && (
+        <img
+          src={deer2}
+          alt="Small Deer"
+          width="60px"
+          height="60px"
+          style={{ marginLeft: '10px' }}
+        />
+      )}
+      {inRange(numberConsecutiveRightAnswers, 8, 12) && (
+        <img src={deer3} alt="Adult Deer" width="60px" height="60px" />
+      )}
       {numberConsecutiveRightAnswers > 11 && (
         <img src={deer4} alt="Big Deer" width="60px" height="60px" />
       )}

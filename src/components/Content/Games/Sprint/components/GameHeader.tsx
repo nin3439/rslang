@@ -4,14 +4,13 @@ import { ArrowBack, VolumeOff, VolumeUp } from '@material-ui/icons';
 import styled from 'styled-components';
 
 const StyledIconButton = styled(IconButton)`
-  transform: scale(1);
-  transition: transform 0.5s;
-  &:hover {
-    transform: scale(1.3);
-    transition: transform 0.5s;
-  }
   &.MuiIconButton-root {
-    color: #fff;
+    transform: scale(1);
+    transition: transform 0.5s;
+    &:hover {
+      transform: scale(1.3);
+      transition: transform 0.5s;
+    }
   }
 `;
 
@@ -48,13 +47,13 @@ export const GameHeader: React.FC<IGameHeaderProps> = ({
           setRightAnswers([]);
         }}
       >
-        <ArrowBack fontSize="large" />
+        <ArrowBack fontSize="large" style={{ color: '#fff' }} />
       </StyledIconButton>
       <StyledIconButton onClick={() => setIsSoundOn(!isSoundOn)}>
         {isSoundOn ? (
-          <VolumeUp fontSize="large" />
+          <VolumeUp fontSize="large" style={{ color: '#fff' }} />
         ) : (
-          <VolumeOff fontSize="large" />
+          <VolumeOff fontSize="large" style={{ color: '#fff' }} />
         )}
       </StyledIconButton>
     </StyledGridHeader>

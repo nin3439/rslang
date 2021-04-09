@@ -6,7 +6,7 @@ import Registration from './components/Registration';
 import Login from './components/Login';
 import { auth } from '../../redux/actions/user';
 import { connect } from 'react-redux';
-import { ChangeModalAuth } from '../../redux/actions/controllerActions';
+import { changeModalAuth } from '../../redux/actions/controllerActions';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import {
   PopUpMenu,
@@ -83,7 +83,7 @@ const mapStateToProps = (state: any) => {
 const mapStateToDispatch = (dispatch: any) => {
   return {
     changeModalAuth() {
-      const action = ChangeModalAuth();
+      const action = changeModalAuth();
       dispatch(action);
     },
     auth,
