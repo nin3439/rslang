@@ -39,7 +39,7 @@ const Pages = ({
     } else {
       getWords(numberGroup);
     }
-  }, [currentPage, getWords, numberGroup, isAuth]);
+  }, [currentPage, getWords, numberGroup, isAuth, getAuthWords]);
   return (
     <>
       {currentWords.length > 1 ? (

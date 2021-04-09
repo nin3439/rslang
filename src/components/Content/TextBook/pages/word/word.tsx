@@ -10,7 +10,6 @@ import {
   StyleButtons,
   StyledButton,
 } from 'components/Content/TextBook/pages/word/style';
-
 interface IWordProps {
   word: IWord;
   updateWord: (body: IUpdateWord, idWord: string) => void;
@@ -35,7 +34,12 @@ export const Word = ({ word, updateWord }: IWordProps) => {
           <h2>{word.word}</h2>
           <VolumeUp
             onClick={() => {
-              audio.play();
+              const play = audio.play().then((res) => {
+                setTimeout(() => {
+                  audio.src = `${API_URL}/${word.audioExample}`;
+                  audio.play();
+                }, 500);
+              });
             }}
           />
         </StyleWord>
