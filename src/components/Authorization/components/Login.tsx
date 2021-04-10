@@ -44,7 +44,7 @@ const Button = styled(IconButton)`
   }
 `;
 
-const InputBlock = styled.div`
+const InputBlock = styled.form`
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -74,7 +74,12 @@ const Login = ({ login, isAuth, showLoader, setShowLoader }: any) => {
 
   return (
     <MenuBlock>
-      <InputBlock>
+      <InputBlock
+        onSubmit={() => {
+          setShowLoader(!showLoader);
+          login({ email, password });
+        }}
+      >
         <ElementBlock>
           <StyledInputLabel>Адрес электронной почты</StyledInputLabel>
           <StyledOutlinedInput
@@ -82,6 +87,11 @@ const Login = ({ login, isAuth, showLoader, setShowLoader }: any) => {
             placeholder="Введите адрес почты"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
+            required={true}
+            inputProps={{
+              minLength: 2,
+              pattern: '^\\w+@(\\w+.+\\w)$',
+            }}
           />
         </ElementBlock>
         <ElementBlock>
@@ -92,6 +102,11 @@ const Login = ({ login, isAuth, showLoader, setShowLoader }: any) => {
             placeholder="Введите пароль"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
+            required={true}
+            inputProps={{
+              minLength: 8,
+              maxLength: 20,
+            }}
             endAdornment={
               <InputAdornment position="end">
                 <StyledIconButton
@@ -105,14 +120,7 @@ const Login = ({ login, isAuth, showLoader, setShowLoader }: any) => {
             }
           />
         </ElementBlock>
-        <Button
-          onClick={() => {
-            setShowLoader(!showLoader);
-            login({ email, password });
-          }}
-        >
-          Войти
-        </Button>
+        <Button type="submit">Войти</Button>
       </InputBlock>
       {showLoader ? <BigLoader /> : null}
     </MenuBlock>
