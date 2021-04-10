@@ -1,13 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, IconButton } from '@material-ui/core';
+import { Lens } from '@material-ui/icons';
 import { BigLoader } from 'components/Authorization/components/BigLoader';
-import { GameHeader } from 'components/Content/Games/Audiocall/components/GameHeader';
 import { WordInfo } from 'components/Content/Games/Audiocall/components/WordInfo';
 import { Answers } from 'components/Content/Games/Audiocall/components/Answers';
 import { playEnglishSound } from 'components/Content/Games/Audiocall/utils';
 import { PAGE_NUMBER } from 'constants/pageNumber';
 import { getWords } from 'api/words';
 import { IWord } from 'components/Content/Games/types';
+import { ArrowBack } from '@material-ui/icons';
+import styled from 'styled-components';
+
+const StyledIconButton = styled(IconButton)`
+  &.MuiIconButton-root {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    transform: scale(1);
+    transition: transform 0.5s;
+    &:hover {
+      transform: scale(1.3);
+      transition: transform 0.5s;
+    }
+    @media (max-width: 700px) {
+      top: 5px;
+      left: 5px;
+    }
+  }
+`;
 
 interface IGameProps {
   setIsGameStart: (isGameStart: boolean) => void;
@@ -30,6 +50,9 @@ export const Game: React.FC<IGameProps> = ({
   const [isRightWordShown, setIsRightWordShown] = useState(false);
   const [rightAnswer, setRightAnswer] = useState<string | []>('');
   const [wrongAnswer, setWrongAnswer] = useState<string | []>('');
+  const [circlesColors, setCirclesColors] = useState<string[]>(
+    Array(20).fill('')
+  );
 
   useEffect(() => {
     getWords(level, Math.floor(Math.random() * PAGE_NUMBER)).then((res) => {
@@ -84,9 +107,18 @@ export const Game: React.FC<IGameProps> = ({
     if (response === randomWord?.wordTranslate) {
       setAllRightAnswers((prev: IWord[]) => [...prev, randomWord]);
       setRightAnswer(response);
+      setCirclesColors((prev: any) => {
+        prev.splice(playedWords.length, 1, 'darkgreen');
+        return [...prev];
+      });
     } else {
       setAllWrongAnswers((prev: IWord[]) => [...prev, randomWord]);
       setWrongAnswer(response);
+      setCirclesColors((prev: any) => {
+        prev.splice(playedWords.length, 1, 'firebrick');
+        return [...prev];
+      });
+
       if (randomWord?.wordTranslate) {
         setRightAnswer(randomWord?.wordTranslate);
       }
@@ -118,6 +150,10 @@ export const Game: React.FC<IGameProps> = ({
       if (randomWord && !playedWords.includes(randomWord?.word)) {
         setPlayedWords((prev: string[]) => [...prev, randomWord?.word]);
       }
+      setCirclesColors((prev: any) => {
+        prev.splice(playedWords.length, 1, 'gold');
+        return [...prev];
+      });
     }
   };
 
@@ -126,24 +162,40 @@ export const Game: React.FC<IGameProps> = ({
       container
       direction="column"
       alignItems="center"
-      justify="flex-start"
+      justify="center"
       style={{ height: '100%', position: 'relative', overflow: 'auto' }}
     >
       {!isDataLoaded ? (
         <BigLoader />
       ) : (
         <>
-          <GameHeader
-            setIsGameStart={setIsGameStart}
-            setAllRightAnswers={setAllRightAnswers}
-          />
+          <StyledIconButton
+            onClick={() => {
+              setIsGameStart(false);
+              setAllRightAnswers([]);
+              setAllWrongAnswers([]);
+            }}
+          >
+            <ArrowBack fontSize="large" style={{ color: '#fff' }} />
+          </StyledIconButton>
           <Grid
             container
             direction="column"
             alignItems="center"
             justify="center"
-            style={{ flex: 1 }}
           >
+            <Grid container alignItems="center" justify="center">
+              {circlesColors.map((color, index) => (
+                <Lens
+                  key={index}
+                  style={{
+                    color: `${color ? color : 'gray'}`,
+                    margin: '3px',
+                    width: '15px',
+                  }}
+                />
+              ))}
+            </Grid>
             <WordInfo
               isRightWordShown={isRightWordShown}
               randomWord={randomWord}
