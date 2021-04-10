@@ -85,10 +85,7 @@ const Registration: React.FC<any> = ({
   return (
     <MenuBlock>
       <InputBlock
-        onClick={() => {
-          if (name === '' || email === '' || password === '') {
-            return null;
-          }
+        onSubmit={() => {
           setShowLoader(!showLoader);
           registration({ name, email, password, avatar });
         }}
