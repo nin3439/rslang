@@ -10,7 +10,6 @@ const StyledButtonAudio = styled(Button)`
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    margin-bottom: 70px;
     background: #004a907d;
     &:hover {
       background: #004a907d;
@@ -25,10 +24,15 @@ const StyledImage = styled.img`
   border-radius: 16px;
   border: 3px solid #004a907d;
   margin-right: 30px;
+  @media (max-width: 950px) {
+    margin: 20px 0;
+  }
   @media (max-width: 800px) {
-    margin: 0 0 20px 0;
     width: 250px;
     height: 150px;
+  }
+  @media (max-width: 650px) {
+    margin: 0;
   }
 `;
 
@@ -72,11 +76,15 @@ const StyledTypography = styled(Typography)`
 `;
 
 const WrapperGrid = styled(Grid)`
-  margin-bottom: 4%;
-  height: 300px;
   @media (max-width: 950px) {
     flex-direction: column;
-    height: auto;
+  }
+`;
+
+const GridStyleWrap = styled(Grid)`
+  min-height: 300px;
+  @media (max-width: 950px) {
+    min-height: 350px;
   }
 `;
 
@@ -88,9 +96,9 @@ const StyledGridText = styled(Grid)`
 
 const StyledGridWrapperText = styled(Grid)`
   &.MuiGrid-container {
-    width: 500px;
-    @media (max-width: 950px) {
-      width: 300px;
+    max-width: 500px;
+    @media (max-width: 600px) {
+      max-width: 300px;
     }
   }
 `;
@@ -105,7 +113,7 @@ export const WordInfo: React.FC<IWordInfoProps> = ({
   randomWord,
 }) => {
   return (
-    <>
+    <GridStyleWrap container alignItems="center" justify="center">
       {isRightWordShown ? (
         <WrapperGrid
           container
@@ -166,12 +174,7 @@ export const WordInfo: React.FC<IWordInfoProps> = ({
           </StyledGridWrapperText>
         </WrapperGrid>
       ) : (
-        <Grid
-          container
-          alignItems="center"
-          justify="center"
-          style={{ height: '300px' }}
-        >
+        <Grid container alignItems="center" justify="center">
           <StyledButtonAudio
             variant="contained"
             onClick={() => {
@@ -182,6 +185,6 @@ export const WordInfo: React.FC<IWordInfoProps> = ({
           </StyledButtonAudio>
         </Grid>
       )}
-    </>
+    </GridStyleWrap>
   );
 };

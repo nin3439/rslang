@@ -47,7 +47,7 @@ const ElementBlock = styled.div`
   margin-bottom: 10px;
 `;
 
-const InputBlock = styled.div`
+const InputBlock = styled.form`
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -84,7 +84,12 @@ const Registration: React.FC<any> = ({
 
   return (
     <MenuBlock>
-      <InputBlock>
+      <InputBlock
+        onSubmit={() => {
+          setShowLoader(!showLoader);
+          registration({ name, email, password, avatar });
+        }}
+      >
         <ElementBlock>
           <StyledInputLabel>Имя пользователя</StyledInputLabel>
           <StyledOutlinedInput
@@ -92,6 +97,8 @@ const Registration: React.FC<any> = ({
             placeholder="Введите имя"
             value={name}
             onChange={(event) => setName(event.target.value)}
+            required={true}
+            inputProps={{ minLength: 2 }}
           />
         </ElementBlock>
         <ElementBlock>
@@ -101,6 +108,11 @@ const Registration: React.FC<any> = ({
             placeholder="Введите адрес почты"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
+            required={true}
+            inputProps={{
+              minLength: 2,
+              pattern: '^\\w+@(\\w+.+\\w)$',
+            }}
           />
         </ElementBlock>
         <ElementBlock>
@@ -111,6 +123,11 @@ const Registration: React.FC<any> = ({
             color="secondary"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
+            required={true}
+            inputProps={{
+              minLength: 8,
+              maxLength: 20,
+            }}
             endAdornment={
               <InputAdornment position="end">
                 <StyledIconButton
@@ -134,15 +151,8 @@ const Registration: React.FC<any> = ({
             }}
           />
         </ElementBlock>
+        <Button type="submit">Зарегистрироваться</Button>
       </InputBlock>
-      <Button
-        onClick={() => {
-          setShowLoader(!showLoader);
-          registration({ name, email, password, avatar });
-        }}
-      >
-        Зарегистрироваться
-      </Button>
       {showLoader ? <BigLoader /> : null}
     </MenuBlock>
   );
