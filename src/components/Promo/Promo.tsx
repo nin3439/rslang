@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import ReactPlayer from 'react-player/lazy';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
-import { ChangeModalAuth } from 'redux/actions/controllerActions';
+import { changeModalAuth } from 'redux/actions/controllerActions';
 import { nina, anton, andrei } from 'assets/team';
 import {
   ChiefBlock,

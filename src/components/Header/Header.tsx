@@ -4,7 +4,7 @@ import { AccountCircle } from '@material-ui/icons';
 import { MenuBlock } from './MenuBlock';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { ChangeModalAuth } from 'redux/actions/controllerActions';
+import { changeModalAuth } from 'redux/actions/controllerActions';
 import { logout } from 'redux/reducers/userReducer';
 import { ExitToApp, WbSunny, Brightness2 } from '@material-ui/icons';
 
