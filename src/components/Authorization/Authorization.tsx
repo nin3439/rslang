@@ -6,7 +6,7 @@ import Registration from './components/Registration';
 import Login from './components/Login';
 import { auth } from 'redux/actions/user';
 import { connect } from 'react-redux';
-import { ChangeModalAuth } from 'redux/actions/controllerActions';
+import { changeModalAuth } from 'redux/actions/controllerActions';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import {
   PopUpMenu,
