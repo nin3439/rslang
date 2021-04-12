@@ -1,7 +1,8 @@
 import { VolumeUp } from '@material-ui/icons';
-import React from 'react';
+import styled from 'styled-components';
 import { API_URL } from '../../../../../config';
 import { IWord } from '../../../../../types';
+import { IconButton } from '@material-ui/core';
 import {
   StyledImg,
   StyledWords,
@@ -14,6 +15,10 @@ interface IWordProps {
   word: IWord;
 }
 
+const StyledIconButton = styled(IconButton)`
+  color: ${({ theme }) => theme.text};
+`;
+
 export const Word = ({ word }: IWordProps) => {
   const audio = new Audio(`${API_URL}/${word.audio}`);
   return (
@@ -22,11 +27,13 @@ export const Word = ({ word }: IWordProps) => {
       <StyledWords>
         <StyleWord>
           <h2>{word.word}</h2>
-          <VolumeUp
-            onClick={() => {
-              audio.play();
-            }}
-          />
+          <StyledIconButton>
+            <VolumeUp
+              onClick={() => {
+                audio.play();
+              }}
+            />
+          </StyledIconButton>
         </StyleWord>
         <p>{word.textMeaning}</p>
         <p>{word.textExample}</p>

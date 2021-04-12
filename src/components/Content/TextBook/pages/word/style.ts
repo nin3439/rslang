@@ -9,12 +9,12 @@ export const StyledPage = styled.div`
   flex-direction: rows;
   align-items: center;
   justify-content: space-around;
-  margin-bottom: 10px;
+  margin: 0 10px 10px 10px;
 `;
 export const StyledImg = styled.img`
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
+  width: 300px;
+  object-fit: scale-down;
+  border: ${({ theme }) => theme.borderWordImage};
 `;
 export const StyledWords = styled.div`
   width: 70%;

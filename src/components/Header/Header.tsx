@@ -46,7 +46,7 @@ const Header: React.FC<any> = ({
       alignItems="center"
     >
       <StyledMenuBlock />
-      <Typography>RS Lang</Typography>
+      <Typography variant="h5">RS Lang</Typography>
       <StyledIconButton onClick={() => updateMode(showNight)}>
         {showNight ? <Brightness2Icon /> : <WbSunnyIcon />}
       </StyledIconButton>

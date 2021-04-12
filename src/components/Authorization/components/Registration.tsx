@@ -9,6 +9,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import IconButton from '@material-ui/core/IconButton';
 import { BigLoader } from './BigLoader';
+import { IRegistrationProps } from '../../../types';
 
 const MenuBlock = styled.div`
   display: flex;
@@ -66,7 +67,7 @@ const StyledIconButton = styled(IconButton)`
   color: ${({ theme }) => theme.text};
 `;
 
-const Registration: React.FC<any> = ({
+const Registration: React.FC<IRegistrationProps> = ({
   registration,
   uploadUserAvatar,
   avatar,

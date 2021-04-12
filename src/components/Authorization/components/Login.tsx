@@ -9,6 +9,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import IconButton from '@material-ui/core/IconButton';
 import { BigLoader } from './BigLoader';
+import { ILoginProps } from '../../../types';
 
 const MenuBlock = styled.div`
   display: flex;
@@ -63,7 +64,12 @@ const StyledIconButton = styled(IconButton)`
   color: ${({ theme }) => theme.text};
 `;
 
-const Login = ({ login, isAuth, showLoader, setShowLoader }: any) => {
+const Login: React.FC<ILoginProps> = ({
+  login,
+  isAuth,
+  showLoader,
+  setShowLoader,
+}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
