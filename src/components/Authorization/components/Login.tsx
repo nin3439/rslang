@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { connect } from 'react-redux';
-import { login } from '../../../redux/actions/user';
+import { login } from 'redux/actions/user';
 import styled from 'styled-components';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -9,7 +9,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import IconButton from '@material-ui/core/IconButton';
 import { BigLoader } from './BigLoader';
-import { ILoginProps } from '../../../types';
+import { ILoginProps } from 'types';
 
 const MenuBlock = styled.div`
   display: flex;

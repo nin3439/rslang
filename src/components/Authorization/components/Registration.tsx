@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { registration } from '../../../redux/actions/user';
+import { registration } from 'redux/actions/user';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -9,7 +9,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import IconButton from '@material-ui/core/IconButton';
 import { BigLoader } from './BigLoader';
-import { IRegistrationProps } from '../../../types';
+import { IRegistrationProps } from 'types';
 
 const MenuBlock = styled.div`
   display: flex;
@@ -86,10 +86,7 @@ const Registration: React.FC<IRegistrationProps> = ({
   return (
     <MenuBlock>
       <InputBlock
-        onClick={() => {
-          if (name === '' || email === '' || password === '') {
-            return null;
-          }
+        onSubmit={() => {
           setShowLoader(!showLoader);
           registration({ name, email, password, avatar });
         }}

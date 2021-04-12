@@ -4,9 +4,9 @@ import { Tabs, Tab } from '@material-ui/core';
 import { TabPanel, a11yProps } from './components/Bookmarks';
 import Registration from './components/Registration';
 import Login from './components/Login';
-import { auth } from '../../redux/actions/user';
+import { auth } from 'redux/actions/user';
 import { connect } from 'react-redux';
-import { ChangeModalAuth } from '../../redux/actions/controllerActions';
+import { ChangeModalAuth } from 'redux/actions/controllerActions';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import {
   PopUpMenu,
