@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
 import Header from './Header/Header';
@@ -8,17 +8,17 @@ import Menu from './Authorization/Authorization';
 import { connect } from 'react-redux';
 import { IMainProps } from '../types';
 import { Games } from './Content/Games/Games';
-import { Sprint } from './Content/Games/Sprint/Sprint';
+import Sprint from './Content/Games/Sprint/Sprint';
 import Promo from './Promo/Promo';
 import { auth } from '../redux/actions/user';
-import { Audiocall } from './Content/Games/Audiocall/Audiocall';
+import Audiocall from './Content/Games/Audiocall/Audiocall';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyles } from './globalStyles';
 import { lightTheme, darkTheme } from './Themes';
 
 const Main: React.FC<IMainProps> = ({ isModalActive, auth }) => {
-  const [theme, setTheme] = React.useState('light');
-  const [showNight, setShowNight] = React.useState(false);
+  const [theme, setTheme] = useState('light');
+  const [showNight, setShowNight] = useState(false);
   const updateMode = (showNight: any) => {
     setShowNight(!showNight);
     theme === 'light' ? setTheme('dark') : setTheme('light');
@@ -32,10 +32,9 @@ const Main: React.FC<IMainProps> = ({ isModalActive, auth }) => {
       <GlobalStyles />
       <Router>
         <Switch>
-          <Route path="/games/sprint" render={() => <Sprint />} />
+          <Route path="/games/sprint" component={Sprint} />
           <Route path="/games/savannah" render={() => <div>Savannah</div>} />
-          <Route path="/games/audiocall" render={() => <div>audiocall</div>} />
-          <Route path="/games/audiocall" render={() => <Audiocall />} />
+          <Route path="/games/audiocall" component={Audiocall} />
           <Route path="/games/game" render={() => <div>game</div>} />
           <React.Fragment>
             <Grid

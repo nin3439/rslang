@@ -12,7 +12,10 @@ import {
 } from '@material-ui/core';
 import { Close, Fullscreen, FullscreenExit } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
+import useSound from 'use-sound';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+const count = require('assets/sounds/count.mp3');
 
 const StyledBox = styled(Box)`
   display: flex;
@@ -27,11 +30,13 @@ const StyledGrid = styled(Grid)`
 `;
 
 const StyledIconButton = styled(IconButton)`
-  transform: scale(1);
-  transition: transform 0.5s;
-  &:hover {
-    transform: scale(1.3);
+  &.MuiIconButton-root {
+    transform: scale(1);
     transition: transform 0.5s;
+    &:hover {
+      transform: scale(1.3);
+      transition: transform 0.5s;
+    }
   }
 `;
 
@@ -55,11 +60,11 @@ const StyledButton = styled(Button)`
     color: #fff;
     transform: scale(1);
     transition: all 0.5s;
-  }
-  &:hover {
-    background-color: #2b4054;
-    transform: scale(1.1);
-    transition: transform 0.5s;
+    &:hover {
+      background-color: #2b4054;
+      transform: scale(1.1);
+      transition: transform 0.5s;
+    }
   }
 `;
 
@@ -78,6 +83,9 @@ const StyledPaper = styled(Paper)`
   @media (max-width: 1500px) {
     width: 40vw;
     height: 40vh;
+  }
+  @media (max-width: 800px) {
+    width: 70vw;
   }
 `;
 
@@ -100,18 +108,24 @@ interface IPageProps {
   setLevel: (level: number) => void;
   changeFullscreen: FullScreenHandle;
   game: IGame;
+  nameMiniGame: string;
 }
 
-export const InitialPage: React.FC<IPageProps> = ({
+const InitialPage: React.FC<IPageProps> = ({
   setIsGameStart,
   level,
   setLevel,
   changeFullscreen,
   game,
+  nameMiniGame,
 }) => {
   const changeLevel = (event: React.ChangeEvent<{ value: unknown }>) => {
     setLevel(event.target.value as number);
   };
+
+  const [playCount] = useSound(count.default, {
+    volume: 0.35,
+  });
 
   return (
     <Grid>
@@ -164,7 +178,12 @@ export const InitialPage: React.FC<IPageProps> = ({
         <StyledButton
           autoFocus
           variant="outlined"
-          onClick={() => setIsGameStart(true)}
+          onClick={() => {
+            setIsGameStart(true);
+            if (nameMiniGame === 'sprint') {
+              playCount();
+            }
+          }}
         >
           Начать
         </StyledButton>
@@ -172,3 +191,9 @@ export const InitialPage: React.FC<IPageProps> = ({
     </Grid>
   );
 };
+
+const mapStateToProps = (state: any) => ({
+  nameMiniGame: state.controllers.nameMiniGame,
+});
+
+export default connect(mapStateToProps)(InitialPage);

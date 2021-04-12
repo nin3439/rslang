@@ -251,7 +251,7 @@ const mapStateToProps = (state: any) => {
 const mapStateToDispatch = (dispatch: any) => {
   return {
     changeModalAuth() {
-      const action = ChangeModalAuth();
+      const action = changeModalAuth();
       dispatch(action);
     },
   };
