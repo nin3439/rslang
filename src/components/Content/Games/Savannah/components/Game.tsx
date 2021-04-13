@@ -71,20 +71,6 @@ export const Game: React.FC<IGameProps> = ({
   let [timeLeft, setTimeLeft] = React.useState(7);
 
   useEffect(() => {
-    if (timeLeft > 0) {
-      setTimeout(() => {
-        setTimeLeft((prev: number) => prev - 1);
-      }, 1000);
-    }
-  }, [timeLeft]);
-
-  if (timeLeft === 0) {
-    setTimeout(() => {
-      setTimeLeft((prev: number) => (prev = 7));
-    }, 1000);
-  }
-
-  useEffect(() => {
     getWords(level, Math.floor(Math.random() * PAGE_NUMBER)).then((res) => {
       setWords(res);
       setIsDataLoaded(true);
@@ -150,13 +136,24 @@ export const Game: React.FC<IGameProps> = ({
   };
 
   const handleAnswerClick = (response: string) => {
+    let sec = setTimeout(() => {
+      setTimeLeft((prev: number) => (prev = 7));
+    }, 1000);
     if (!isRightWordShown) {
       checkIsAnswerRight(response);
       setIsRightWordShown(true);
+      setAllWrongAnswers((prev: IWord[]) => [...prev, randomWord]);
       if (randomWord && !playedWords.includes(randomWord?.word)) {
         setPlayedWords((prev: string[]) => [...prev, randomWord?.word]);
       }
     }
+    setIsRightWordShown(false);
+    getRandomWord();
+    setRightAnswer('');
+    setWrongAnswer('');
+    return function cleanUp() {
+      clearTimeout(sec);
+    };
   };
 
   const handleNextWordClick = () => {
@@ -168,18 +165,34 @@ export const Game: React.FC<IGameProps> = ({
     } else {
       setIsRightWordShown(true);
       setAllWrongAnswers((prev: IWord[]) => [...prev, randomWord]);
-      if (randomWord) {
-        setRightAnswer(randomWord?.wordTranslate);
-      }
       if (randomWord && !playedWords.includes(randomWord?.word)) {
         setPlayedWords((prev: string[]) => [...prev, randomWord?.word]);
       }
       setCirclesColors((prev: any) => {
-        prev.splice(playedWords.length, 1, 'gold');
+        prev.splice(playedWords.length, 1, 'firebrick');
         return [...prev];
       });
     }
   };
+
+  useEffect(() => {
+    if (timeLeft > 0) {
+      let sec = setTimeout(() => {
+        setTimeLeft((prev: number) => prev - 1);
+      }, 1000);
+      return function cleanUp() {
+        clearTimeout(sec);
+      };
+    } else {
+      let sec = setTimeout(() => {
+        setTimeLeft((prev: number) => (prev = 7));
+      }, 1000);
+      handleAnswerClick('undefined');
+      return function cleanUp() {
+        clearTimeout(sec);
+      };
+    }
+  }, [timeLeft]);
 
   return (
     <Grid
@@ -228,7 +241,7 @@ export const Game: React.FC<IGameProps> = ({
                 <Lens
                   key={index}
                   style={{
-                    color: `${color ? color : 'gray'}`,
+                    color: `${color ? color : 'white'}`,
                     margin: '3px',
                     width: '15px',
                   }}
@@ -236,7 +249,6 @@ export const Game: React.FC<IGameProps> = ({
               ))}
             </Grid>
           </Grid>
-          {isRightWordShown ? handleNextWordClick() : null}
         </>
       )}
     </Grid>

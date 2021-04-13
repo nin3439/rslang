@@ -15,7 +15,7 @@ const StyledTypography = styled(Typography)`
   }
   position: absolute;
   top: -80px;
-  animation: move 8s infinite ease-in-out;
+  animation: move 7s infinite linear;
   &.MuiTypography-h6 {
     color: #fff;
     margin: 5px 0;

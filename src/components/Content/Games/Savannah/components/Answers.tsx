@@ -80,7 +80,7 @@ export const Answers: React.FC<IAnswersProps> = ({
   wrongAnswer,
 }) => {
   const clickKeysHandler = (event: any) => {
-    if ([49, 50, 51, 52, 53].includes(event.keyCode)) {
+    if ([49, 50, 51, 52].includes(event.keyCode)) {
       if (!isRightWordShown) {
         handleAnswerClick(responseOptions[event.key - 1]);
       }
