@@ -15,7 +15,7 @@ const StyledTypography = styled(Typography)`
   }
   position: absolute;
   top: -80px;
-  animation: move 7s infinite linear;
+  animation: move 6s infinite ease-out;
   &.MuiTypography-h6 {
     color: #fff;
     margin: 5px 0;
@@ -35,16 +35,21 @@ const GridStyleWrap = styled(Grid)`
 interface IWordInfoProps {
   randomWord: IWord | null;
   isRightWordShown: boolean;
+  showWord: string;
 }
 
 export const WordInfo: React.FC<IWordInfoProps> = ({
   isRightWordShown,
   randomWord,
+  showWord,
 }) => {
   return (
     <GridStyleWrap container alignItems="center" justify="center">
       {isRightWordShown ? null : (
-        <StyledTypography variant="h2" style={{ color: '#FFF' }}>
+        <StyledTypography
+          variant="h2"
+          style={{ color: '#FFF', display: `${showWord}` }}
+        >
           {randomWord?.word}
         </StyledTypography>
       )}

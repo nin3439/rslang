@@ -68,7 +68,16 @@ export const Game: React.FC<IGameProps> = ({
   const [circlesColors, setCirclesColors] = useState<string[]>(
     Array(20).fill('')
   );
-  let [timeLeft, setTimeLeft] = React.useState(7);
+  let [timeLeft, setTimeLeft] = React.useState(6);
+  let [showWord, setShowWord] = React.useState('inherit');
+
+  const simpleHideWord = () => {
+    setShowWord('none');
+  };
+
+  const simpleShowWord = () => {
+    setShowWord('inherit');
+  };
 
   useEffect(() => {
     getWords(level, Math.floor(Math.random() * PAGE_NUMBER)).then((res) => {
@@ -136,9 +145,10 @@ export const Game: React.FC<IGameProps> = ({
   };
 
   const handleAnswerClick = (response: string) => {
+    simpleHideWord();
     let sec = setTimeout(() => {
-      setTimeLeft((prev: number) => (prev = 7));
-    }, 1000);
+      setTimeLeft((prev: number) => (prev = 6));
+    });
     if (!isRightWordShown) {
       checkIsAnswerRight(response);
       setIsRightWordShown(true);
@@ -176,6 +186,7 @@ export const Game: React.FC<IGameProps> = ({
   };
 
   useEffect(() => {
+    simpleShowWord();
     if (timeLeft > 0) {
       let sec = setTimeout(() => {
         setTimeLeft((prev: number) => prev - 1);
@@ -185,7 +196,7 @@ export const Game: React.FC<IGameProps> = ({
       };
     } else {
       let sec = setTimeout(() => {
-        setTimeLeft((prev: number) => (prev = 7));
+        setTimeLeft((prev: number) => (prev = 6));
       }, 1000);
       handleAnswerClick('undefined');
       return function cleanUp() {
@@ -209,6 +220,7 @@ export const Game: React.FC<IGameProps> = ({
           <WordInfo
             isRightWordShown={isRightWordShown}
             randomWord={randomWord}
+            showWord={showWord}
           />
           <StyledIconButton
             onClick={() => {
