@@ -16,7 +16,10 @@ import {
 
 interface IWordProps {
   word: IWord;
-  options: any;
+  options: {
+    translate: boolean;
+    buttons: boolean;
+  };
 }
 
 export const Word = ({ word, options }: IWordProps) => {

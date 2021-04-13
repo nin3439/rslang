@@ -12,7 +12,10 @@ const StyledWords = styled.div`
 
 interface IPageProps {
   words: IWord[];
-  options: any;
+  options: {
+    translate: boolean;
+    buttons: boolean;
+  };
 }
 export const Page = ({ words, options }: IPageProps) => {
   const allWords = words.map((word: IWord) => {
