@@ -29,22 +29,24 @@ const Pages = ({ currentWords, getWords, options }: IPagesProps) => {
     <>
       {currentWords.length > 1 ? (
         <div>
-          <NavLink to={`./${currentPage - 1}`}>
-            <StyledIconButton
-              onClick={() => {
-                setCurrentPage((prev) => prev - 1);
-              }}
-            >
+          <NavLink
+            to={`./${currentPage - 1}`}
+            onClick={() => {
+              setCurrentPage((prev) => prev - 1);
+            }}
+          >
+            <StyledIconButton size="medium">
               <ArrowBackIosIcon />
             </StyledIconButton>
           </NavLink>
           <Page words={currentWords} options={options} />
-          <NavLink to={`./${currentPage + 1}`}>
-            <StyledIconButton
-              onClick={() => {
-                setCurrentPage((prev) => prev + 1);
-              }}
-            >
+          <NavLink
+            to={`./${currentPage + 1}`}
+            onClick={() => {
+              setCurrentPage((prev) => prev + 1);
+            }}
+          >
+            <StyledIconButton size="medium">
               <ArrowForwardIosIcon />
             </StyledIconButton>
           </NavLink>

@@ -30,31 +30,31 @@ export const Word = ({ word, options }: IWordProps) => {
             <Typography gutterBottom variant="h5" component="h1">
               {word.word}
             </Typography>
-            <Typography variant="body2" color="inherit" component="p">
-              <p>Transcription: {word.transcription}</p>
-              <p>Meaning: {word.textMeaning}</p>
-              <p style={{ paddingBottom: '10px' }}>
+            <Typography variant="body2" color="inherit" component="div">
+              <span>Transcription: {word.transcription}</span>
+              <span>Meaning: {word.textMeaning}</span>
+              <span style={{ paddingBottom: '10px' }}>
                 Example: {word.textExample}
-              </p>
+              </span>
               {options.translate ? (
                 <div>
-                  <p>
+                  <span>
                     Перевод: <b>{word.wordTranslate}</b>
-                  </p>
-                  <p>Значение: {word.textMeaningTranslate}</p>
-                  <p>Пример: {word.textExampleTranslate}</p>
+                  </span>
+                  <span>Значение: {word.textMeaningTranslate}</span>
+                  <span>Пример: {word.textExampleTranslate}</span>
                 </div>
               ) : null}
             </Typography>
           </CardContent>
         </TeamCardActionArea>
         <CardActions>
-          <StyledIconButton>
-            <VolumeUp
-              onClick={() => {
-                audio.play();
-              }}
-            />
+          <StyledIconButton
+            onClick={() => {
+              audio.play();
+            }}
+          >
+            <VolumeUp />
           </StyledIconButton>
           {options.buttons ? (
             <StyleButtons>
