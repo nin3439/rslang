@@ -17,8 +17,9 @@ const StyledIconButton = styled(IconButton)`
 interface IPagesProps {
   currentWords: IWord[];
   getWords: (value: IPropsLoadWords) => void;
+  options: any;
 }
-const Pages = ({ currentWords, getWords }: IPagesProps) => {
+const Pages = ({ currentWords, getWords, options }: IPagesProps) => {
   const numberGroup: IPropsLoadWords = useParams();
   const [currentPage, setCurrentPage] = useState(0);
   useEffect(() => {
@@ -37,7 +38,7 @@ const Pages = ({ currentWords, getWords }: IPagesProps) => {
               <ArrowBackIosIcon />
             </StyledIconButton>
           </NavLink>
-          <Page words={currentWords} />
+          <Page words={currentWords} options={options} />
           <NavLink to={`./${currentPage + 1}`}>
             <StyledIconButton
               onClick={() => {

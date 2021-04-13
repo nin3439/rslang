@@ -16,9 +16,10 @@ import {
 
 interface IWordProps {
   word: IWord;
+  options: any;
 }
 
-export const Word = ({ word }: IWordProps) => {
+export const Word = ({ word, options }: IWordProps) => {
   const audio = new Audio(`${API_URL}/${word.audio}`);
   return (
     <TeamBlock>
@@ -35,11 +36,15 @@ export const Word = ({ word }: IWordProps) => {
               <p style={{ paddingBottom: '10px' }}>
                 Example: {word.textExample}
               </p>
-              <p>
-                Перевод: <b>{word.wordTranslate}</b>
-              </p>
-              <p>Значение: {word.textMeaningTranslate}</p>
-              <p>Пример: {word.textExampleTranslate}</p>
+              {options.translate ? (
+                <div>
+                  <p>
+                    Перевод: <b>{word.wordTranslate}</b>
+                  </p>
+                  <p>Значение: {word.textMeaningTranslate}</p>
+                  <p>Пример: {word.textExampleTranslate}</p>
+                </div>
+              ) : null}
             </Typography>
           </CardContent>
         </TeamCardActionArea>
@@ -51,10 +56,12 @@ export const Word = ({ word }: IWordProps) => {
               }}
             />
           </StyledIconButton>
-          <StyleButtons>
-            <StyledButton>Сохранить</StyledButton>
-            <StyledButton>Удалить</StyledButton>
-          </StyleButtons>
+          {options.buttons ? (
+            <StyleButtons>
+              <StyledButton>Сохранить</StyledButton>
+              <StyledButton>Удалить</StyledButton>
+            </StyleButtons>
+          ) : null}
         </CardActions>
       </TeamCard>
     </TeamBlock>

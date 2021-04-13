@@ -91,7 +91,7 @@ export const TextBook = () => {
           <Dictionary />
         </Route>
         <Route path={`${path}/group/:groupNumber/page/:pageNumber`}>
-          <Pages />
+          <Pages options={options} />
         </Route>
         <Route exact path="/textbook">
           <Groups />
