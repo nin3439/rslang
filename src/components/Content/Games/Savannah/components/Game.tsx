@@ -203,7 +203,7 @@ export const Game: React.FC<IGameProps> = ({
         clearTimeout(sec);
       };
     }
-  }, [timeLeft]);
+  });
 
   return (
     <Grid
