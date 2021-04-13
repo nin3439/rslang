@@ -1,6 +1,6 @@
 import React from 'react';
-import { parametrGroupsWords } from '../../../../constants/groupsWords';
-import { IGroupParametr } from '../../../../types';
+import { parametrGroupsWords } from 'constants/groupsWords';
+import { IGroupParametr } from 'types';
 import { Group } from './group';
 import styled from 'styled-components';
 

@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { IMainProps } from '../types';
 import { Games } from './Content/Games/Games';
 import Sprint from './Content/Games/Sprint/Sprint';
+import Savannah from './Content/Games/Savannah/Savannah';
 import Promo from './Promo/Promo';
 import { auth } from '../redux/actions/user';
 import Audiocall from './Content/Games/Audiocall/Audiocall';
@@ -33,7 +34,7 @@ const Main: React.FC<IMainProps> = ({ isModalActive, auth }) => {
       <Router>
         <Switch>
           <Route path="/games/sprint" component={Sprint} />
-          <Route path="/games/savannah" render={() => <div>Savannah</div>} />
+          <Route path="/games/savannah" component={Savannah} />
           <Route path="/games/audiocall" component={Audiocall} />
           <Route path="/games/game" render={() => <div>game</div>} />
           <React.Fragment>

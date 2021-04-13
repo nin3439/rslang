@@ -2,14 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router';
 import { NavLink } from 'react-router-dom';
-import { getWords } from '../../../../redux/actions/actionTextbook';
-import { IPropsLoadWords, IStatePage, IWord } from '../../../../types';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import { getWords } from 'redux/actions/actionTextbook';
+import { IPropsLoadWords, IStatePage, IWord } from 'types';
 import { Page } from './page/page';
+import { IconButton } from '@material-ui/core';
+import styled from 'styled-components';
+
+const StyledIconButton = styled(IconButton)`
+  color: ${({ theme }) => theme.text};
+`;
+
 interface IPagesProps {
   currentWords: IWord[];
   getWords: (value: IPropsLoadWords) => void;
+  options: any;
 }
-const Pages = ({ currentWords, getWords }: IPagesProps) => {
+const Pages = ({ currentWords, getWords, options }: IPagesProps) => {
   const numberGroup: IPropsLoadWords = useParams();
   const [currentPage, setCurrentPage] = useState(0);
   useEffect(() => {
@@ -19,24 +29,26 @@ const Pages = ({ currentWords, getWords }: IPagesProps) => {
     <>
       {currentWords.length > 1 ? (
         <div>
-          <NavLink to={`./${currentPage - 1}`}>
-            <div
-              onClick={() => {
-                setCurrentPage((prev) => prev - 1);
-              }}
-            >
-              prev
-            </div>
+          <NavLink
+            to={`./${currentPage - 1}`}
+            onClick={() => {
+              setCurrentPage((prev) => prev - 1);
+            }}
+          >
+            <StyledIconButton size="medium">
+              <ArrowBackIosIcon />
+            </StyledIconButton>
           </NavLink>
-          This is Page <Page words={currentWords} />
-          <NavLink to={`./${currentPage + 1}`}>
-            <div
-              onClick={() => {
-                setCurrentPage((prev) => prev + 1);
-              }}
-            >
-              next
-            </div>
+          <Page words={currentWords} options={options} />
+          <NavLink
+            to={`./${currentPage + 1}`}
+            onClick={() => {
+              setCurrentPage((prev) => prev + 1);
+            }}
+          >
+            <StyledIconButton size="medium">
+              <ArrowForwardIosIcon />
+            </StyledIconButton>
           </NavLink>
         </div>
       ) : null}

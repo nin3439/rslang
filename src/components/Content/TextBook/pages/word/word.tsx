@@ -1,51 +1,72 @@
 import { VolumeUp } from '@material-ui/icons';
-import styled from 'styled-components';
-import { API_URL } from '../../../../../config';
-import { IWord } from '../../../../../types';
-import { IconButton } from '@material-ui/core';
+import { API_URL } from 'config';
+import { IWord } from 'types';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import CardActions from '@material-ui/core/CardActions';
 import {
   StyledImg,
-  StyledWords,
-  StyledPage,
-  StyleWord,
   StyleButtons,
   StyledButton,
+  TeamBlock,
+  TeamCard,
+  TeamCardActionArea,
+  StyledIconButton,
 } from './style';
+
 interface IWordProps {
   word: IWord;
+  options: {
+    translate: boolean;
+    buttons: boolean;
+  };
 }
 
-const StyledIconButton = styled(IconButton)`
-  color: ${({ theme }) => theme.text};
-`;
-
-export const Word = ({ word }: IWordProps) => {
+export const Word = ({ word, options }: IWordProps) => {
   const audio = new Audio(`${API_URL}/${word.audio}`);
   return (
-    <StyledPage>
-      <StyledImg src={`${API_URL}/${word.image}`} alt="" />
-      <StyledWords>
-        <StyleWord>
-          <h2>{word.word}</h2>
-          <StyledIconButton>
-            <VolumeUp
-              onClick={() => {
-                audio.play();
-              }}
-            />
+    <TeamBlock>
+      <TeamCard>
+        <TeamCardActionArea>
+          <StyledImg src={`${API_URL}/${word.image}`} alt="" />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="h1">
+              {word.word}
+            </Typography>
+            <Typography variant="body2" color="inherit" component="div">
+              <span>Transcription: {word.transcription}</span>
+              <span>Meaning: {word.textMeaning}</span>
+              <span style={{ paddingBottom: '10px' }}>
+                Example: {word.textExample}
+              </span>
+              {options.translate ? (
+                <div>
+                  <span>
+                    Перевод: <b>{word.wordTranslate}</b>
+                  </span>
+                  <span>Значение: {word.textMeaningTranslate}</span>
+                  <span>Пример: {word.textExampleTranslate}</span>
+                </div>
+              ) : null}
+            </Typography>
+          </CardContent>
+        </TeamCardActionArea>
+        <CardActions>
+          <StyledIconButton
+            onClick={() => {
+              audio.play();
+            }}
+          >
+            <VolumeUp />
           </StyledIconButton>
-        </StyleWord>
-        <p>{word.textMeaning}</p>
-        <p>{word.textExample}</p>
-        <p>{word.transcription}</p>
-        <p>{word.textExampleTranslate}</p>
-        <p>{word.textMeaningTranslate}</p>
-        <p>{word.wordTranslate}</p>
-        <StyleButtons>
-          <StyledButton>Сохранить</StyledButton>
-          <StyledButton>Удалить</StyledButton>
-        </StyleButtons>
-      </StyledWords>
-    </StyledPage>
+          {options.buttons ? (
+            <StyleButtons>
+              <StyledButton>Сохранить</StyledButton>
+              <StyledButton>Удалить</StyledButton>
+            </StyleButtons>
+          ) : null}
+        </CardActions>
+      </TeamCard>
+    </TeamBlock>
   );
 };
