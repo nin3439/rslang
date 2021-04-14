@@ -23,7 +23,7 @@ export const uploadWords = async (group: string, page: string) => {
   });
 };
 export const uploadAuthWords = async (
-  userId: string,
+  userId: string | null,
   group: string,
   page: string
 ) => {

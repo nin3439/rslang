@@ -16,7 +16,9 @@ export interface IWord {
   textExampleTranslate: string;
   userWord: {
     difficulty: string;
-    optional: {};
+    optional: {
+      isDeleted: boolean;
+    };
   };
 }
 
@@ -91,8 +93,8 @@ export interface ILoginProps {
 }
 
 export interface IPropsUpdate {
-  difficulty: string;
-  optional: {};
+  difficulty?: string;
+  optional?: {};
 }
 
 export interface IOptions {

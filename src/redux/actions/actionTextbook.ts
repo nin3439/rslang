@@ -18,18 +18,6 @@ export const getWords = ({ groupNumber, pageNumber }: IPropsLoadWords) => {
     }
   };
 };
-
-// export const getWords = ({ groupNumber, pageNumber }: IPropsLoadWords) => {
-//   return async (dispatch: any) => {
-//     try {
-//       const res = await uploadWords(groupNumber, pageNumber);
-//       dispatch(LoadWords(res.data));
-//       return res.data;
-//     } catch (e) {
-//       console.log(e);
-//     }
-//   };
-// };
 export const getAuthWords = ({
   userId,
   groupNumber,
@@ -48,11 +36,20 @@ export const getAuthWords = ({
 export const updateWord = (
   body: IPropsUpdate,
   wordId: string,
-  method: 'post' | 'put'
+  method: 'post' | 'put',
+  numberGroup: IPropsLoadWords
 ) => {
   return async (dispatch: any) => {
     try {
       await changeWord(method, body, wordId);
+      const id = localStorage.getItem('userId');
+      const res = await uploadAuthWords(
+        id,
+        numberGroup.groupNumber,
+        numberGroup.pageNumber
+      );
+      const data = res.data[0].paginatedResults;
+      dispatch(LoadWords(data));
     } catch (e) {
       console.log(e);
     }

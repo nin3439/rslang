@@ -1,7 +1,7 @@
 import React from 'react';
 import { API_URL } from 'config';
 import { VolumeUp } from '@material-ui/icons';
-import { IOptions, IPropsUpdate, IWord } from 'types';
+import { IOptions, IPropsLoadWords, IPropsUpdate, IWord } from 'types';
 import {
   StyledImg,
   StyleButtons,
@@ -16,23 +16,40 @@ import {
 import { CardActions, CardContent, Typography } from '@material-ui/core';
 interface IWordProps {
   word: IWord;
+  numberGroup: IPropsLoadWords;
   updateWord: (
     body: IPropsUpdate,
     idWord: string,
-    method: 'post' | 'put'
+    method: 'post' | 'put',
+    numberGroup: IPropsLoadWords
   ) => void;
   options: IOptions;
 }
-export const Word = ({ word, updateWord, options }: IWordProps) => {
+export const Word = ({
+  word,
+  updateWord,
+  options,
+  numberGroup,
+}: IWordProps) => {
   const audio = new Audio(`${API_URL}/${word.audio}`);
+
+  const deleteWord = (id: string) => {
+    const body = {
+      optional: {
+        isDeleted: true,
+      },
+    };
+    const method = word.userWord ? 'put' : 'post';
+    updateWord(body, id, method, numberGroup);
+  };
   const difficultWord = (id: string, value: string) => {
     const body = {
       difficulty: value,
-      optional: {},
     };
     const method = word.userWord ? 'put' : 'post';
-    updateWord(body, id, method);
+    updateWord(body, id, method, numberGroup);
   };
+
   return (
     <TeamBlock>
       <TeamCard>
@@ -48,7 +65,7 @@ export const Word = ({ word, updateWord, options }: IWordProps) => {
               <div style={{ paddingBottom: '10px' }}>
                 Example: {word.textExample}
               </div>
-              {options.translate ? (
+              {options.translate && (
                 <div>
                   <div>
                     Перевод: <b>{word.wordTranslate}</b>
@@ -56,7 +73,7 @@ export const Word = ({ word, updateWord, options }: IWordProps) => {
                   <div>Значение: {word.textMeaningTranslate}</div>
                   <div>Пример: {word.textExampleTranslate}</div>
                 </div>
-              ) : null}
+              )}
             </Typography>
           </CardContent>
         </TeamCardActionArea>
@@ -73,7 +90,7 @@ export const Word = ({ word, updateWord, options }: IWordProps) => {
           >
             <VolumeUp />
           </StyledIconButton>
-          {options.buttons ? (
+          {options.buttons && (
             <StyleButtons>
               <StyledButton
                 onClick={() => {
@@ -84,13 +101,13 @@ export const Word = ({ word, updateWord, options }: IWordProps) => {
               </StyledButton>
               <StyledButton
                 onClick={() => {
-                  difficultWord(word['_id'], 'delete');
+                  deleteWord(word['_id']);
                 }}
               >
                 Удалить
               </StyledButton>
             </StyleButtons>
-          ) : null}
+          )}
         </CardActions>
       </TeamCard>
     </TeamBlock>

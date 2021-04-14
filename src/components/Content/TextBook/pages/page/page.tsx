@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Word } from 'components/Content/TextBook/pages/word/word';
-import { IOptions, IPropsUpdate, IWord } from 'types';
+import { IOptions, IPropsLoadWords, IPropsUpdate, IWord } from 'types';
 
 const StyledWords = styled.div`
   width: 100%;
@@ -12,22 +12,30 @@ const StyledWords = styled.div`
 
 interface IPageProps {
   words: IWord[];
+  numberGroup: IPropsLoadWords;
   updateWord: (
     body: IPropsUpdate,
     idWord: string,
-    method: 'post' | 'put'
+    method: 'post' | 'put',
+    numberGroup: IPropsLoadWords
   ) => void;
   options: IOptions;
 }
-export const Page = ({ words, updateWord, options }: IPageProps) => {
+export const Page = ({
+  words,
+  updateWord,
+  options,
+  numberGroup,
+}: IPageProps) => {
   const allWords = words.map((word: IWord) => {
     if (word.userWord) {
-      if (word.userWord.difficulty === 'delete') {
+      if (word.userWord.optional?.isDeleted) {
         return '';
       }
     }
     return (
       <Word
+        numberGroup={numberGroup}
         updateWord={updateWord}
         key={word.id || word._id}
         word={word}

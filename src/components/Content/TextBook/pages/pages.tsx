@@ -31,13 +31,22 @@ import { GAMES } from 'constants/games';
 const StyledIconButton = styled(IconButton)`
   color: ${({ theme }) => theme.text};
 `;
+const StyledNavLink = styled.div`
+  position: fixed;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 10;
+`;
 interface IPagesProps {
   currentWords: IWord[];
   getWords: (value: IPropsLoadWords) => void;
   updateWord: (
     body: IPropsUpdate,
     idWord: string,
-    method: 'post' | 'put'
+    method: 'post' | 'put',
+    numberGroup: IPropsLoadWords
   ) => void;
   getAuthWords: (value: IPropsLoadWordsAuth) => void;
   isAuth: boolean;
@@ -52,7 +61,7 @@ const Pages = ({
   options,
 }: IPagesProps) => {
   const numberGroup: IPropsLoadWords = useParams();
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(2);
   useEffect(() => {
     if (isAuth) {
       const userId = localStorage.getItem('userId') || '';
@@ -65,31 +74,39 @@ const Pages = ({
     <>
       {currentWords.length > 1 && (
         <div>
-          <NavLink
-            to={`./${currentPage - 1}`}
-            onClick={() => {
-              setCurrentPage((prev) => prev - 1);
-            }}
-          >
-            <StyledIconButton size="medium">
-              <ArrowBackIosIcon />
-            </StyledIconButton>
-          </NavLink>
+          <StyledNavLink>
+            <NavLink
+              to={`./${currentPage - 1}`}
+              onClick={() => {
+                if (currentPage > 1) {
+                  setCurrentPage((prev) => prev - 1);
+                }
+              }}
+            >
+              <StyledIconButton size="medium">
+                <ArrowBackIosIcon />
+              </StyledIconButton>
+            </NavLink>
+            <NavLink
+              to={`./${currentPage - 1}`}
+              onClick={() => {
+                if (currentPage < 30) {
+                  setCurrentPage((prev) => prev + 1);
+                }
+              }}
+            >
+              <StyledIconButton size="medium">
+                <ArrowForwardIosIcon />
+              </StyledIconButton>
+            </NavLink>
+          </StyledNavLink>
+
           <Page
             words={currentWords}
             options={options}
             updateWord={updateWord}
+            numberGroup={numberGroup}
           />
-          <NavLink
-            to={`./${currentPage + 1}`}
-            onClick={() => {
-              setCurrentPage((prev) => prev + 1);
-            }}
-          >
-            <StyledIconButton size="medium">
-              <ArrowForwardIosIcon />
-            </StyledIconButton>
-          </NavLink>
           <Grid container direction="row" justify="center" alignItems="center">
             {GAMES.map(({ name, path, background }) => (
               <Grid item key={name} style={{ margin: '10px' }}>
