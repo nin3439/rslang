@@ -65,6 +65,7 @@ const Header: React.FC<any> = ({
     if (isPlayAudio) {
       audioPlay();
     }
+    // eslint-disable-next-line
   }, [isPlayAudio]);
   return (
     <StyledGrid
