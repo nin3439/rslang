@@ -61,7 +61,7 @@ const Pages = ({
   options,
 }: IPagesProps) => {
   const numberGroup: IPropsLoadWords = useParams();
-  const [currentPage, setCurrentPage] = useState(2);
+  const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {
     if (isAuth) {
       const userId = localStorage.getItem('userId') || '';
@@ -88,7 +88,7 @@ const Pages = ({
               </StyledIconButton>
             </NavLink>
             <NavLink
-              to={`./${currentPage - 1}`}
+              to={`./${currentPage === 30 ? 29 : currentPage}`}
               onClick={() => {
                 if (currentPage < 30) {
                   setCurrentPage((prev) => prev + 1);
@@ -141,6 +141,15 @@ const Pages = ({
               </Grid>
             ))}
           </Grid>
+          <Typography
+            variant="h3"
+            style={{
+              color: '#ccc',
+              textAlign: 'center',
+            }}
+          >
+            {currentPage}
+          </Typography>
         </div>
       )}
     </>

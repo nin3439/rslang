@@ -14,6 +14,8 @@ import {
   StyledIconButton,
 } from './style';
 import { CardActions, CardContent, Typography } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
+import { playAudioWord } from 'redux/actions/controllerActions';
 interface IWordProps {
   word: IWord;
   numberGroup: IPropsLoadWords;
@@ -31,8 +33,6 @@ export const Word = ({
   options,
   numberGroup,
 }: IWordProps) => {
-  const audio = new Audio(`${API_URL}/${word.audio}`);
-
   const deleteWord = (id: string) => {
     const body = {
       optional: {
@@ -49,6 +49,7 @@ export const Word = ({
     const method = word.userWord ? 'put' : 'post';
     updateWord(body, id, method, numberGroup);
   };
+  const dispatch = useDispatch();
 
   return (
     <TeamBlock>
@@ -80,12 +81,16 @@ export const Word = ({
         <CardActions>
           <StyledIconButton
             onClick={() => {
-              audio.play().then((res) => {
-                setTimeout(() => {
-                  audio.src = `${API_URL}/${word.audioExample}`;
-                  audio.play();
-                }, 500);
-              });
+              const words = word.audio;
+              const meaning = word.audioMeaning;
+              const example = word.audioExample;
+              dispatch(playAudioWord({ words, meaning, example }));
+              // audio.play().then((res) => {
+              //   setTimeout(() => {
+              //     audio.src = `${API_URL}/${word.audioExample}`;
+              //     audio.play();
+              //   }, 500);
+              // });
             }}
           >
             <VolumeUp />

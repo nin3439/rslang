@@ -53,6 +53,11 @@ export interface IStatePage {
   };
   controllers: {
     isModalActive: boolean;
+    nameMiniGame: string;
+    isPlayAudio: boolean;
+    audioWord: string;
+    audioMeaning: string;
+    audioExample: string;
   };
 }
 
