@@ -10,16 +10,16 @@ import {
 import {
   IPropsLoadWordsAuth,
   IStatePage,
-  IUpdateWord,
   IWord,
   IPropsLoadWords,
+  IPropsUpdate,
 } from 'types';
 import { Page } from 'components/Content/TextBook/pages/page/page';
 
 interface IPagesProps {
   currentWords: IWord[];
   getWords: (value: IPropsLoadWords) => void;
-  updateWord: (body: IUpdateWord, idWord: string) => void;
+  updateWord: (body: IPropsUpdate, idWord: string) => void;
   getAuthWords: (value: IPropsLoadWordsAuth) => void;
   isAuth: boolean;
 }

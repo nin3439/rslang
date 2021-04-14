@@ -1,9 +1,9 @@
 import { changeWord, uploadAuthWords, uploadWords } from '../../api/words';
 import {
   IPropsLoadWords,
-  IUpdateWord,
   IWord,
   IPropsLoadWordsAuth,
+  IPropsUpdate,
 } from '../../types';
 import { LOAD_WORDS } from '../constants';
 const LoadWords = (words: IWord[]) => ({ type: LOAD_WORDS, words });
@@ -45,7 +45,7 @@ export const getAuthWords = ({
     }
   };
 };
-export const updateWord = (body: IUpdateWord, wordId: string) => {
+export const updateWord = (body: IPropsUpdate, wordId: string) => {
   return async (dispatch: any) => {
     try {
       const res = await changeWord(body, wordId);

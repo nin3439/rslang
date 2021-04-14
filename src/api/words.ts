@@ -1,6 +1,6 @@
 import axios from 'axios';
+import { IPropsUpdate, IWord } from 'types';
 import { API_URL } from '../config';
-import { IUpdateWord } from '../types';
 
 export const getWords = async (groupNumber: number, pageNumber: number) => {
   try {
@@ -49,10 +49,10 @@ export const uploadAuthWords = async (
 //   },
 // });
 
-export const changeWord = async (body: IUpdateWord, wordId: string) => {
+export const changeWord = async (body: IPropsUpdate, wordId: string) => {
   const userId = localStorage.getItem('userId');
   const token = localStorage.getItem('token');
-  return await axios.post(
+  return await axios.put(
     `${API_URL}/users/${userId}/words/${wordId}`,
     { ...body },
     {

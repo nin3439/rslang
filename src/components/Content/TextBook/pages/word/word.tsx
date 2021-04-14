@@ -1,7 +1,7 @@
 import React from 'react';
 import { API_URL } from 'config';
 import { VolumeUp } from '@material-ui/icons';
-import { IUpdateWord, IWord } from 'types';
+import { IPropsUpdate, IWord } from 'types';
 import {
   StyledImg,
   StyledWords,
@@ -12,17 +12,15 @@ import {
 } from 'components/Content/TextBook/pages/word/style';
 interface IWordProps {
   word: IWord;
-  updateWord: (body: IUpdateWord, idWord: string) => void;
+  updateWord: (body: IPropsUpdate, idWord: string) => void;
 }
 
 export const Word = ({ word, updateWord }: IWordProps) => {
   const audio = new Audio(`${API_URL}/${word.audio}`);
-  const difficultWord = (word: string, id: string) => {
+  const difficultWord = (id: string, value: string) => {
     const body = {
-      difficulty: 'hard',
-      optional: {
-        delete: false,
-      },
+      difficulty: value,
+      optional: {},
     };
     updateWord(body, id);
   };
@@ -52,12 +50,18 @@ export const Word = ({ word, updateWord }: IWordProps) => {
         <StyleButtons>
           <StyledButton
             onClick={() => {
-              difficultWord(word.word, word['_id']);
+              difficultWord(word['_id'], 'hard');
             }}
           >
             Сложное слово
           </StyledButton>
-          <StyledButton>Удалить</StyledButton>
+          <StyledButton
+            onClick={() => {
+              difficultWord(word['_id'], 'delete');
+            }}
+          >
+            Удалить
+          </StyledButton>
         </StyleButtons>
       </StyledWords>
     </StyledPage>

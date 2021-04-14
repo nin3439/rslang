@@ -14,6 +14,10 @@ export interface IWord {
   wordTranslate: string;
   textMeaningTranslate: string;
   textExampleTranslate: string;
+  userWord: {
+    difficulty: string;
+    optional: {};
+  };
 }
 
 export interface IActionWords {
@@ -63,8 +67,7 @@ export interface IMainProps {
   isModalActive: string;
   auth: () => void;
 }
-
-export interface IUpdateWord {
+export interface IPropsUpdate {
   difficulty: string;
   optional: {};
 }
