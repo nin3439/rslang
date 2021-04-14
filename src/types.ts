@@ -1,4 +1,5 @@
 export interface IWord {
+  _id: string;
   id: string;
   group: number;
   page: number;
@@ -13,6 +14,12 @@ export interface IWord {
   wordTranslate: string;
   textMeaningTranslate: string;
   textExampleTranslate: string;
+  userWord: {
+    difficulty: string;
+    optional: {
+      isDeleted: boolean;
+    };
+  };
 }
 
 export interface IActionWords {
@@ -21,6 +28,11 @@ export interface IActionWords {
 }
 
 export interface IPropsLoadWords {
+  groupNumber: string;
+  pageNumber: string;
+}
+export interface IPropsLoadWordsAuth {
+  userId: string;
   groupNumber: string;
   pageNumber: string;
 }
@@ -35,8 +47,29 @@ export interface IStatePage {
   textbook: {
     currentWords: IWord[];
   };
+  userReducer: {
+    currentUser: ICurrentUser;
+    isAuth: boolean;
+  };
+  controllers: {
+    isModalActive: boolean;
+    nameMiniGame: string;
+    isPlayAudio: boolean;
+    audioWord: string;
+    audioMeaning: string;
+    audioExample: string;
+  };
 }
 
+export interface ICurrentUser {
+  message?: string;
+  userId: string;
+  email: string;
+  name: string;
+  avatar: string;
+  token?: string;
+  refreshToken?: string;
+}
 export interface IMainProps {
   isModalActive: string;
   auth: () => void;
@@ -62,4 +95,14 @@ export interface ILoginProps {
   isAuth: boolean;
   showLoader: boolean;
   setShowLoader: any;
+}
+
+export interface IPropsUpdate {
+  difficulty?: string;
+  optional?: {};
+}
+
+export interface IOptions {
+  translate: boolean;
+  buttons: boolean;
 }

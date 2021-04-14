@@ -35,7 +35,13 @@ const Main: React.FC<IMainProps> = ({ isModalActive, auth }) => {
         <Switch>
           <Route path="/games/sprint" component={Sprint} />
           <Route path="/games/savannah" component={Savannah} />
-          <Route path="/games/audiocall" component={Audiocall} />
+          <Route exact path="/games/audiocall" component={Audiocall} />
+          {/* <Route path="/games/sprint" component={Sprint} />
+          <Route path="/games/savannah" component={Savannah} /> */}
+          <Route
+            path="/games/audiocall/:link/:groupNumber/:pageNumber"
+            component={Audiocall}
+          />
           <Route path="/games/game" render={() => <div>game</div>} />
           <React.Fragment>
             <Grid

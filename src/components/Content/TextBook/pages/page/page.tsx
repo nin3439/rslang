@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { IWord } from 'types';
-import { Word } from '../word/word';
+import { Word } from 'components/Content/TextBook/pages/word/word';
+import { IOptions, IPropsLoadWords, IPropsUpdate, IWord } from 'types';
 
 const StyledWords = styled.div`
   width: 100%;
@@ -12,14 +12,36 @@ const StyledWords = styled.div`
 
 interface IPageProps {
   words: IWord[];
-  options: {
-    translate: boolean;
-    buttons: boolean;
-  };
+  numberGroup: IPropsLoadWords;
+  updateWord: (
+    body: IPropsUpdate,
+    idWord: string,
+    method: 'post' | 'put',
+    numberGroup: IPropsLoadWords
+  ) => void;
+  options: IOptions;
 }
-export const Page = ({ words, options }: IPageProps) => {
+export const Page = ({
+  words,
+  updateWord,
+  options,
+  numberGroup,
+}: IPageProps) => {
   const allWords = words.map((word: IWord) => {
-    return <Word key={word.id} word={word} options={options} />;
+    if (word.userWord) {
+      if (word.userWord.optional?.isDeleted) {
+        return '';
+      }
+    }
+    return (
+      <Word
+        numberGroup={numberGroup}
+        updateWord={updateWord}
+        key={word.id || word._id}
+        word={word}
+        options={options}
+      />
+    );
   });
   return <StyledWords>{allWords}</StyledWords>;
 };

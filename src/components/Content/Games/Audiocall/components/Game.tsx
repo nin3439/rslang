@@ -10,6 +10,7 @@ import { getWords } from 'api/words';
 import { IWord } from 'components/Content/Games/types';
 import { ArrowBack } from '@material-ui/icons';
 import styled from 'styled-components';
+import { useParams } from 'react-router';
 
 const StyledIconButton = styled(IconButton)`
   &.MuiIconButton-root {
@@ -53,7 +54,8 @@ export const Game: React.FC<IGameProps> = ({
   const [circlesColors, setCirclesColors] = useState<string[]>(
     Array(20).fill('')
   );
-
+  const params = useParams();
+  console.log(params);
   useEffect(() => {
     getWords(level, Math.floor(Math.random() * PAGE_NUMBER)).then((res) => {
       setWords(res);
