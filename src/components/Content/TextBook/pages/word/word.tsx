@@ -34,18 +34,18 @@ export const Word = ({ word, options }: IWordProps) => {
               {word.word}
             </Typography>
             <Typography variant="body2" color="inherit" component="div">
-              <span>Transcription: {word.transcription}</span>
-              <span>Meaning: {word.textMeaning}</span>
-              <span style={{ paddingBottom: '10px' }}>
+              <div>Transcription: {word.transcription}</div>
+              <div>Meaning: {word.textMeaning}</div>
+              <div style={{ paddingBottom: '10px' }}>
                 Example: {word.textExample}
-              </span>
+              </div>
               {options.translate ? (
                 <div>
-                  <span>
+                  <div>
                     Перевод: <b>{word.wordTranslate}</b>
-                  </span>
-                  <span>Значение: {word.textMeaningTranslate}</span>
-                  <span>Пример: {word.textExampleTranslate}</span>
+                  </div>
+                  <div>Значение: {word.textMeaningTranslate}</div>
+                  <div>Пример: {word.textExampleTranslate}</div>
                 </div>
               ) : null}
             </Typography>
