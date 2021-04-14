@@ -1,34 +1,15 @@
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import Card from '@material-ui/core/Card';
+import { IconButton } from '@material-ui/core';
 
-export const StyledPage = styled.div`
-  width: 100%;
-  height: 300px;
-  border: 1px solid #ccc;
-  display: flex;
-  flex-direction: rows;
-  align-items: center;
-  justify-content: space-around;
-  margin-bottom: 10px;
-`;
 export const StyledImg = styled.img`
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
+  width: 300px;
+  object-fit: scale-down;
+  border: ${({ theme }) => theme.borderWordImage};
 `;
-export const StyledWords = styled.div`
-  width: 70%;
-  min-heih
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
-export const StyleWord = styled.div`
-  width: 100%;
-  margin: 0;
-  display: flex;
-  justify-content: space-between;
-`;
+
 export const StyleButtons = styled.div`
   width: 100%;
   display: flex;
@@ -36,5 +17,32 @@ export const StyleButtons = styled.div`
 `;
 
 export const StyledButton = styled(Button)`
+  color: ${({ theme }) => theme.text};
+`;
+
+export const TeamBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+`;
+
+export const TeamCard = styled(Card)`
+  display: flex;
+  flex-direction: row;
+  color: ${({ theme }) => theme.text};
+  background: ${({ theme }) => theme.cardTextbook};
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 95%;
+`;
+
+export const TeamCardActionArea = styled(CardActionArea)`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+`;
+
+export const StyledIconButton = styled(IconButton)`
   color: ${({ theme }) => theme.text};
 `;

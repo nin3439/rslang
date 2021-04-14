@@ -4,8 +4,8 @@ import { AccountCircle } from '@material-ui/icons';
 import { MenuBlock } from './MenuBlock';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { changeModalAuth } from '../../redux/actions/controllerActions';
-import { logout } from '../../redux/reducers/userReducer';
+import { changeModalAuth } from 'redux/actions/controllerActions';
+import { logout } from 'redux/reducers/userReducer';
 import { ExitToApp, WbSunny, Brightness2 } from '@material-ui/icons';
 
 const StyledGrid = styled(Grid)`
@@ -44,7 +44,7 @@ const Header: React.FC<any> = ({
       alignItems="center"
     >
       <StyledMenuBlock />
-      <Typography>RS Lang</Typography>
+      <Typography variant="h5">RS Lang</Typography>
       <StyledIconButton onClick={() => updateMode(showNight)}>
         {showNight ? <Brightness2 /> : <WbSunny />}
       </StyledIconButton>

@@ -4,9 +4,9 @@ import { Tabs, Tab } from '@material-ui/core';
 import { TabPanel, a11yProps } from './components/Bookmarks';
 import Registration from './components/Registration';
 import Login from './components/Login';
-import { auth } from '../../redux/actions/user';
+import { auth } from 'redux/actions/user';
 import { connect } from 'react-redux';
-import { changeModalAuth } from '../../redux/actions/controllerActions';
+import { changeModalAuth } from 'redux/actions/controllerActions';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import {
   PopUpMenu,
@@ -15,8 +15,9 @@ import {
   StyledAppBar,
   Button,
 } from './style';
+import { IAuthorizationProps } from '../../types';
 
-const Menu: React.FC<any> = ({
+const Menu: React.FC<IAuthorizationProps> = ({
   isModalActive,
   changeModalAuth,
   auth,
@@ -65,7 +66,11 @@ const Menu: React.FC<any> = ({
                 />
               </TabPanel>
               <TabPanel value={value} index={1}>
-                <Login showLoader={showLoader} setShowLoader={setShowLoader} />
+                <Login
+                  isAuth={isAuth}
+                  showLoader={showLoader}
+                  setShowLoader={setShowLoader}
+                />
               </TabPanel>
             </TabsBlock>
           )}

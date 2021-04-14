@@ -67,7 +67,35 @@ export interface IMainProps {
   isModalActive: string;
   auth: () => void;
 }
+
+export interface IAuthorizationProps {
+  isModalActive: string;
+  auth: () => void;
+  isAuth: boolean;
+  changeModalAuth: any;
+}
+
+export interface IRegistrationProps {
+  registration: any;
+  uploadUserAvatar: (e: any) => void;
+  avatar: string | unknown;
+  showLoader: boolean;
+  setShowLoader: any;
+}
+
+export interface ILoginProps {
+  login: any;
+  isAuth: boolean;
+  showLoader: boolean;
+  setShowLoader: any;
+}
+
 export interface IPropsUpdate {
   difficulty: string;
   optional: {};
+}
+
+export interface IOptions {
+  translate: boolean;
+  buttons: boolean;
 }

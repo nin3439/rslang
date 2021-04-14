@@ -23,6 +23,9 @@ const SettingsBlock = styled.div`
 const StyledAppBar = styled(AppBar)`
   color: ${({ theme }) => theme.text};
   background: ${({ theme }) => theme.body};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -57,41 +60,40 @@ export const TextBook = () => {
         <Tabs value={value} onChange={handleChange}>
           <Tab label="Электронный учебник" component={Link} to="/textbook" />
           <Tab label="Словарь" component={Link} to={`${path}/dictionary`} />
-          <SettingsBlock>
-            <FormControl component="fieldset">
-              <FormGroup row={true}>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={options.translate}
-                      onChange={optionsChange}
-                      name="translate"
-                    />
-                  }
-                  label="Показывать перевод слов"
-                />
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={options.buttons}
-                      onChange={optionsChange}
-                      name="buttons"
-                    />
-                  }
-                  label="Показывать кнопки словаря"
-                />
-              </FormGroup>
-            </FormControl>
-          </SettingsBlock>
         </Tabs>
       </StyledAppBar>
-
+      <SettingsBlock>
+        <FormControl component="fieldset">
+          <FormGroup row={true}>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={options.translate}
+                  onChange={optionsChange}
+                  name="translate"
+                />
+              }
+              label="Показывать перевод слов"
+            />
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={options.buttons}
+                  onChange={optionsChange}
+                  name="buttons"
+                />
+              }
+              label="Показывать кнопки словаря"
+            />
+          </FormGroup>
+        </FormControl>
+      </SettingsBlock>
       <SwitchRouter>
         <Route path={`${path}/dictionary`}>
           <Dictionary />
         </Route>
         <Route path={`${path}/group/:groupNumber/page/:pageNumber`}>
-          <Pages />
+          <Pages options={options} />
         </Route>
         <Route exact path="/textbook">
           <Groups />

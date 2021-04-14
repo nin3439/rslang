@@ -10,7 +10,9 @@ export const lightTheme = {
   borderVideo: 'solid 16px #f3727b',
   middleBlock: '#f3727b',
   card: '#FFF',
+  cardTextbook: '#f3727b',
   borderTeamImage: 'solid 8px #FFF',
+  borderWordImage: 'solid 8px #f3727b',
 };
 
 export const darkTheme = {
@@ -25,5 +27,7 @@ export const darkTheme = {
   borderVideo: 'solid 16px #363537',
   middleBlock: '#363537',
   card: '#482182',
+  cardTextbook: '#482182',
   borderTeamImage: 'solid 8px #482182',
+  borderWordImage: 'solid 8px #482182',
 };

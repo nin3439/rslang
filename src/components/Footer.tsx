@@ -1,8 +1,8 @@
 import React from 'react';
 import { Grid, Link } from '@material-ui/core';
+import { AUTHORS } from 'constants/allAuthors';
 import styled from 'styled-components';
 import GitHubIcon from '@material-ui/icons/GitHub';
-import { AUTHORS } from 'constants/allAuthors';
 
 const StyledLink = styled(Link)`
   transform: scale(1);

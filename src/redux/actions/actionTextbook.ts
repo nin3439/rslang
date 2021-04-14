@@ -45,10 +45,14 @@ export const getAuthWords = ({
     }
   };
 };
-export const updateWord = (body: IPropsUpdate, wordId: string) => {
+export const updateWord = (
+  body: IPropsUpdate,
+  wordId: string,
+  method: 'post' | 'put'
+) => {
   return async (dispatch: any) => {
     try {
-      const res = await changeWord(body, wordId);
+      await changeWord(method, body, wordId);
     } catch (e) {
       console.log(e);
     }

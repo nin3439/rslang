@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IPropsUpdate, IWord } from 'types';
+import { IPropsUpdate } from 'types';
 import { API_URL } from '../config';
 
 export const getWords = async (groupNumber: number, pageNumber: number) => {
@@ -29,14 +29,13 @@ export const uploadAuthWords = async (
 ) => {
   const token = localStorage.getItem('token');
   return await axios.get(
-    `${API_URL}/users/${userId}/aggregatedWords?group=${group}&page=${page}&wordsPerPage=${20}`,
+    `${API_URL}/users/${userId}/aggregatedWords?group=${group}&page=0&wordsPerPage=20&filter=%7B%20%22page%22%3A%20%7B%20%22%24eq%22%3A%20${page}%20%7D%20%7D`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
-      params: { group, page },
     }
   );
 };
@@ -49,18 +48,34 @@ export const uploadAuthWords = async (
 //   },
 // });
 
-export const changeWord = async (body: IPropsUpdate, wordId: string) => {
-  const userId = localStorage.getItem('userId');
+export const changeWord = async (
+  methodRequest: 'post' | 'put',
+  body: IPropsUpdate,
+  wordId: string
+) => {
+  const id = localStorage.getItem('userId');
   const token = localStorage.getItem('token');
-  return await axios.put(
-    `${API_URL}/users/${userId}/words/${wordId}`,
-    { ...body },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    }
-  );
+  return await axios({
+    method: methodRequest,
+    url: `${API_URL}/users/${id}/words/${wordId}`,
+    data: {
+      ...body,
+    },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+  });
 };
+// axios[method](
+//   `${API_URL}/users/${id}/words/${wordId}`,
+//   { ...body },
+//   {
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//       Accept: 'application/json',
+//       'Content-Type': 'application/json',
+//     },
+//   }
+// );
