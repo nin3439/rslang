@@ -7,11 +7,12 @@ import { PaperHeader } from 'components/Content/Games/Sprint/components/PaperHea
 import { GameButtons } from 'components/Content/Games/Sprint/components/GameButtons';
 import { Timer } from 'components/Content/Games/Sprint/components/Timer';
 import { Start } from 'components/Content/Games/Sprint/components/Start';
-import { IWord } from 'components/Content/Games/types';
+import { IWord } from 'types';
 import useSound from 'use-sound';
 import styled from 'styled-components';
 import { useParams } from 'react-router';
 import { connect } from 'react-redux';
+import { BigLoader } from 'components/Authorization/components/BigLoader';
 const wrongAnswerSound = require('assets/sounds/wrongAnswer.mp3');
 const rightAnswerSound = require('assets/sounds/rightAnswer.mp3');
 const inRange = require('lodash.inrange');
@@ -232,6 +233,8 @@ const Game: React.FC<IGameProps> = ({
     >
       {isStartProgresShown ? (
         <Start setIsStartProgresShown={setIsStartProgresShown} />
+      ) : !isWrongTranslationAdded ? (
+        <BigLoader />
       ) : (
         <>
           <GameHeader
@@ -239,6 +242,7 @@ const Game: React.FC<IGameProps> = ({
             isSoundOn={isSoundOn}
             setIsGameStart={setIsGameStart}
             setRightAnswers={setRightAnswers}
+            setWrongAnswers={setWrongAnswers}
           />
           <Typography
             variant="h3"

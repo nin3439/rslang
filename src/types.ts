@@ -18,6 +18,7 @@ export interface IWord {
     difficulty: string;
     optional: {
       isDeleted: boolean;
+      isLearn: boolean;
     };
   };
 }

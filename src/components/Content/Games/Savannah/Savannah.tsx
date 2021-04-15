@@ -5,7 +5,7 @@ import InitialPage from 'components/Content/Games/commonComponents/InitialPage';
 import Results from 'components/Content/Games/commonComponents/Results';
 import { GAMES } from 'constants/games';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
-import { IWord } from 'components/Content/Games/types';
+import { IWord } from 'types';
 import { changeNameMiniGame } from 'redux/actions/controllerActions';
 import { connect } from 'react-redux';
 import styled from 'styled-components';

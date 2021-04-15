@@ -42,7 +42,7 @@ const StyledListItemText = styled(ListItemText)`
   color: ${({ theme }) => theme.text};
   transition: color 0.5s;
   &:hover {
-    color: #f3727b;
+    color: ${({ theme }) => theme.cardTextbook};
     transition: color 0.5s;
   }
 `;

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, IconButton, Typography } from '@material-ui/core';
-import { Favorite } from '@material-ui/icons';
+import { Grid, IconButton } from '@material-ui/core';
+import { Favorite, VolumeUp, VolumeOff } from '@material-ui/icons';
 import { BigLoader } from 'components/Authorization/components/BigLoader';
 import { FaillingWord } from 'components/Content/Games/Savannah/components/FallingWord';
 import { Answers } from 'components/Content/Games/Savannah/components/Answers';
 import { PAGE_NUMBER } from 'constants/pageNumber';
 import { getWords } from 'api/words';
-import { IWord } from 'components/Content/Games/types';
+import { IWord } from 'types';
 import { ArrowBack } from '@material-ui/icons';
 import styled from 'styled-components';
 import useSound from 'use-sound';
@@ -43,22 +43,6 @@ const StyledIconGrid = styled(Grid)`
   }
 `;
 
-const StyledTypography = styled(Typography)`
-  position: absolute;
-  bottom: 30px;
-  right: 45px;
-  transform: scale(1);
-  transition: transform 0.5s;
-  &:hover {
-    transform: scale(1.3);
-    transition: transform 0.5s;
-  }
-  @media (max-width: 700px) {
-    top: 5px;
-    left: 15px;
-  }
-`;
-
 interface IParams {
   link: string;
   groupNumber: string;
@@ -92,6 +76,7 @@ const Game: React.FC<IGameProps> = ({
   const [lifes, setLifes] = useState<string[]>(Array(5).fill('red'));
   const [timeLeft, setTimeLeft] = useState(6);
   const [showWord, setShowWord] = useState('inherit');
+  const [isSoundOn, setIsSoundOn] = useState(true);
 
   const params: IParams = useParams();
   const [playWrongAnswer] = useSound(wrongAnswerSound.default, {
@@ -160,17 +145,19 @@ const Game: React.FC<IGameProps> = ({
     setResponseOptions(arrResponse);
   };
 
-  console.log(playedWords);
-
   const checkIsAnswerRight = (response: string) => {
     if (response === randomWord?.wordTranslate) {
       setAllRightAnswers((prev: IWord[]) => [...prev, randomWord]);
       setRightAnswer(response);
-      playRightAnswer();
+      if (isSoundOn) {
+        playRightAnswer();
+      }
     } else {
       setAllWrongAnswers((prev: IWord[]) => [...prev, randomWord]);
       setWrongAnswer(response);
-      playWrongAnswer();
+      if (isSoundOn) {
+        playWrongAnswer();
+      }
       setLifes((prev: string[]) => {
         prev.splice(0, 1);
         return [...prev, 'seashell'];
@@ -190,11 +177,11 @@ const Game: React.FC<IGameProps> = ({
     if (randomWord && !playedWords.includes(randomWord?.word)) {
       setPlayedWords((prev: string[]) => [...prev, randomWord?.word]);
     }
-    // setTimeout(() => {
-    getRandomWord();
-    setRightAnswer('');
-    setWrongAnswer('');
-    // }, 1000);
+    setTimeout(() => {
+      getRandomWord();
+      setRightAnswer('');
+      setWrongAnswer('');
+    }, 1000);
     return function cleanUp() {
       clearTimeout(sec);
     };
@@ -218,7 +205,8 @@ const Game: React.FC<IGameProps> = ({
         clearTimeout(sec);
       };
     }
-  });
+    // eslint-disable-next-line
+  }, [timeLeft]);
 
   return (
     <Grid
@@ -226,7 +214,7 @@ const Game: React.FC<IGameProps> = ({
       direction="column"
       alignItems="center"
       justify="center"
-      style={{ height: '100vh', position: 'relative', overflow: 'auto' }}
+      style={{ height: '100vh', position: 'relative' }}
     >
       {!isDataLoaded ? (
         <BigLoader />
@@ -260,9 +248,6 @@ const Game: React.FC<IGameProps> = ({
             showWord={showWord}
             timeLeft={timeLeft}
           />
-          <StyledTypography variant="h4" style={{ color: '#fff' }}>
-            {timeLeft}
-          </StyledTypography>
           <Grid
             container
             direction="column"
@@ -275,6 +260,16 @@ const Game: React.FC<IGameProps> = ({
               rightAnswer={rightAnswer.toString()}
               wrongAnswer={wrongAnswer.toString()}
             />
+            <StyledIconButton
+              style={{ top: '0', left: '0', right: '45px', bottom: '30px' }}
+              onClick={() => setIsSoundOn(!isSoundOn)}
+            >
+              {isSoundOn ? (
+                <VolumeUp fontSize="large" style={{ color: '#fff' }} />
+              ) : (
+                <VolumeOff fontSize="large" style={{ color: '#fff' }} />
+              )}
+            </StyledIconButton>
           </Grid>
         </>
       )}

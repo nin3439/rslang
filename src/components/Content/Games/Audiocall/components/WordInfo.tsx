@@ -3,7 +3,7 @@ import { Grid, Button, Typography } from '@material-ui/core';
 import { VolumeUp } from '@material-ui/icons';
 import styled from 'styled-components';
 import { playEnglishSound } from 'components/Content/Games/Audiocall/utils';
-import { IWord } from 'components/Content/Games/types';
+import { IWord } from 'types';
 
 const StyledButtonAudio = styled(Button)`
   &.MuiButton-root {

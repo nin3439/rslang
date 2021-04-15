@@ -34,7 +34,7 @@ const StyledButtonResponse = styled(Button)`
     min-height: 60px;
     min-width: 200px;
     margin: 10px;
-    background: #2b4054;
+    background: #2b405452;
     transform: scale(1);
     transition: transform 0.5s;
     &:hover {
@@ -44,7 +44,7 @@ const StyledButtonResponse = styled(Button)`
         }
         return 'none';
       }};
-      background: #2b4054;
+      background: #2b405452;
       transform: scale(1.1);
       transition: transform 0.5s;
     }
@@ -90,7 +90,12 @@ export const Answers: React.FC<IAnswersProps> = ({
 
   return (
     <>
-      <StyledGrid container alignItems="center" justify="center">
+      <StyledGrid
+        container
+        alignItems="center"
+        justify="center"
+        style={{ marginTop: '-35vh' }}
+      >
         {responseOptions.map((response, index) => {
           return (
             <StyledButtonResponse

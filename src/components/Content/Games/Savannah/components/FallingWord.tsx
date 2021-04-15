@@ -1,16 +1,13 @@
 import React from 'react';
 import { Grid, Typography } from '@material-ui/core';
 import styled from 'styled-components';
-import { IWord } from 'components/Content/Games/types';
-
-interface StyledProps {
-  timeleft: string;
-}
+import { IWord } from 'types';
 
 const StyledTypography = styled(Typography)`
   @keyframes move {
     from,
-    to {
+    to,
+    20% {
       top: -80px;
     }
     100% {

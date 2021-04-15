@@ -5,7 +5,7 @@ import { BigLoader } from 'components/Authorization/components/BigLoader';
 import { playEnglishSound } from 'components/Content/Games/Audiocall/utils';
 import { PAGE_NUMBER } from 'constants/pageNumber';
 import { getWords } from 'api/words';
-import { IWord } from 'components/Content/Games/types';
+import { IWord } from 'types';
 import { ArrowBack } from '@material-ui/icons';
 import styled from 'styled-components';
 import { useParams } from 'react-router';
@@ -119,8 +119,9 @@ const Game: React.FC<IGameProps> = ({
   const [words, setWords] = useState<IWord[] | []>([]);
   const [playedWords, setPlayedWords] = useState<string[]>([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
-  const [clickedWord, setClickedWord] = useState<IWord | null>(null);
+  // const [clickedWord, setClickedWord] = useState<IWord | null>(null);
   const params: IParams = useParams();
+  console.log(setPlayedWords);
 
   useEffect(() => {
     if (isAuth && params.link) {

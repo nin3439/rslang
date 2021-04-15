@@ -26,6 +26,7 @@ interface IGameHeaderProps {
   setIsSoundOn: (isSoundOn: boolean) => void;
   setIsGameStart: (isGameStart: boolean) => void;
   setRightAnswers: (rightAnswers: any) => void;
+  setWrongAnswers: (wrongAnswers: any) => void;
 }
 
 export const GameHeader: React.FC<IGameHeaderProps> = ({
@@ -33,6 +34,7 @@ export const GameHeader: React.FC<IGameHeaderProps> = ({
   setIsGameStart,
   setIsSoundOn,
   setRightAnswers,
+  setWrongAnswers,
 }) => {
   return (
     <StyledGridHeader
@@ -45,6 +47,7 @@ export const GameHeader: React.FC<IGameHeaderProps> = ({
         onClick={() => {
           setIsGameStart(false);
           setRightAnswers([]);
+          setWrongAnswers([]);
         }}
       >
         <ArrowBack fontSize="large" style={{ color: '#fff' }} />

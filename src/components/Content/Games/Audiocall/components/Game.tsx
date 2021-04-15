@@ -7,7 +7,7 @@ import { Answers } from 'components/Content/Games/Audiocall/components/Answers';
 import { playEnglishSound } from 'components/Content/Games/Audiocall/utils';
 import { PAGE_NUMBER } from 'constants/pageNumber';
 import { getWords } from 'api/words';
-import { IWord } from 'components/Content/Games/types';
+import { IWord } from 'types';
 import { ArrowBack } from '@material-ui/icons';
 import styled from 'styled-components';
 import { useParams } from 'react-router';
@@ -180,7 +180,7 @@ const Game: React.FC<IGameProps> = ({
       direction="column"
       alignItems="center"
       justify="center"
-      style={{ height: '100%', position: 'relative', overflow: 'auto' }}
+      style={{ height: '100%', position: 'relative' }}
     >
       {!isDataLoaded ? (
         <BigLoader />
