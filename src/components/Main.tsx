@@ -34,16 +34,26 @@ const Main: React.FC<IMainProps> = ({ isModalActive, auth }) => {
       <GlobalStyles />
       <Router>
         <Switch>
-          <Route path="/games/sprint" component={Sprint} />
-          <Route path="/games/savannah" component={Savannah} />
+          <Route exact path="/games/sprint" component={Sprint} />
+          <Route exact path="/games/savannah" component={Savannah} />
           <Route exact path="/games/audiocall" component={Audiocall} />
-          {/* <Route path="/games/sprint" component={Sprint} />
-          <Route path="/games/savannah" component={Savannah} /> */}
+          <Route exact path="/games/speakit" component={SpeakIt} />
+          <Route
+            path="/games/sprint/:link/:groupNumber/:pageNumber"
+            component={Sprint}
+          />
+          <Route
+            path="/games/savannah/:link/:groupNumber/:pageNumber"
+            component={Savannah}
+          />
           <Route
             path="/games/audiocall/:link/:groupNumber/:pageNumber"
             component={Audiocall}
           />
-          <Route path="/games/game" component={SpeakIt} />
+          <Route
+            path="/games/speakit/:link/:groupNumber/:pageNumber"
+            component={SpeakIt}
+          />
           <React.Fragment>
             <Grid
               container

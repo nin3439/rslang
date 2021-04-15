@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom';
 import useSound from 'use-sound';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import { useParams } from 'react-router';
 const count = require('assets/sounds/count.mp3');
 
 const StyledBox = styled(Box)`
@@ -102,6 +103,12 @@ interface IGame {
   path: string;
 }
 
+interface IParams {
+  link: string;
+  groupNumber: string;
+  pageNumber: string;
+}
+
 interface IPageProps {
   setIsGameStart: (isGameStart: boolean) => void;
   level: number;
@@ -109,6 +116,7 @@ interface IPageProps {
   changeFullscreen: FullScreenHandle;
   game: IGame;
   nameMiniGame: string;
+  isAuth: boolean;
 }
 
 const InitialPage: React.FC<IPageProps> = ({
@@ -118,11 +126,13 @@ const InitialPage: React.FC<IPageProps> = ({
   changeFullscreen,
   game,
   nameMiniGame,
+  isAuth,
 }) => {
+  const params: IParams = useParams();
   const changeLevel = (event: React.ChangeEvent<{ value: unknown }>) => {
     setLevel(event.target.value as number);
   };
-
+  console.log(params, isAuth);
   const [playCount] = useSound(count.default, {
     volume: 0.35,
   });
@@ -141,22 +151,24 @@ const InitialPage: React.FC<IPageProps> = ({
           </IconButton>
         </StyledLink>
         <StyledBox>
-          <FormControl style={{ color: '#fff', marginRight: '20px' }}>
-            <Select
-              value={level}
-              onChange={changeLevel}
-              style={{ color: '#fff', width: '110px' }}
-            >
-              <MenuItem value={0} selected>
-                Уровень 1
-              </MenuItem>
-              <MenuItem value={1}>Уровень 2</MenuItem>
-              <MenuItem value={2}>Уровень 3</MenuItem>
-              <MenuItem value={3}>Уровень 4</MenuItem>
-              <MenuItem value={4}>Уровень 5</MenuItem>
-              <MenuItem value={5}>Уровень 6</MenuItem>
-            </Select>
-          </FormControl>
+          {isAuth && params.link ? null : (
+            <FormControl style={{ color: '#fff', marginRight: '20px' }}>
+              <Select
+                value={level}
+                onChange={changeLevel}
+                style={{ color: '#fff', width: '110px' }}
+              >
+                <MenuItem value={0} selected>
+                  Уровень 1
+                </MenuItem>
+                <MenuItem value={1}>Уровень 2</MenuItem>
+                <MenuItem value={2}>Уровень 3</MenuItem>
+                <MenuItem value={3}>Уровень 4</MenuItem>
+                <MenuItem value={4}>Уровень 5</MenuItem>
+                <MenuItem value={5}>Уровень 6</MenuItem>
+              </Select>
+            </FormControl>
+          )}
           {!window.screenTop && !window.screenY ? (
             <StyledIconButton onClick={changeFullscreen.enter}>
               <Fullscreen fontSize="large" style={{ color: '#fff' }} />
@@ -194,6 +206,7 @@ const InitialPage: React.FC<IPageProps> = ({
 
 const mapStateToProps = (state: any) => ({
   nameMiniGame: state.controllers.nameMiniGame,
+  isAuth: state.userReducer.isAuth,
 });
 
 export default connect(mapStateToProps)(InitialPage);

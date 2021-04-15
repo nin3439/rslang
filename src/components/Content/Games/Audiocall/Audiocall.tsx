@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
-import { Game } from 'components/Content/Games/Audiocall/components/Game';
+import Game from 'components/Content/Games/Audiocall/components/Game';
 import InitialPage from 'components/Content/Games/commonComponents/InitialPage';
 import Results from 'components/Content/Games/commonComponents/Results';
 import { GAMES } from 'constants/games';
@@ -40,10 +40,10 @@ const Audiocall: React.FC<IAudiocallProps> = ({ changeNameGame }) => {
   }, []);
 
   useEffect(() => {
-    if (!isGameStart && allRightAnswers.length) {
+    if (!isGameStart && (allRightAnswers.length || allWrongAnswers.length)) {
       setIsResultsShow(true);
     }
-  }, [isGameStart, allRightAnswers]);
+  }, [isGameStart, allRightAnswers, allWrongAnswers]);
 
   return (
     <FullScreen handle={changeFullscreen}>

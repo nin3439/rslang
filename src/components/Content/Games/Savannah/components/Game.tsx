@@ -1,19 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, IconButton, Typography } from '@material-ui/core';
-import { Lens } from '@material-ui/icons';
+import { Favorite } from '@material-ui/icons';
 import { BigLoader } from 'components/Authorization/components/BigLoader';
-import { WordInfo } from 'components/Content/Games/Savannah/components/WordInfo';
+import { FaillingWord } from 'components/Content/Games/Savannah/components/FallingWord';
 import { Answers } from 'components/Content/Games/Savannah/components/Answers';
 import { PAGE_NUMBER } from 'constants/pageNumber';
 import { getWords } from 'api/words';
 import { IWord } from 'components/Content/Games/types';
 import { ArrowBack } from '@material-ui/icons';
 import styled from 'styled-components';
+import useSound from 'use-sound';
+import { useParams } from 'react-router';
+import { connect } from 'react-redux';
+const wrongAnswerSound = require('assets/sounds/wrongAnswer.mp3');
+const rightAnswerSound = require('assets/sounds/rightAnswer.mp3');
 
 const StyledIconButton = styled(IconButton)`
   &.MuiIconButton-root {
     position: absolute;
-    top: 30px;
+    top: 20px;
     left: 30px;
     transform: scale(1);
     transition: transform 0.5s;
@@ -22,15 +27,25 @@ const StyledIconButton = styled(IconButton)`
       transition: transform 0.5s;
     }
     @media (max-width: 700px) {
-      top: 5px;
+      top: 3px;
       left: 5px;
     }
   }
 `;
 
-const StyledTypography = styled(Typography)`
+const StyledIconGrid = styled(Grid)`
   position: absolute;
   top: 30px;
+  right: 30px;
+  @media (max-width: 700px) {
+    top: 5px;
+    right: 5px;
+  }
+`;
+
+const StyledTypography = styled(Typography)`
+  position: absolute;
+  bottom: 30px;
   right: 45px;
   transform: scale(1);
   transition: transform 0.5s;
@@ -44,32 +59,47 @@ const StyledTypography = styled(Typography)`
   }
 `;
 
+interface IParams {
+  link: string;
+  groupNumber: string;
+  pageNumber: string;
+}
+
 interface IGameProps {
   setIsGameStart: (isGameStart: boolean) => void;
   setAllRightAnswers: (allRightAnswers: any) => void;
   setAllWrongAnswers: (allWrongAnswers: any) => void;
   level: number;
+  isAuth: boolean;
+  currentWords: IWord[];
 }
 
-export const Game: React.FC<IGameProps> = ({
+const Game: React.FC<IGameProps> = ({
   setIsGameStart,
   setAllRightAnswers,
   setAllWrongAnswers,
   level,
+  isAuth,
+  currentWords,
 }) => {
   const [words, setWords] = useState<IWord[] | []>([]);
   const [randomWord, setRandomWord] = useState<IWord | null>(null);
   const [playedWords, setPlayedWords] = useState<string[]>([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [responseOptions, setResponseOptions] = useState<string[]>([]);
-  const [isRightWordShown, setIsRightWordShown] = useState(false);
   const [rightAnswer, setRightAnswer] = useState<string | []>('');
   const [wrongAnswer, setWrongAnswer] = useState<string | []>('');
-  const [circlesColors, setCirclesColors] = useState<string[]>(
-    Array(20).fill('')
-  );
-  let [timeLeft, setTimeLeft] = React.useState(6);
-  let [showWord, setShowWord] = React.useState('inherit');
+  const [lifes, setLifes] = useState<string[]>(Array(5).fill('red'));
+  const [timeLeft, setTimeLeft] = useState(6);
+  const [showWord, setShowWord] = useState('inherit');
+
+  const params: IParams = useParams();
+  const [playWrongAnswer] = useSound(wrongAnswerSound.default, {
+    volume: 0.45,
+  });
+  const [playRightAnswer] = useSound(rightAnswerSound.default, {
+    volume: 0.35,
+  });
 
   const simpleHideWord = () => {
     setShowWord('none');
@@ -80,11 +110,16 @@ export const Game: React.FC<IGameProps> = ({
   };
 
   useEffect(() => {
-    getWords(level, Math.floor(Math.random() * PAGE_NUMBER)).then((res) => {
-      setWords(res);
+    if (isAuth && params.link) {
+      setWords(currentWords);
       setIsDataLoaded(true);
-    });
-  }, [level]);
+    } else {
+      getWords(level, Math.floor(Math.random() * PAGE_NUMBER)).then((res) => {
+        setWords(res);
+        setIsDataLoaded(true);
+      });
+    }
+  }, [level, params, isAuth, currentWords]);
 
   useEffect(() => {
     if (isDataLoaded) {
@@ -94,7 +129,10 @@ export const Game: React.FC<IGameProps> = ({
   }, [isDataLoaded]);
 
   useEffect(() => {
-    if (playedWords.length === words.length && words.length) {
+    if (
+      (playedWords.length === words.length && words.length) ||
+      lifes.every((life) => life === 'seashell')
+    ) {
       setIsGameStart(false);
     }
     // eslint-disable-next-line
@@ -122,22 +160,21 @@ export const Game: React.FC<IGameProps> = ({
     setResponseOptions(arrResponse);
   };
 
+  console.log(playedWords);
+
   const checkIsAnswerRight = (response: string) => {
     if (response === randomWord?.wordTranslate) {
       setAllRightAnswers((prev: IWord[]) => [...prev, randomWord]);
       setRightAnswer(response);
-      setCirclesColors((prev: any) => {
-        prev.splice(playedWords.length, 1, 'darkgreen');
-        return [...prev];
-      });
+      playRightAnswer();
     } else {
       setAllWrongAnswers((prev: IWord[]) => [...prev, randomWord]);
       setWrongAnswer(response);
-      setCirclesColors((prev: any) => {
-        prev.splice(playedWords.length, 1, 'firebrick');
-        return [...prev];
+      playWrongAnswer();
+      setLifes((prev: string[]) => {
+        prev.splice(0, 1);
+        return [...prev, 'seashell'];
       });
-
       if (randomWord?.wordTranslate) {
         setRightAnswer(randomWord?.wordTranslate);
       }
@@ -149,40 +186,18 @@ export const Game: React.FC<IGameProps> = ({
     let sec = setTimeout(() => {
       setTimeLeft((prev: number) => (prev = 6));
     });
-    if (!isRightWordShown) {
-      checkIsAnswerRight(response);
-      setIsRightWordShown(true);
-      setAllWrongAnswers((prev: IWord[]) => [...prev, randomWord]);
-      if (randomWord && !playedWords.includes(randomWord?.word)) {
-        setPlayedWords((prev: string[]) => [...prev, randomWord?.word]);
-      }
+    checkIsAnswerRight(response);
+    if (randomWord && !playedWords.includes(randomWord?.word)) {
+      setPlayedWords((prev: string[]) => [...prev, randomWord?.word]);
     }
-    setIsRightWordShown(false);
+    // setTimeout(() => {
     getRandomWord();
     setRightAnswer('');
     setWrongAnswer('');
+    // }, 1000);
     return function cleanUp() {
       clearTimeout(sec);
     };
-  };
-
-  const handleNextWordClick = () => {
-    if (isRightWordShown) {
-      setIsRightWordShown(false);
-      getRandomWord();
-      setRightAnswer('');
-      setWrongAnswer('');
-    } else {
-      setIsRightWordShown(true);
-      setAllWrongAnswers((prev: IWord[]) => [...prev, randomWord]);
-      if (randomWord && !playedWords.includes(randomWord?.word)) {
-        setPlayedWords((prev: string[]) => [...prev, randomWord?.word]);
-      }
-      setCirclesColors((prev: any) => {
-        prev.splice(playedWords.length, 1, 'firebrick');
-        return [...prev];
-      });
-    }
   };
 
   useEffect(() => {
@@ -211,17 +226,12 @@ export const Game: React.FC<IGameProps> = ({
       direction="column"
       alignItems="center"
       justify="center"
-      style={{ height: '100%', position: 'relative', overflow: 'auto' }}
+      style={{ height: '100vh', position: 'relative', overflow: 'auto' }}
     >
       {!isDataLoaded ? (
         <BigLoader />
       ) : (
         <>
-          <WordInfo
-            isRightWordShown={isRightWordShown}
-            randomWord={randomWord}
-            showWord={showWord}
-          />
           <StyledIconButton
             onClick={() => {
               setIsGameStart(false);
@@ -231,6 +241,25 @@ export const Game: React.FC<IGameProps> = ({
           >
             <ArrowBack fontSize="large" style={{ color: '#fff' }} />
           </StyledIconButton>
+          <StyledIconGrid>
+            {lifes.map((life: string, index: number) => (
+              <Favorite
+                key={index}
+                style={{
+                  color: `${life}`,
+                  margin: '3px',
+                  width: '25px',
+                  height: '25px',
+                }}
+              ></Favorite>
+            ))}
+          </StyledIconGrid>
+
+          <FaillingWord
+            randomWord={randomWord}
+            showWord={showWord}
+            timeLeft={timeLeft}
+          />
           <StyledTypography variant="h4" style={{ color: '#fff' }}>
             {timeLeft}
           </StyledTypography>
@@ -242,27 +271,22 @@ export const Game: React.FC<IGameProps> = ({
           >
             <Answers
               handleAnswerClick={handleAnswerClick}
-              handleNextWordClick={handleNextWordClick}
               responseOptions={responseOptions}
               rightAnswer={rightAnswer.toString()}
               wrongAnswer={wrongAnswer.toString()}
-              isRightWordShown={isRightWordShown}
             />
-            <Grid container alignItems="center" justify="center">
-              {circlesColors.map((color, index) => (
-                <Lens
-                  key={index}
-                  style={{
-                    color: `${color ? color : 'white'}`,
-                    margin: '3px',
-                    width: '15px',
-                  }}
-                />
-              ))}
-            </Grid>
           </Grid>
         </>
       )}
     </Grid>
   );
 };
+
+const MapStateToProps = (state: any, ownprops: any) => {
+  return {
+    currentWords: state.textbook.currentWords,
+    isAuth: state.userReducer.isAuth,
+  };
+};
+
+export default connect(MapStateToProps, null)(Game);

@@ -8,6 +8,8 @@ import { getWords } from 'api/words';
 import { IWord } from 'components/Content/Games/types';
 import { ArrowBack } from '@material-ui/icons';
 import styled from 'styled-components';
+import { useParams } from 'react-router';
+import { connect } from 'react-redux';
 
 const StyledIconButton = styled(IconButton)`
   &.MuiIconButton-root {
@@ -91,30 +93,46 @@ const StyledButton = styled(Button)`
   }
 `;
 
+interface IParams {
+  link: string;
+  groupNumber: string;
+  pageNumber: string;
+}
+
 interface IGameProps {
   setIsGameStart: (isGameStart: boolean) => void;
   setRightAnswers: (rightAnswers: any) => void;
   setWrongAnswers: (wrongAnswers: any) => void;
   level: number;
+  isAuth: boolean;
+  currentWords: IWord[];
 }
 
-export const Game: React.FC<IGameProps> = ({
+const Game: React.FC<IGameProps> = ({
   setIsGameStart,
   setRightAnswers,
   setWrongAnswers,
   level,
+  isAuth,
+  currentWords,
 }) => {
   const [words, setWords] = useState<IWord[] | []>([]);
   const [playedWords, setPlayedWords] = useState<string[]>([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [clickedWord, setClickedWord] = useState<IWord | null>(null);
+  const params: IParams = useParams();
 
   useEffect(() => {
-    getWords(level, Math.floor(Math.random() * PAGE_NUMBER)).then((res) => {
-      setWords(res.slice(0, 10));
+    if (isAuth && params.link) {
+      setWords(currentWords.slice(0, 10));
       setIsDataLoaded(true);
-    });
-  }, [level]);
+    } else {
+      getWords(level, Math.floor(Math.random() * PAGE_NUMBER)).then((res) => {
+        setWords(res);
+        setIsDataLoaded(true);
+      });
+    }
+  }, [level, params, isAuth, currentWords]);
 
   const clickHandler = (event: any) => {
     console.log(event.target.id);
@@ -219,3 +237,12 @@ export const Game: React.FC<IGameProps> = ({
     </Grid>
   );
 };
+
+const MapStateToProps = (state: any, ownprops: any) => {
+  return {
+    currentWords: state.textbook.currentWords,
+    isAuth: state.userReducer.isAuth,
+  };
+};
+
+export default connect(MapStateToProps, null)(Game);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
-import { Game } from 'components/Content/Games/Savannah/components/Game';
+import Game from 'components/Content/Games/Savannah/components/Game';
 import InitialPage from 'components/Content/Games/commonComponents/InitialPage';
 import Results from 'components/Content/Games/commonComponents/Results';
 import { GAMES } from 'constants/games';
@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 const StyledGrid = styled(Grid)`
-  background-image: url(https://img1.goodfon.ru/wallpaper/nbig/d/51/tekstura-tekstury-derevo.jpg);
+  background-image: url(https://s3.nat-geo.ru/images/2019/5/16/38fc4adf5b0340628aa9fb94120c7a10.max-2500x1500.jpg);
   height: 100vh;
   background-position: center;
   background-repeat: no-repeat;
@@ -40,10 +40,10 @@ const Savannah: React.FC<ISavannahProps> = ({ changeNameGame }) => {
   }, []);
 
   useEffect(() => {
-    if (!isGameStart && allRightAnswers.length) {
+    if (!isGameStart && (allRightAnswers.length || allWrongAnswers.length)) {
       setIsResultsShow(true);
     }
-  }, [isGameStart, allRightAnswers]);
+  }, [isGameStart, allRightAnswers, allWrongAnswers]);
 
   return (
     <FullScreen handle={changeFullscreen}>

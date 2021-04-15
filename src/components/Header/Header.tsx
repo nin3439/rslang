@@ -76,39 +76,37 @@ const Header: React.FC<any> = ({
     >
       <StyledMenuBlock />
       <Typography variant="h5">DREAMLANG</Typography>
-      <Grid>
-        <StyledIconButton onClick={() => updateMode(showNight)}>
-          {showNight ? <Brightness2 /> : <WbSunny />}
-        </StyledIconButton>
-        {isAuth ? (
-          <Grid
-            container
-            direction="row"
-            justify="center"
-            alignItems="center"
-            wrap="nowrap"
-            style={{ maxWidth: '200px' }}
-          >
-            <div>{localStorage.getItem('userName')}</div>
-            <Avatar src={userAvatar} style={{ margin: '0 0 0 10px' }} />
-            <StyledIconButton
-              onClick={() => {
-                logout();
-              }}
-            >
-              <ExitToApp />
-            </StyledIconButton>
-          </Grid>
-        ) : (
+      <StyledIconButton onClick={() => updateMode(showNight)}>
+        {showNight ? <Brightness2 /> : <WbSunny />}
+      </StyledIconButton>
+      {isAuth ? (
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          alignItems="center"
+          wrap="nowrap"
+          style={{ width: '200px' }}
+        >
+          <div>{localStorage.getItem('userName')}</div>
+          <Avatar src={userAvatar} style={{ margin: '0 0 0 10px' }} />
           <StyledIconButton
             onClick={() => {
-              changeModalAuth();
+              logout();
             }}
           >
-            <AccountCircle />
+            <ExitToApp />
           </StyledIconButton>
-        )}
-      </Grid>
+        </Grid>
+      ) : (
+        <StyledIconButton
+          onClick={() => {
+            changeModalAuth();
+          }}
+        >
+          <AccountCircle />
+        </StyledIconButton>
+      )}
     </StyledGrid>
   );
 };

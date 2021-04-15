@@ -11,6 +11,7 @@ import { IWord } from 'components/Content/Games/types';
 import { ArrowBack } from '@material-ui/icons';
 import styled from 'styled-components';
 import { useParams } from 'react-router';
+import { connect } from 'react-redux';
 
 const StyledIconButton = styled(IconButton)`
   &.MuiIconButton-root {
@@ -35,13 +36,23 @@ interface IGameProps {
   setAllRightAnswers: (allRightAnswers: any) => void;
   setAllWrongAnswers: (allWrongAnswers: any) => void;
   level: number;
+  isAuth: boolean;
+  currentWords: IWord[];
 }
 
-export const Game: React.FC<IGameProps> = ({
+interface IParams {
+  link: string;
+  groupNumber: string;
+  pageNumber: string;
+}
+
+const Game: React.FC<IGameProps> = ({
   setIsGameStart,
   setAllRightAnswers,
   setAllWrongAnswers,
   level,
+  isAuth,
+  currentWords,
 }) => {
   const [words, setWords] = useState<IWord[] | []>([]);
   const [randomWord, setRandomWord] = useState<IWord | null>(null);
@@ -52,15 +63,19 @@ export const Game: React.FC<IGameProps> = ({
   const [rightAnswer, setRightAnswer] = useState<string | []>('');
   const [wrongAnswer, setWrongAnswer] = useState<string | []>('');
   const [circlesColors, setCirclesColors] = useState<string[] | []>([]);
-  const params = useParams();
-  console.log(params);
+  const params: IParams = useParams();
 
   useEffect(() => {
-    getWords(level, Math.floor(Math.random() * PAGE_NUMBER)).then((res) => {
-      setWords(res);
+    if (isAuth && params.link) {
+      setWords(currentWords);
       setIsDataLoaded(true);
-    });
-  }, [level]);
+    } else {
+      getWords(level, Math.floor(Math.random() * PAGE_NUMBER)).then((res) => {
+        setWords(res);
+        setIsDataLoaded(true);
+      });
+    }
+  }, [level, params, isAuth, currentWords]);
 
   useEffect(() => {
     if (isDataLoaded) {
@@ -216,3 +231,12 @@ export const Game: React.FC<IGameProps> = ({
     </Grid>
   );
 };
+
+const MapStateToProps = (state: any, ownprops: any) => {
+  return {
+    currentWords: state.textbook.currentWords,
+    isAuth: state.userReducer.isAuth,
+  };
+};
+
+export default connect(MapStateToProps, null)(Game);

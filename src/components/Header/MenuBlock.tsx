@@ -40,11 +40,15 @@ const StyledListItemIcon = styled(ListItemIcon)`
 
 const StyledListItemText = styled(ListItemText)`
   color: ${({ theme }) => theme.text};
-  text-decoration: none;
-
+  transition: color 0.5s;
   &:hover {
-    text-decoration: underline;
+    color: #f3727b;
+    transition: color 0.5s;
   }
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
 `;
 
 const StyledListItem = styled(ListItem)`
@@ -83,7 +87,7 @@ export const MenuBlock = () => {
       <Drawer anchor={'left'} open={isMenuOpen} onClose={toggleDrawer()}>
         <StyledGrid className={classes.list} onClick={toggleDrawer()}>
           <List>
-            <Link to="/">
+            <StyledLink to="/">
               <StyledListItem
                 button
                 key={'Главная'}
@@ -95,8 +99,8 @@ export const MenuBlock = () => {
                 </StyledListItemIcon>
                 <StyledListItemText primary={'Главная'} />
               </StyledListItem>
-            </Link>
-            <Link to="/textbook">
+            </StyledLink>
+            <StyledLink to="/textbook">
               <StyledListItem
                 button
                 key={'Электронный учебник'}
@@ -110,8 +114,8 @@ export const MenuBlock = () => {
                 </StyledListItemIcon>
                 <StyledListItemText primary={'Электронный учебник'} />
               </StyledListItem>
-            </Link>
-            <Link to="/games">
+            </StyledLink>
+            <StyledLink to="/games">
               <StyledListItem
                 button
                 key={'Мини-игры'}
@@ -123,8 +127,8 @@ export const MenuBlock = () => {
                 </StyledListItemIcon>
                 <StyledListItemText primary={'Мини-игры'} />
               </StyledListItem>
-            </Link>
-            <Link to="/statistics">
+            </StyledLink>
+            <StyledLink to="/statistics">
               <StyledListItem
                 button
                 key={'Статистика'}
@@ -136,7 +140,7 @@ export const MenuBlock = () => {
                 </StyledListItemIcon>
                 <StyledListItemText primary={'Статистика'} />
               </StyledListItem>
-            </Link>
+            </StyledLink>
             <DreamImg src={dreamteam} />
           </List>
         </StyledGrid>

@@ -3,7 +3,7 @@ import { Grid } from '@material-ui/core';
 import { GAMES } from 'constants/games';
 import InitialPage from 'components/Content/Games/commonComponents/InitialPage';
 import Results from 'components/Content/Games/commonComponents/Results';
-import { Game } from 'components/Content/Games/Sprint/components/Game';
+import Game from 'components/Content/Games/Sprint/components/Game';
 import { IWord } from 'components/Content/Games/types';
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import { changeNameMiniGame } from 'redux/actions/controllerActions';
@@ -37,10 +37,10 @@ const Sprint: React.FC<ISprintProps> = ({ changeNameGame }) => {
   }, []);
 
   useEffect(() => {
-    if (!isGameStart && rightAnswers.length) {
+    if (!isGameStart && (rightAnswers.length || wrongAnswers.length)) {
       setIsResultsShow(true);
     }
-  }, [isGameStart, rightAnswers]);
+  }, [isGameStart, rightAnswers, wrongAnswers]);
 
   return (
     <FullScreen handle={changeFullscreen}>

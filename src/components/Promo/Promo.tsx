@@ -44,7 +44,7 @@ const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
         </LeftHeadBlock>
         <RightHeadBlock>
           <HeadImage
-            src="https://images.unsplash.com/photo-1487001175664-86de872e3cd6?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80"
+            src="https://www.zastavki.com/pictures/640x480/2013Animals___Dogs_Dog_reading_a_book_042363_29.jpg"
             alt="dog"
           />
         </RightHeadBlock>

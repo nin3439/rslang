@@ -25,7 +25,7 @@ export const GAMES = [
   {
     name: 'Speak It',
     description:
-      'Помогает выучить значение слова и тренирует навык произношения',
+      'Нажмите на карточку со словом, чтобы увидеть его перевод и услышать звучание. Нажмите на кнопку "Cтарт" и  произносите слова в микрофон.',
     path: '/games/speakit',
     background:
       'https://images.unsplash.com/photo-1527161153332-99adcc6f2966?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=749&q=80',
