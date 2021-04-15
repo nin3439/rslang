@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Dialog,
   DialogContent,
@@ -8,9 +8,11 @@ import {
   Grid,
 } from '@material-ui/core';
 import { VolumeUp } from '@material-ui/icons';
-import { IWord } from 'components/Content/Games/types';
+import { IWord, IPropsUpdate } from 'types';
 import { connect } from 'react-redux';
+import { useParams } from 'react-router';
 import styled from 'styled-components';
+import { updateWord } from 'redux/actions/actionTextbook';
 
 const StyledGrid = styled(Grid)`
   height: 300px;
@@ -71,6 +73,12 @@ const StyledButton = styled(Button)`
   }
 `;
 
+interface IParams {
+  link: string;
+  groupNumber: string;
+  pageNumber: string;
+}
+
 interface IResultsProps {
   isResultsShow: boolean;
   setIsResultsShow: (isResultsShow: boolean) => void;
@@ -81,6 +89,13 @@ interface IResultsProps {
   score?: number;
   setScore?: (score: number) => void;
   nameMiniGame: string;
+  isAuth: boolean;
+  updateWord: (
+    body: IPropsUpdate,
+    idWord: string,
+    method: 'post' | 'put',
+    numberGroup: any
+  ) => void;
 }
 
 const Results: React.FC<IResultsProps> = ({
@@ -93,12 +108,35 @@ const Results: React.FC<IResultsProps> = ({
   setRightAnswers,
   setWrongAnswers,
   nameMiniGame,
+  updateWord,
+  isAuth,
 }) => {
+  const params: IParams = useParams();
   const playEnglishWord = (name: string | undefined) => {
     const audio = new Audio();
     audio.src = `https://dream-react-rslang-server.herokuapp.com/${name}`;
     audio.play();
   };
+
+  useEffect(() => {
+    if (isAuth && params.link) {
+      const allLearnWords = [...rightAnswers, ...wrongAnswers];
+      allLearnWords.forEach((learnWord: IWord | null) => {
+        const body = {
+          optional: {
+            isLearn: true,
+          },
+        };
+        const method = learnWord?.userWord ? 'put' : 'post';
+        return (
+          learnWord &&
+          updateWord(body, learnWord?._id, method, learnWord?.group)
+        );
+      });
+    }
+
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <Dialog onClose={() => setIsResultsShow(false)} open={isResultsShow}>
@@ -215,6 +253,7 @@ const Results: React.FC<IResultsProps> = ({
 
 const mapStateToProps = (state: any) => ({
   nameMiniGame: state.controllers.nameMiniGame,
+  isAuth: state.userReducer.isAuth,
 });
 
-export default connect(mapStateToProps)(Results);
+export default connect(mapStateToProps, { updateWord })(Results);

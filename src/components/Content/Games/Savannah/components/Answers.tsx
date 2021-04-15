@@ -34,7 +34,7 @@ const StyledButtonResponse = styled(Button)`
     min-height: 60px;
     min-width: 200px;
     margin: 10px;
-    background: #3d2b53d4;
+    background: #2b405452;
     transform: scale(1);
     transition: transform 0.5s;
     &:hover {
@@ -44,7 +44,7 @@ const StyledButtonResponse = styled(Button)`
         }
         return 'none';
       }};
-      background: #3d2b53d4;
+      background: #2b405452;
       transform: scale(1.1);
       transition: transform 0.5s;
     }
@@ -64,28 +64,20 @@ const StyledGrid = styled(Grid)`
 
 interface IAnswersProps {
   handleAnswerClick: (response: string) => void;
-  handleNextWordClick: () => void;
   responseOptions: string[];
   rightAnswer: string;
   wrongAnswer: string;
-  isRightWordShown: boolean;
 }
 
 export const Answers: React.FC<IAnswersProps> = ({
   handleAnswerClick,
-  handleNextWordClick,
   responseOptions,
-  isRightWordShown,
   rightAnswer,
   wrongAnswer,
 }) => {
   const clickKeysHandler = (event: any) => {
     if ([49, 50, 51, 52].includes(event.keyCode)) {
-      if (!isRightWordShown) {
-        handleAnswerClick(responseOptions[event.key - 1]);
-      }
-    } else if (event.keyCode === 13) {
-      handleNextWordClick();
+      handleAnswerClick(responseOptions[event.key - 1]);
     } else return;
   };
 
@@ -98,7 +90,12 @@ export const Answers: React.FC<IAnswersProps> = ({
 
   return (
     <>
-      <StyledGrid container alignItems="center" justify="center">
+      <StyledGrid
+        container
+        alignItems="center"
+        justify="center"
+        style={{ marginTop: '-35vh' }}
+      >
         {responseOptions.map((response, index) => {
           return (
             <StyledButtonResponse

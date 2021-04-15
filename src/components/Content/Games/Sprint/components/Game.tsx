@@ -7,9 +7,12 @@ import { PaperHeader } from 'components/Content/Games/Sprint/components/PaperHea
 import { GameButtons } from 'components/Content/Games/Sprint/components/GameButtons';
 import { Timer } from 'components/Content/Games/Sprint/components/Timer';
 import { Start } from 'components/Content/Games/Sprint/components/Start';
-import { IWord } from 'components/Content/Games/types';
+import { IWord } from 'types';
 import useSound from 'use-sound';
 import styled from 'styled-components';
+import { useParams } from 'react-router';
+import { connect } from 'react-redux';
+import { BigLoader } from 'components/Authorization/components/BigLoader';
 const wrongAnswerSound = require('assets/sounds/wrongAnswer.mp3');
 const rightAnswerSound = require('assets/sounds/rightAnswer.mp3');
 const inRange = require('lodash.inrange');
@@ -54,6 +57,12 @@ const StyledPaper = styled(Paper)`
   }
 `;
 
+interface IParams {
+  link: string;
+  groupNumber: string;
+  pageNumber: string;
+}
+
 interface IGameProps {
   setIsGameStart: (isGameStart: boolean) => void;
   level: number;
@@ -65,15 +74,19 @@ interface IGameProps {
   ) => void;
   score: number;
   setScore: (score: (value: number) => number) => void;
+  isAuth: boolean;
+  currentWords: IWord[];
 }
 
-export const Game: React.FC<IGameProps> = ({
+const Game: React.FC<IGameProps> = ({
   setIsGameStart,
   level,
   setWrongAnswers,
   setRightAnswers,
   score,
   setScore,
+  isAuth,
+  currentWords,
 }) => {
   const [words, setWords] = useState<IWord[] | []>([]);
   const [randomWord, setRandomWord] = useState<IWord | null>(null);
@@ -88,6 +101,7 @@ export const Game: React.FC<IGameProps> = ({
     setNumberConsecutiveRightAnswers,
   ] = useState(0);
   const [isStartProgresShown, setIsStartProgresShown] = useState(true);
+  const params: IParams = useParams();
 
   const [playWrongAnswer] = useSound(wrongAnswerSound.default, {
     volume: 0.45,
@@ -111,10 +125,14 @@ export const Game: React.FC<IGameProps> = ({
   };
 
   useEffect(() => {
-    getWords(level, getRandomPageNumber()).then((res) => {
-      addWrongTranslation(res);
-    });
-  }, [level]);
+    if (isAuth && params.link) {
+      addWrongTranslation(currentWords);
+    } else {
+      getWords(level, getRandomPageNumber()).then((res) => {
+        addWrongTranslation(res);
+      });
+    }
+  }, [level, params, isAuth, currentWords]);
 
   useEffect(() => {
     if (words.length === 5) {
@@ -215,6 +233,8 @@ export const Game: React.FC<IGameProps> = ({
     >
       {isStartProgresShown ? (
         <Start setIsStartProgresShown={setIsStartProgresShown} />
+      ) : !isWrongTranslationAdded ? (
+        <BigLoader />
       ) : (
         <>
           <GameHeader
@@ -222,6 +242,7 @@ export const Game: React.FC<IGameProps> = ({
             isSoundOn={isSoundOn}
             setIsGameStart={setIsGameStart}
             setRightAnswers={setRightAnswers}
+            setWrongAnswers={setWrongAnswers}
           />
           <Typography
             variant="h3"
@@ -266,3 +287,12 @@ export const Game: React.FC<IGameProps> = ({
     </StyledGrid>
   );
 };
+
+const MapStateToProps = (state: any, ownprops: any) => {
+  return {
+    currentWords: state.textbook.currentWords,
+    isAuth: state.userReducer.isAuth,
+  };
+};
+
+export default connect(MapStateToProps, null)(Game);

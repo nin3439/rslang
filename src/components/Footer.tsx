@@ -19,6 +19,7 @@ const StyledLink = styled(Link)`
 
 const StyledGrid = styled(Grid)`
   padding: 0 40px;
+  height: 50px;
 `;
 
 export const Footer: React.FC = () => {

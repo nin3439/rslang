@@ -20,12 +20,13 @@ export const GAMES = [
       'Выберите из предложенных вариантов ответа правильный перевод слова, который услышите',
     path: '/games/audiocall',
     background:
-      'https://images.unsplash.com/photo-1560579499-ab30d29dfd9a?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80',
+      'https://images.unsplash.com/photo-1592304699501-1bd1c422a661?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1468&q=80',
   },
   {
-    name: 'Какая-то игра',
-    description: 'Описание',
-    path: '/games/game',
+    name: 'Speak It',
+    description:
+      'Нажмите на карточку со словом, чтобы увидеть его перевод и услышать звучание. Нажмите на кнопку "Cтарт" и  произносите слова в микрофон.',
+    path: '/games/speakit',
     background:
       'https://images.unsplash.com/photo-1527161153332-99adcc6f2966?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=749&q=80',
   },

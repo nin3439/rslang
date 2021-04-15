@@ -75,7 +75,7 @@ const Header: React.FC<any> = ({
       alignItems="center"
     >
       <StyledMenuBlock />
-      <Typography variant="h5">RS Lang</Typography>
+      <Typography variant="h5">DREAMLANG</Typography>
       <StyledIconButton onClick={() => updateMode(showNight)}>
         {showNight ? <Brightness2 /> : <WbSunny />}
       </StyledIconButton>
@@ -86,7 +86,7 @@ const Header: React.FC<any> = ({
           justify="center"
           alignItems="center"
           wrap="nowrap"
-          style={{ maxWidth: '200px' }}
+          style={{ width: '200px' }}
         >
           <div>{localStorage.getItem('userName')}</div>
           <Avatar src={userAvatar} style={{ margin: '0 0 0 10px' }} />

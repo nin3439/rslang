@@ -10,7 +10,7 @@ import {
 } from 'components/Content/Games/Sprint/utils';
 import useSound from 'use-sound';
 import styled from 'styled-components';
-import { IWord } from 'components/Content/Games/types';
+import { IWord } from 'types';
 const inRange = require('lodash.inrange');
 
 interface StyledProps {

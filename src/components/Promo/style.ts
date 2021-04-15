@@ -13,9 +13,10 @@ export const HeadBlock = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  align-items: center;
   background: ${({ theme }) => theme.backgroundImage};
   background-size: cover;
-  height: 100vh;
+  height: 70vh;
   background-position: center center;
 `;
 

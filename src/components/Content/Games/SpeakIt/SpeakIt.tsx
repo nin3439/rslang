@@ -1,49 +1,46 @@
 import React, { useEffect, useState } from 'react';
 import { Grid } from '@material-ui/core';
-import Game from 'components/Content/Games/Savannah/components/Game';
+import { GAMES } from 'constants/games';
 import InitialPage from 'components/Content/Games/commonComponents/InitialPage';
 import Results from 'components/Content/Games/commonComponents/Results';
-import { GAMES } from 'constants/games';
-import { FullScreen, useFullScreenHandle } from 'react-full-screen';
+import Game from 'components/Content/Games/SpeakIt/components/Game';
 import { IWord } from 'types';
+import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 import { changeNameMiniGame } from 'redux/actions/controllerActions';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 const StyledGrid = styled(Grid)`
-  background-image: url(https://s3.nat-geo.ru/images/2019/5/16/38fc4adf5b0340628aa9fb94120c7a10.max-2500x1500.jpg);
+  background-image: url(https://7themes.su/_ph/37/976700070.png);
   height: 100vh;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 `;
 
-interface ISavannahProps {
+interface ISpeakItProps {
   changeNameGame: (name: string) => void;
 }
 
-const Savannah: React.FC<ISavannahProps> = ({ changeNameGame }) => {
+const SpeakIt: React.FC<ISpeakItProps> = ({ changeNameGame }) => {
   const [isGameStart, setIsGameStart] = useState(false);
   const [level, setLevel] = useState(0);
   const changeFullscreen = useFullScreenHandle();
-  const [allRightAnswers, setAllRightAnswers] = useState<(IWord | null)[] | []>(
-    []
-  );
-  const [allWrongAnswers, setAllWrongAnswers] = useState<(IWord | null)[] | []>(
-    []
-  );
+  const [rightAnswers, setRightAnswers] = useState<(IWord | null)[] | []>([]);
+  const [wrongAnswers, setWrongAnswers] = useState<(IWord | null)[] | []>([]);
+  const [score, setScore] = useState(0);
   const [isResultsShow, setIsResultsShow] = useState(false);
 
   useEffect(() => {
-    changeNameGame('savannah');
+    changeNameGame('speakit');
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
-    if (!isGameStart && (allRightAnswers.length || allWrongAnswers.length)) {
+    if (!isGameStart && (rightAnswers.length || wrongAnswers.length)) {
       setIsResultsShow(true);
     }
-  }, [isGameStart, allRightAnswers, allWrongAnswers]);
+  }, [isGameStart, rightAnswers, wrongAnswers]);
 
   return (
     <FullScreen handle={changeFullscreen}>
@@ -57,8 +54,8 @@ const Savannah: React.FC<ISavannahProps> = ({ changeNameGame }) => {
           <Game
             setIsGameStart={setIsGameStart}
             level={level}
-            setAllRightAnswers={setAllRightAnswers}
-            setAllWrongAnswers={setAllWrongAnswers}
+            setRightAnswers={setRightAnswers}
+            setWrongAnswers={setWrongAnswers}
           />
         ) : (
           <InitialPage
@@ -66,17 +63,19 @@ const Savannah: React.FC<ISavannahProps> = ({ changeNameGame }) => {
             level={level}
             setLevel={setLevel}
             changeFullscreen={changeFullscreen}
-            game={GAMES[1]}
+            game={GAMES[3]}
           />
         )}
         {isResultsShow && (
           <Results
             isResultsShow={isResultsShow}
             setIsResultsShow={setIsResultsShow}
-            rightAnswers={allRightAnswers}
-            wrongAnswers={allWrongAnswers}
-            setRightAnswers={setAllRightAnswers}
-            setWrongAnswers={setAllWrongAnswers}
+            rightAnswers={rightAnswers}
+            wrongAnswers={wrongAnswers}
+            setRightAnswers={setRightAnswers}
+            setWrongAnswers={setWrongAnswers}
+            score={score}
+            setScore={setScore}
           />
         )}
       </StyledGrid>
@@ -92,4 +91,4 @@ const mapDispatchToProps = (dispatch: any) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(Savannah);
+export default connect(null, mapDispatchToProps)(SpeakIt);

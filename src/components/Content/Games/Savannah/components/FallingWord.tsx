@@ -1,16 +1,17 @@
 import React from 'react';
 import { Grid, Typography } from '@material-ui/core';
 import styled from 'styled-components';
-import { IWord } from 'components/Content/Games/types';
+import { IWord } from 'types';
 
 const StyledTypography = styled(Typography)`
   @keyframes move {
     from,
-    to {
+    to,
+    20% {
       top: -80px;
     }
     100% {
-      top: 280px;
+      top: 50%;
     }
   }
   position: absolute;
@@ -32,27 +33,25 @@ const GridStyleWrap = styled(Grid)`
   }
 `;
 
-interface IWordInfoProps {
+interface IFaillingWordProps {
   randomWord: IWord | null;
-  isRightWordShown: boolean;
   showWord: string;
+  timeLeft: number;
 }
 
-export const WordInfo: React.FC<IWordInfoProps> = ({
-  isRightWordShown,
+export const FaillingWord: React.FC<IFaillingWordProps> = ({
   randomWord,
   showWord,
+  timeLeft,
 }) => {
   return (
     <GridStyleWrap container alignItems="center" justify="center">
-      {isRightWordShown ? null : (
-        <StyledTypography
-          variant="h2"
-          style={{ color: '#FFF', display: `${showWord}` }}
-        >
-          {randomWord?.word}
-        </StyledTypography>
-      )}
+      <StyledTypography
+        variant="h2"
+        style={{ color: '#FFF', display: `${showWord}` }}
+      >
+        {randomWord?.word}
+      </StyledTypography>
     </GridStyleWrap>
   );
 };
