@@ -31,6 +31,7 @@ const StyledGrid = styled(Grid)`
   background-size: cover;
   height: 100vh;
   background-position: center center;
+  overflow: hidden;
 `;
 
 const StyledListItemIcon = styled(ListItemIcon)`

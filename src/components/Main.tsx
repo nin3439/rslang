@@ -16,6 +16,7 @@ import Audiocall from './Content/Games/Audiocall/Audiocall';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyles } from './globalStyles';
 import { lightTheme, darkTheme } from './Themes';
+import SpeakIt from 'components/Content/Games/SpeakIt/SpeakIt';
 
 const Main: React.FC<IMainProps> = ({ isModalActive, auth }) => {
   const [theme, setTheme] = useState('light');
@@ -42,7 +43,7 @@ const Main: React.FC<IMainProps> = ({ isModalActive, auth }) => {
             path="/games/audiocall/:link/:groupNumber/:pageNumber"
             component={Audiocall}
           />
-          <Route path="/games/game" render={() => <div>game</div>} />
+          <Route path="/games/game" component={SpeakIt} />
           <React.Fragment>
             <Grid
               container
@@ -57,7 +58,6 @@ const Main: React.FC<IMainProps> = ({ isModalActive, auth }) => {
                 alignItems="center"
                 style={{
                   minHeight: 'calc(100vh - 100px)',
-                  padding: '0px',
                 }}
               >
                 <Route exact path="/">

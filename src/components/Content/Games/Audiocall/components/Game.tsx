@@ -51,11 +51,10 @@ export const Game: React.FC<IGameProps> = ({
   const [isRightWordShown, setIsRightWordShown] = useState(false);
   const [rightAnswer, setRightAnswer] = useState<string | []>('');
   const [wrongAnswer, setWrongAnswer] = useState<string | []>('');
-  const [circlesColors, setCirclesColors] = useState<string[]>(
-    Array(20).fill('')
-  );
+  const [circlesColors, setCirclesColors] = useState<string[] | []>([]);
   const params = useParams();
   console.log(params);
+
   useEffect(() => {
     getWords(level, Math.floor(Math.random() * PAGE_NUMBER)).then((res) => {
       setWords(res);
@@ -66,6 +65,7 @@ export const Game: React.FC<IGameProps> = ({
   useEffect(() => {
     if (isDataLoaded) {
       getRandomWord();
+      setCirclesColors(Array(words.length).fill(''));
     }
     // eslint-disable-next-line
   }, [isDataLoaded]);
@@ -187,7 +187,7 @@ export const Game: React.FC<IGameProps> = ({
             justify="center"
           >
             <Grid container alignItems="center" justify="center">
-              {circlesColors.map((color, index) => (
+              {circlesColors.map((color: string, index: number) => (
                 <Lens
                   key={index}
                   style={{
