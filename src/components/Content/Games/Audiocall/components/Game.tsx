@@ -66,7 +66,7 @@ const Game: React.FC<IGameProps> = ({
   const params: IParams = useParams();
 
   useEffect(() => {
-    if (isAuth && params.link) {
+    if (params.link) {
       setWords(currentWords);
       setIsDataLoaded(true);
     } else {

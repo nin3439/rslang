@@ -6,7 +6,7 @@ import { GameHeader } from 'components/Content/Games/Sprint/components/GameHeade
 import { PaperHeader } from 'components/Content/Games/Sprint/components/PaperHeader';
 import { GameButtons } from 'components/Content/Games/Sprint/components/GameButtons';
 import { Timer } from 'components/Content/Games/Sprint/components/Timer';
-import { Start } from 'components/Content/Games/Sprint/components/Start';
+import { Start } from 'components/Content/Games/commonComponents/StartLoader';
 import { IWord } from 'types';
 import useSound from 'use-sound';
 import styled from 'styled-components';
@@ -125,7 +125,7 @@ const Game: React.FC<IGameProps> = ({
   };
 
   useEffect(() => {
-    if (isAuth && params.link) {
+    if (params.link) {
       addWrongTranslation(currentWords);
     } else {
       getWords(level, getRandomPageNumber()).then((res) => {

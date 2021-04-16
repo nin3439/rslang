@@ -31,6 +31,7 @@ import { GAMES } from 'constants/games';
 const StyledIconButton = styled(IconButton)`
   color: ${({ theme }) => theme.text};
 `;
+
 const StyledNavLink = styled.div`
   position: fixed;
   width: 100%;
@@ -39,6 +40,28 @@ const StyledNavLink = styled.div`
   justify-content: space-between;
   z-index: 10;
 `;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+`;
+
+const StyledCard = styled(Card)`
+  &.MuiCard-root {
+    width: 150px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    transform: scale(1);
+    transition: transform 0.5s;
+    &:hover {
+      transform: scale(1.1);
+      transition: transform 0.5s;
+    }
+  }
+`;
+
 interface IPagesProps {
   currentWords: IWord[];
   getWords: (value: IPropsLoadWords) => void;
@@ -110,17 +133,11 @@ const Pages = ({
           <Grid container direction="row" justify="center" alignItems="center">
             {GAMES.map(({ name, path, background }) => (
               <Grid item key={name} style={{ margin: '10px' }}>
-                <Link
+                <StyledLink
                   to={`${path}/textbook/${numberGroup.groupNumber}/${numberGroup.pageNumber}`}
                 >
-                  <Card
+                  <StyledCard
                     style={{
-                      width: '200px',
-                      height: '200px',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      borderRadius: '50%',
                       background: `url(${background})`,
                       backgroundSize: 'cover',
                     }}
@@ -136,8 +153,8 @@ const Pages = ({
                         {name}
                       </Typography>
                     </CardContent>
-                  </Card>
-                </Link>
+                  </StyledCard>
+                </StyledLink>
               </Grid>
             ))}
           </Grid>

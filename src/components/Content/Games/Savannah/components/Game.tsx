@@ -12,6 +12,7 @@ import styled from 'styled-components';
 import useSound from 'use-sound';
 import { useParams } from 'react-router';
 import { connect } from 'react-redux';
+// import { Start } from 'components/Content/Games/commonComponents/StartLoader';
 const wrongAnswerSound = require('assets/sounds/wrongAnswer.mp3');
 const rightAnswerSound = require('assets/sounds/rightAnswer.mp3');
 
@@ -26,10 +27,6 @@ const StyledIconButton = styled(IconButton)`
       transform: scale(1.3);
       transition: transform 0.5s;
     }
-    @media (max-width: 700px) {
-      top: 3px;
-      left: 5px;
-    }
   }
 `;
 
@@ -37,10 +34,6 @@ const StyledIconGrid = styled(Grid)`
   position: absolute;
   top: 30px;
   right: 30px;
-  @media (max-width: 700px) {
-    top: 5px;
-    right: 5px;
-  }
 `;
 
 interface IParams {
@@ -77,6 +70,7 @@ const Game: React.FC<IGameProps> = ({
   const [timeLeft, setTimeLeft] = useState(6);
   const [showWord, setShowWord] = useState('inherit');
   const [isSoundOn, setIsSoundOn] = useState(true);
+  // const [isStartProgresShown, setIsStartProgresShown] = useState(true);
 
   const params: IParams = useParams();
   const [playWrongAnswer] = useSound(wrongAnswerSound.default, {
@@ -95,7 +89,7 @@ const Game: React.FC<IGameProps> = ({
   };
 
   useEffect(() => {
-    if (isAuth && params.link) {
+    if (params.link) {
       setWords(currentWords);
       setIsDataLoaded(true);
     } else {
@@ -216,63 +210,72 @@ const Game: React.FC<IGameProps> = ({
       justify="center"
       style={{ height: '100vh', position: 'relative' }}
     >
-      {!isDataLoaded ? (
-        <BigLoader />
-      ) : (
-        <>
-          <StyledIconButton
-            onClick={() => {
-              setIsGameStart(false);
-              setAllRightAnswers([]);
-              setAllWrongAnswers([]);
-            }}
-          >
-            <ArrowBack fontSize="large" style={{ color: '#fff' }} />
-          </StyledIconButton>
-          <StyledIconGrid>
-            {lifes.map((life: string, index: number) => (
-              <Favorite
-                key={index}
-                style={{
-                  color: `${life}`,
-                  margin: '3px',
-                  width: '25px',
-                  height: '25px',
-                }}
-              ></Favorite>
-            ))}
-          </StyledIconGrid>
-
-          <FaillingWord
-            randomWord={randomWord}
-            showWord={showWord}
-            timeLeft={timeLeft}
-          />
-          <Grid
-            container
-            direction="column"
-            alignItems="center"
-            justify="center"
-          >
-            <Answers
-              handleAnswerClick={handleAnswerClick}
-              responseOptions={responseOptions}
-              rightAnswer={rightAnswer.toString()}
-              wrongAnswer={wrongAnswer.toString()}
-            />
+      {
+        // isStartProgresShown ? (
+        //   <Start setIsStartProgresShown={setIsStartProgresShown} />
+        // ) :
+        !isDataLoaded ? (
+          <BigLoader />
+        ) : (
+          <>
             <StyledIconButton
-              style={{ top: '0', left: '0', right: '45px', bottom: '30px' }}
-              onClick={() => setIsSoundOn(!isSoundOn)}
+              onClick={() => {
+                setIsGameStart(false);
+                setAllRightAnswers([]);
+                setAllWrongAnswers([]);
+              }}
             >
-              {isSoundOn ? (
-                <VolumeUp fontSize="large" style={{ color: '#fff' }} />
-              ) : (
-                <VolumeOff fontSize="large" style={{ color: '#fff' }} />
-              )}
+              <ArrowBack fontSize="large" style={{ color: '#fff' }} />
             </StyledIconButton>
-          </Grid>
-        </>
-      )}
+            <StyledIconGrid>
+              {lifes.map((life: string, index: number) => (
+                <Favorite
+                  key={index}
+                  style={{
+                    color: `${life}`,
+                    margin: '3px',
+                    width: '25px',
+                    height: '25px',
+                  }}
+                ></Favorite>
+              ))}
+            </StyledIconGrid>
+
+            <FaillingWord
+              randomWord={randomWord}
+              showWord={showWord}
+              timeLeft={timeLeft}
+            />
+            <Grid
+              container
+              direction="column"
+              alignItems="center"
+              justify="center"
+            >
+              <Answers
+                handleAnswerClick={handleAnswerClick}
+                responseOptions={responseOptions}
+                rightAnswer={rightAnswer.toString()}
+                wrongAnswer={wrongAnswer.toString()}
+              />
+              <StyledIconButton
+                style={{
+                  top: '90%',
+                  left: '85%',
+                  height: '30px',
+                }}
+                onClick={() => setIsSoundOn(!isSoundOn)}
+              >
+                {isSoundOn ? (
+                  <VolumeUp fontSize="large" style={{ color: '#fff' }} />
+                ) : (
+                  <VolumeOff fontSize="large" style={{ color: '#fff' }} />
+                )}
+              </StyledIconButton>
+            </Grid>
+          </>
+        )
+      }
     </Grid>
   );
 };

@@ -25,12 +25,10 @@ import {
   ButtonInscription,
   StyledReactPlayer,
   TeamBlock,
-  LeftTeamBlock,
-  CenterTeamBlock,
   RightTeamBlock,
   TeamCard,
   TeamCardActionArea,
-  TeamImage,
+  LittleBlock,
 } from './style';
 
 const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
@@ -134,24 +132,12 @@ const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
               controls={true}
               loop={true}
               width="100%"
-              height="100vh"
+              height="80vh"
             />
           </StyledReactPlayer>
         </PlayerBlock>
         <TeamBlock>
-          <LeftTeamBlock>
-            <TeamImage
-              src="https://images.unsplash.com/photo-1606425271394-c3ca9aa1fc06?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=675&q=80"
-              title="Statistic"
-              style={{ maxWidth: '250px' }}
-              alt="Team"
-            />
-          </LeftTeamBlock>
-          <CenterTeamBlock>
-            <MiddleHeader>Знакомство</MiddleHeader>
-            <MiddleHeader>с нашей командой</MiddleHeader>
-            <MiddleHeader>DreamTeam</MiddleHeader>
-          </CenterTeamBlock>
+          <MiddleHeader>Знакомство с нашей командой DreamTeam</MiddleHeader>
           <RightTeamBlock>
             <a
               href="https://www.linkedin.com/in/nina-viter-8b4459202/"
@@ -162,15 +148,23 @@ const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
                   <img
                     src={nina}
                     title="Nina"
-                    style={{ maxWidth: '120px' }}
+                    style={{
+                      maxWidth: '200px',
+                      borderRadius: '50%',
+                      marginBottom: '-20px',
+                    }}
                     alt="Nina"
                   />
                   <CardContent>
                     <Typography gutterBottom variant="h6" component="h2">
-                      Nina
+                      Нина
                     </Typography>
                     <Typography variant="body2" color="inherit" component="p">
-                      Team Lead
+                      <strong>TeamLead, Разработчик</strong>
+                    </Typography>
+                    <Typography variant="body2" color="inherit" component="p">
+                      Игра 'Спринт', Игра 'Аудиовызов', Игра 'SpeakIt', Игра
+                      'Саванна'
                     </Typography>
                   </CardContent>
                 </TeamCardActionArea>
@@ -185,15 +179,22 @@ const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
                   <img
                     src={anton}
                     title="Anton"
-                    style={{ maxWidth: '120px' }}
+                    style={{
+                      maxWidth: '200px',
+                      borderRadius: '50%',
+                      marginBottom: '-20px',
+                    }}
                     alt="Anton"
                   />
                   <CardContent>
                     <Typography gutterBottom variant="h6" component="h2">
-                      Anton
+                      Антон
                     </Typography>
                     <Typography variant="body2" color="inherit" component="p">
-                      Full stack developer
+                      <strong>Full-stack Разработчик</strong>
+                    </Typography>
+                    <Typography variant="body2" color="inherit" component="p">
+                      Электронный учебник, словарь, карточка слова
                     </Typography>
                   </CardContent>
                 </TeamCardActionArea>
@@ -208,15 +209,22 @@ const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
                   <img
                     src={andrei}
                     title="Andrei"
-                    style={{ maxWidth: '120px' }}
+                    style={{
+                      maxWidth: '200px',
+                      borderRadius: '50%',
+                      marginBottom: '-20px',
+                    }}
                     alt="Andrei"
                   />
                   <CardContent>
                     <Typography gutterBottom variant="h6" component="h2">
-                      Andrei
+                      Андрей
                     </Typography>
                     <Typography variant="body2" color="inherit" component="p">
-                      Frontend developer
+                      <strong>Full-stack Разработчик</strong>
+                    </Typography>
+                    <Typography variant="body2" color="inherit" component="p">
+                      Backend, Авторизация, Главная страница, Игра 'Саванна'
                     </Typography>
                   </CardContent>
                 </TeamCardActionArea>
@@ -224,6 +232,7 @@ const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
             </a>
           </RightTeamBlock>
         </TeamBlock>
+        <LittleBlock />
         <BottomLowerBlock>
           {isAuth ? null : (
             <Button
