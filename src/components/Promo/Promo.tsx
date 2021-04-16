@@ -129,7 +129,7 @@ const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
           <MiddleHeader>Знакомство с приложением</MiddleHeader>
           <StyledReactPlayer>
             <ReactPlayer
-              url="https://youtu.be/e_lUniqWAeI"
+              url="https://www.youtube.com/watch?v=e_lUniqWAeI"
               controls={true}
               loop={true}
               width="100%"
