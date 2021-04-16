@@ -93,10 +93,29 @@ const Pages = ({
       getWords(numberGroup);
     }
   }, [currentPage, getWords, numberGroup, isAuth, getAuthWords]);
+
+  const changeGroupBG = () => {
+    switch (numberGroup.groupNumber) {
+      case '0':
+        return '#ff00002b';
+      case '1':
+        return '#0080001f';
+      case '2':
+        return '#ffff0026';
+      case '3':
+        return '#0000ff30';
+      case '4':
+        return '#a52a2a40';
+      case '5':
+        return '#ee82ee52';
+      default:
+        return 'white';
+    }
+  };
   return (
     <>
       {currentWords.length > 0 ? (
-        <div>
+        <div style={{ background: `${changeGroupBG()}` }}>
           <StyledNavLink>
             <NavLink
               to={`./${currentPage - 1}`}
