@@ -20,6 +20,15 @@ const StyledLink = styled(Link)`
 const StyledGrid = styled(Grid)`
   padding: 0 40px;
   height: 50px;
+  z-index: 2;
+  background: ${({ theme }) => theme.body};
+`;
+
+const Year = styled.span`
+  display: inherit;
+  @media (max-width: 800px) {
+    display: none;
+  }
 `;
 
 export const Footer: React.FC = () => {
@@ -43,7 +52,7 @@ export const Footer: React.FC = () => {
           <GitHubIcon />
         </StyledLink>
       </Grid>
-      <span>2021</span>
+      <Year>2021</Year>
       <Grid
         container
         spacing={2}

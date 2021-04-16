@@ -18,6 +18,14 @@ export const HeadBlock = styled.div`
   background-size: cover;
   height: 70vh;
   background-position: center center;
+  padding-top: 70px;
+  padding-bottom: 70px;
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
 `;
 
 export const LeftHeadBlock = styled.div`
@@ -39,21 +47,36 @@ export const RightHeadBlock = styled.div`
 
 export const HeaderBlockTop = styled.div`
   font-size: 2.8rem;
+  @media (max-width: 800px) {
+    font-size: 1.8rem;
+  }
 `;
 
 export const HeaderBlockMiddle = styled.div`
   font-size: 2.4rem;
   padding-top: 20px;
+  @media (max-width: 800px) {
+    font-size: 1.4rem;
+    padding-top: 5px;
+  }
 `;
 
 export const HeaderBlockBottom = styled.div`
   font-size: 2.2rem;
+  @media (max-width: 800px) {
+    font-size: 1.2rem;
+  }
 `;
 
 export const HeadImage = styled.img`
   margin-top: 25px;
   width: 35vw;
   border: ${({ theme }) => theme.borderImage};
+  @media (max-width: 800px) {
+    margin-top: 5px;
+    width: 40vw;
+    margin-bottom: 10px;
+  }
 `;
 
 export const MiddleBlock = styled.div`
@@ -64,6 +87,11 @@ export const MiddleBlock = styled.div`
   background: ${({ theme }) => theme.middleBlock};
   padding-top: 25px;
   padding-bottom: 25px;
+  @media (max-width: 800px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 export const LittleBlock = styled.div`
@@ -84,6 +112,10 @@ export const MiddleHeader = styled.div`
   font-weight: 400;
   line-height: 1.5;
   letter-spacing: 0.00938em;
+  @media (max-width: 800px) {
+    padding-top: 5px;
+    font-size: 1.5rem;
+  }
 `;
 
 export const BottomBlock = styled.div`
@@ -117,12 +149,32 @@ export const BottomLowerBlock = styled.div`
   background-size: cover;
   height: 70vh;
   background-position: center center;
+  @media (max-width: 800px) {
+    flex-direction: column;
+  }
 `;
 
 export const StyledCard = styled(Card)`
   color: ${({ theme }) => theme.text};
   background: ${({ theme }) => theme.card};
   max-width: 250px;
+  @media (max-width: 800px) {
+    max-width: 90%;
+    display: flex;
+    flex-direction: row;
+    color: ${({ theme }) => theme.text};
+    background: ${({ theme }) => theme.card};
+    margin-top: 10px;
+    margin-bottom: 10px;
+    justify-content: flex-start;
+  }
+`;
+
+export const StyledImg = styled.img`
+  max-width: 250px;
+  @media (max-width: 800px) {
+    max-width: 150px;
+  }
 `;
 
 export const ButtonInscription = styled.div`
@@ -140,44 +192,66 @@ export const StyledReactPlayer = styled.div`
 
 export const TeamBlock = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-around;
   width: 100%;
   background: ${({ theme }) => theme.middleBlock};
+  @media (max-width: 800px) {
+    flex-direction: column;
+    justify-content: center;
+  }
 `;
 
 export const LeftTeamBlock = styled.div`
   display: flex;
   flex-direction: column;
+  @media (max-width: 800px) {
+    display: none;
+  }
 `;
 
 export const CenterTeamBlock = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
 `;
 
 export const RightTeamBlock = styled.div`
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
+  flex-direction: column;
+  align-items: flex-start;
+  @media (max-width: 800px) {
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 export const TeamCard = styled(Card)`
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: center;
   color: ${({ theme }) => theme.text};
   background: ${({ theme }) => theme.card};
-  margin: 7vh 5vw;
-  height: 50vh;
-  width: 20vw;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  justify-content: flex-start;
 `;
 
 export const TeamCardActionArea = styled(CardActionArea)`
   display: flex;
+  flex-direction: row;
+`;
+
+export const StyledCardActionArea = styled(CardActionArea)`
+  display: flex;
   flex-direction: column;
-  justify-content: center;
+  @media (max-width: 800px) {
+    display: flex;
+    flex-direction: row;
+  }
+`;
+
+export const TeamImage = styled.img`
+  margin-top: 25px;
+  width: 25vw;
+  border: ${({ theme }) => theme.borderTeamImage};
 `;

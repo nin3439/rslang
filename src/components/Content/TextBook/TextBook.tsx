@@ -28,6 +28,15 @@ const StyledAppBar = styled(AppBar)`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 2;
+`;
+
+const StyledFormGroup = styled(FormGroup)`
+  display: flex;
+  flex-direction: row;
+  @media (max-width: 800px) {
+    flex-direction: column;
+  }
 `;
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -58,7 +67,7 @@ const TextBook = ({ isAuth }: { isAuth: boolean }) => {
 
   return (
     <div className={classes.root}>
-      <StyledAppBar position="static" color="default">
+      <StyledAppBar position="relative" color="default">
         <Tabs value={value} onChange={handleChange}>
           <Tab label="Электронный учебник" component={Link} to="/textbook" />
           {isAuth && (
@@ -68,7 +77,7 @@ const TextBook = ({ isAuth }: { isAuth: boolean }) => {
       </StyledAppBar>
       <SettingsBlock>
         <FormControl component="fieldset">
-          <FormGroup row={true}>
+          <StyledFormGroup>
             <FormControlLabel
               control={
                 <Switch
@@ -91,7 +100,7 @@ const TextBook = ({ isAuth }: { isAuth: boolean }) => {
                 label="Показывать кнопки словаря"
               />
             )}
-          </FormGroup>
+          </StyledFormGroup>
         </FormControl>
       </SettingsBlock>
       <SwitchRouter>
