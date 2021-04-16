@@ -168,7 +168,7 @@ const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
                       Nina
                     </Typography>
                     <Typography variant="body2" color="inherit" component="p">
-                      <strong>Team Lead, разработчик</strong>
+                      <strong>Team Lead, frontend developer</strong>
                     </Typography>
                     <Typography variant="body2" color="inherit" component="p">
                       Игры 'Спринт', 'Аудиовызов', 'SpeakIt', 'Саванна'
