@@ -85,8 +85,9 @@ const StyledPaper = styled(Paper)`
     width: 40vw;
     height: 40vh;
   }
-  @media (max-width: 800px) {
+  @media (max-width: 900px) {
     width: 70vw;
+    height: 40vh;
   }
 `;
 
@@ -116,7 +117,6 @@ interface IPageProps {
   changeFullscreen: FullScreenHandle;
   game: IGame;
   nameMiniGame: string;
-  isAuth: boolean;
 }
 
 const InitialPage: React.FC<IPageProps> = ({
@@ -126,13 +126,12 @@ const InitialPage: React.FC<IPageProps> = ({
   changeFullscreen,
   game,
   nameMiniGame,
-  isAuth,
 }) => {
   const params: IParams = useParams();
   const changeLevel = (event: React.ChangeEvent<{ value: unknown }>) => {
     setLevel(event.target.value as number);
   };
-  console.log(params, isAuth);
+
   const [playCount] = useSound(count.default, {
     volume: 0.35,
   });
@@ -151,7 +150,7 @@ const InitialPage: React.FC<IPageProps> = ({
           </IconButton>
         </StyledLink>
         <StyledBox>
-          {isAuth && params.link ? null : (
+          {!params.link && (
             <FormControl style={{ color: '#fff', marginRight: '20px' }}>
               <Select
                 value={level}
@@ -192,7 +191,10 @@ const InitialPage: React.FC<IPageProps> = ({
           variant="outlined"
           onClick={() => {
             setIsGameStart(true);
-            if (nameMiniGame === 'sprint') {
+            if (
+              nameMiniGame === 'sprint'
+              // || nameMiniGame === 'savannah'
+            ) {
               playCount();
             }
           }}
@@ -206,7 +208,6 @@ const InitialPage: React.FC<IPageProps> = ({
 
 const mapStateToProps = (state: any) => ({
   nameMiniGame: state.controllers.nameMiniGame,
-  isAuth: state.userReducer.isAuth,
 });
 
 export default connect(mapStateToProps)(InitialPage);
