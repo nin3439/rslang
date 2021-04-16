@@ -55,7 +55,12 @@ export const filterAuthWords = async (
       break;
     }
     case 'learn': {
-      data = { 'userWord.optional.isLearn': true };
+      data = {
+        $or: [
+          { 'userWord.optional.isLearn': true },
+          { 'userWord.difficulty': 'hard' },
+        ],
+      };
       break;
     }
     default:

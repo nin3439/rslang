@@ -46,17 +46,20 @@ export const updateWord = (
   body: IPropsUpdate,
   wordId: string,
   method: 'post' | 'put',
-  numberGroup: IPropsLoadWords
+  numberGroup: IPropsLoadWords,
+  category = ''
 ) => {
   return async (dispatch: any) => {
     try {
       await changeWord(method, body, wordId);
       const id = localStorage.getItem('userId');
-      const res = await uploadAuthWords(
-        id,
-        numberGroup.groupNumber,
-        numberGroup.pageNumber
-      );
+      const res = numberGroup.category
+        ? await filterAuthWords(id, numberGroup.groupNumber, category)
+        : await uploadAuthWords(
+            id,
+            numberGroup.groupNumber,
+            numberGroup.pageNumber
+          );
       const data = res.data[0].paginatedResults;
       dispatch(LoadWords(data));
     } catch (e) {
