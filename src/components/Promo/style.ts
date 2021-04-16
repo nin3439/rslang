@@ -52,7 +52,7 @@ export const HeaderBlockBottom = styled.div`
 
 export const HeadImage = styled.img`
   margin-top: 25px;
-  width: 25vw;
+  width: 35vw;
   border: ${({ theme }) => theme.borderImage};
 `;
 
@@ -66,6 +66,14 @@ export const MiddleBlock = styled.div`
   padding-bottom: 25px;
 `;
 
+export const LittleBlock = styled.div`
+  width: 100%;
+  background: ${({ theme }) => theme.backgroundImage};
+  height: 10vh;
+  background-size: cover;
+  background-position: center center;
+`;
+
 export const MiddleHeader = styled.div`
   font-size: 2rem;
   display: flex;
@@ -76,7 +84,6 @@ export const MiddleHeader = styled.div`
   font-weight: 400;
   line-height: 1.5;
   letter-spacing: 0.00938em;
-  transform: rotate(1deg);
 `;
 
 export const BottomBlock = styled.div`
@@ -85,7 +92,6 @@ export const BottomBlock = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  padding-bottom: 25px;
 `;
 
 export const PlayerBlock = styled.div`
@@ -109,7 +115,7 @@ export const BottomLowerBlock = styled.div`
   align-items: bottom;
   background: url('https://images.unsplash.com/photo-1551098930-dbd128bd7489?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1000&q=80');
   background-size: cover;
-  height: 100vh;
+  height: 70vh;
   background-position: center center;
 `;
 
@@ -129,12 +135,12 @@ export const StyledReactPlayer = styled.div`
   border: ${({ theme }) => theme.borderVideo};
   transform: rotate(1deg);
   width: 70%;
-  height: 100vh;
+  height: 80vh;
 `;
 
 export const TeamBlock = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-around;
   width: 100%;
   background: ${({ theme }) => theme.middleBlock};
@@ -147,33 +153,31 @@ export const LeftTeamBlock = styled.div`
 
 export const CenterTeamBlock = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
 `;
 
 export const RightTeamBlock = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
 `;
 
 export const TeamCard = styled(Card)`
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
   color: ${({ theme }) => theme.text};
   background: ${({ theme }) => theme.card};
-  margin-top: 10px;
-  margin-bottom: 10px;
-  max-width: 223px;
+  margin: 7vh 5vw;
+  height: 50vh;
+  width: 20vw;
 `;
 
 export const TeamCardActionArea = styled(CardActionArea)`
   display: flex;
-  flex-direction: row;
-`;
-
-export const TeamImage = styled.img`
-  margin-top: 25px;
-  width: 25vw;
-  border: ${({ theme }) => theme.borderTeamImage};
+  flex-direction: column;
+  justify-content: center;
 `;
