@@ -11,6 +11,8 @@ import Switch from '@material-ui/core/Switch';
 import Pages from 'components/Content/TextBook/pages/pages';
 import { Dictionary } from 'components/Content/TextBook/dictionary/Dictionary';
 import { Groups } from 'components/Content/TextBook/groups/groups';
+import { IStatePage } from 'types';
+import { connect } from 'react-redux';
 
 const SettingsBlock = styled.div`
   display: flex;
@@ -38,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export const TextBook = () => {
+const TextBook = ({ isAuth }: { isAuth: boolean }) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const { path } = useRouteMatch();
@@ -59,7 +61,9 @@ export const TextBook = () => {
       <StyledAppBar position="static" color="default">
         <Tabs value={value} onChange={handleChange}>
           <Tab label="Электронный учебник" component={Link} to="/textbook" />
-          <Tab label="Словарь" component={Link} to={`${path}/dictionary`} />
+          {isAuth && (
+            <Tab label="Словарь" component={Link} to={`${path}/dictionary`} />
+          )}
         </Tabs>
       </StyledAppBar>
       <SettingsBlock>
@@ -75,21 +79,32 @@ export const TextBook = () => {
               }
               label="Показывать перевод слов"
             />
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={options.buttons}
-                  onChange={optionsChange}
-                  name="buttons"
-                />
-              }
-              label="Показывать кнопки словаря"
-            />
+            {isAuth && (
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={options.buttons}
+                    onChange={optionsChange}
+                    name="buttons"
+                  />
+                }
+                label="Показывать кнопки словаря"
+              />
+            )}
           </FormGroup>
         </FormControl>
       </SettingsBlock>
       <SwitchRouter>
-        <Route path={`${path}/dictionary`}>
+        <Route exact path={`${path}/dictionary/:category`}>
+          <Groups />
+        </Route>
+        <Route
+          exact
+          path={`${path}/dictionary/:category/group/:groupNumber/page/:pageNumber`}
+        >
+          <Pages options={options} />
+        </Route>
+        <Route exact path={`${path}/dictionary`}>
           <Dictionary />
         </Route>
         <Route path={`${path}/group/:groupNumber/page/:pageNumber`}>
@@ -102,3 +117,9 @@ export const TextBook = () => {
     </div>
   );
 };
+const mapStateToProps = (state: IStatePage) => {
+  return {
+    isAuth: state.userReducer.isAuth,
+  };
+};
+export default connect(mapStateToProps)(TextBook);

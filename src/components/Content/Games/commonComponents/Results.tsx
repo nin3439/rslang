@@ -124,14 +124,16 @@ const Results: React.FC<IResultsProps> = ({
       allLearnWords.forEach((learnWord: IWord | null) => {
         const body = {
           optional: {
+            ...learnWord?.userWord?.optional,
             isLearn: true,
           },
         };
+        const dataPage = {
+          groupNumber: params.groupNumber,
+          pageNumber: params.pageNumber,
+        };
         const method = learnWord?.userWord ? 'put' : 'post';
-        return (
-          learnWord &&
-          updateWord(body, learnWord?._id, method, learnWord?.group)
-        );
+        return learnWord && updateWord(body, learnWord?._id, method, dataPage);
       });
     }
 

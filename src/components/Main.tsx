@@ -3,7 +3,7 @@ import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
 import Header from './Header/Header';
 import { Footer } from './Footer';
-import { TextBook } from './Content/TextBook/TextBook';
+import TextBook from './Content/TextBook/TextBook';
 import Menu from './Authorization/Authorization';
 import { connect } from 'react-redux';
 import { IMainProps } from '../types';

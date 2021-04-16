@@ -72,7 +72,7 @@ const Pages = ({
   }, [currentPage, getWords, numberGroup, isAuth, getAuthWords]);
   return (
     <>
-      {currentWords.length > 1 && (
+      {currentWords.length > 0 ? (
         <div>
           <StyledNavLink>
             <NavLink
@@ -151,6 +151,8 @@ const Pages = ({
             {currentPage}
           </Typography>
         </div>
+      ) : (
+        'Вернись назад тут пусто'
       )}
     </>
   );
