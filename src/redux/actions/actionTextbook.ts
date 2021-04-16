@@ -1,4 +1,9 @@
-import { changeWord, uploadAuthWords, uploadWords } from '../../api/words';
+import {
+  changeWord,
+  filterAuthWords,
+  uploadAuthWords,
+  uploadWords,
+} from '../../api/words';
 import {
   IPropsLoadWords,
   IWord,
@@ -22,11 +27,15 @@ export const getAuthWords = ({
   userId,
   groupNumber,
   pageNumber,
+  category = '',
 }: IPropsLoadWordsAuth) => {
   return async (dispatch: any) => {
     try {
-      const res = await uploadAuthWords(userId, groupNumber, pageNumber);
+      const res = category
+        ? await filterAuthWords(userId, groupNumber, category)
+        : await uploadAuthWords(userId, groupNumber, pageNumber);
       const data = res.data[0].paginatedResults;
+
       dispatch(LoadWords(data));
     } catch (e) {
       console.log(e);

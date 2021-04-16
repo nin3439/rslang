@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 import { IGroupParametr } from 'types';
 const StyledGroup = styled.div`
@@ -20,8 +20,14 @@ const StyledGroup = styled.div`
 `;
 
 export const Group = ({ numberGroup, color }: IGroupParametr) => {
+  const { path } = useRouteMatch();
+  const params: { category: string } = useParams();
   return (
-    <NavLink to={`textbook/group/${numberGroup}/page/0`}>
+    <NavLink
+      to={`${
+        params.category ? params.category : path
+      }/group/${numberGroup}/page/0`}
+    >
       <StyledGroup color={color}>Раздел {numberGroup + 1}</StyledGroup>
     </NavLink>
   );

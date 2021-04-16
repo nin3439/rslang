@@ -31,11 +31,13 @@ export interface IActionWords {
 export interface IPropsLoadWords {
   groupNumber: string;
   pageNumber: string;
+  category: string;
 }
 export interface IPropsLoadWordsAuth {
   userId: string;
   groupNumber: string;
   pageNumber: string;
+  category?: string;
 }
 
 export interface IGroupParametr {

@@ -39,6 +39,43 @@ export const uploadAuthWords = async (
     }
   );
 };
+export const filterAuthWords = async (
+  userId: string | null,
+  group: string,
+  category: string
+) => {
+  let data = {};
+  switch (category) {
+    case 'hard': {
+      data = { 'userWord.difficulty': 'hard' };
+      break;
+    }
+    case 'delete': {
+      data = { 'userWord.optional.isDeleted': true };
+      break;
+    }
+    case 'learn': {
+      data = { 'userWord.optional.isLearn': true };
+      break;
+    }
+    default:
+      break;
+  }
+  const token = localStorage.getItem('token');
+  return await axios.get(
+    `${API_URL}/users/${userId}/aggregatedWords?group=${group}&page=0&wordsPerPage=20`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      params: {
+        filter: data,
+      },
+    }
+  );
+};
 // await fetch(`${API_URL}/users/${userId}/aggregatedWords?group=${group}&page=${page}`, {
 //   method: 'PUT',
 //   headers: {

@@ -28,11 +28,19 @@ export const Page = ({
   numberGroup,
 }: IPageProps) => {
   const allWords = words.map((word: IWord) => {
-    if (word.userWord) {
-      if (word.userWord.optional?.isDeleted) {
+    if (numberGroup.category !== 'delete') {
+      if (word.userWord) {
+        if (word.userWord.optional?.isDeleted) {
+          return '';
+        }
+      }
+    }
+    if (numberGroup.category === 'delete') {
+      if (!word?.userWord?.optional?.isDeleted) {
         return '';
       }
     }
+
     return (
       <Word
         numberGroup={numberGroup}
@@ -43,5 +51,7 @@ export const Page = ({
       />
     );
   });
-  return <StyledWords>{allWords}</StyledWords>;
+  return (
+    <StyledWords>{allWords.length > 0 ? allWords : 'ТУТ ПУСТО'}</StyledWords>
+  );
 };
