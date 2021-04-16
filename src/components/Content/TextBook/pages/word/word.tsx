@@ -29,7 +29,8 @@ interface IWordProps {
     body: IPropsUpdate,
     idWord: string,
     method: 'post' | 'put',
-    numberGroup: IPropsLoadWords
+    numberGroup: IPropsLoadWords,
+    category: string
   ) => void;
   options: IOptions;
 }
@@ -40,22 +41,22 @@ export const Word = ({
   numberGroup,
 }: IWordProps) => {
   const isCategory = numberGroup.category;
-  const deleteWord = (id: string) => {
+  const deleteWord = (value: boolean) => {
     const body = {
       optional: {
         ...word?.userWord?.optional,
-        isDeleted: true,
+        isDeleted: value,
       },
     };
     const method = word.userWord ? 'put' : 'post';
-    updateWord(body, id, method, numberGroup);
+    updateWord(body, word._id, method, numberGroup, isCategory);
   };
   const difficultWord = (id: string, value: string) => {
     const body = {
       difficulty: value,
     };
     const method = word.userWord ? 'put' : 'post';
-    updateWord(body, id, method, numberGroup);
+    updateWord(body, id, method, numberGroup, isCategory);
   };
   const dispatch = useDispatch();
   const { isAuth } = useSelector((state: IStatePage) => state.userReducer);
@@ -113,6 +114,20 @@ export const Word = ({
                 )}
               </StyledButton>
             )}
+          {isCategory !== 'learn' && isCategory && (
+            <StyledButton
+              onClick={() => {
+                if (isCategory === 'delete') {
+                  deleteWord(false);
+                }
+                if (isCategory === 'hard') {
+                  difficultWord(word['_id'], 'easy');
+                }
+              }}
+            >
+              Убрать
+            </StyledButton>
+          )}
           {isAuth && options.buttons && !isCategory && (
             <StyleButtons>
               {word?.userWord?.difficulty !== 'hard' && (
@@ -126,7 +141,7 @@ export const Word = ({
               )}
               <StyledButton
                 onClick={() => {
-                  deleteWord(word['_id']);
+                  deleteWord(true);
                 }}
               >
                 Удалить
