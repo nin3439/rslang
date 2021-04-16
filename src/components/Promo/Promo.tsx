@@ -29,6 +29,11 @@ import {
   TeamCard,
   TeamCardActionArea,
   LittleBlock,
+  StyledImg,
+  LeftTeamBlock,
+  CenterTeamBlock,
+  TeamImage,
+  StyledCardActionArea,
 } from './style';
 
 const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
@@ -49,11 +54,10 @@ const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
       </HeadBlock>
       <MiddleBlock>
         <StyledCard>
-          <CardActionArea>
-            <img
+          <StyledCardActionArea>
+            <StyledImg
               src="https://images.unsplash.com/photo-1574870111867-089730e5a72b?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
               title="Memorize"
-              style={{ maxWidth: '250px' }}
               alt="Memorize"
             />
             <CardContent>
@@ -65,14 +69,13 @@ const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
                 отдельно
               </Typography>
             </CardContent>
-          </CardActionArea>
+          </StyledCardActionArea>
         </StyledCard>
         <StyledCard>
-          <CardActionArea>
-            <img
+          <StyledCardActionArea>
+            <StyledImg
               src="https://images.unsplash.com/photo-1449027627419-e46b1154169d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=632&q=80"
               title="Library"
-              style={{ maxWidth: '250px' }}
               alt="Library"
             />
             <CardContent>
@@ -84,14 +87,13 @@ const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
                 темпе
               </Typography>
             </CardContent>
-          </CardActionArea>
+          </StyledCardActionArea>
         </StyledCard>
         <StyledCard>
-          <CardActionArea>
-            <img
+          <StyledCardActionArea>
+            <StyledImg
               src="https://images.unsplash.com/photo-1549639457-2c41890d2db6?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=634&q=80"
               title="Game"
-              style={{ maxWidth: '250px' }}
               alt="Game"
             />
             <CardContent>
@@ -102,14 +104,13 @@ const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
                 Для лучшего запоминания играй и делись результатами с другими
               </Typography>
             </CardContent>
-          </CardActionArea>
+          </StyledCardActionArea>
         </StyledCard>
         <StyledCard>
-          <CardActionArea>
-            <img
+          <StyledCardActionArea>
+            <StyledImg
               src="https://images.unsplash.com/photo-1609695001873-bf16717ba9db?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
               title="Statistic"
-              style={{ maxWidth: '250px' }}
               alt="Statistic"
             />
             <CardContent>
@@ -120,7 +121,7 @@ const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
                 Подробная статистика твоих достижений, изученных слов и ошибок
               </Typography>
             </CardContent>
-          </CardActionArea>
+          </StyledCardActionArea>
         </StyledCard>
       </MiddleBlock>
       <BottomBlock>
@@ -128,7 +129,7 @@ const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
           <MiddleHeader>Знакомство с приложением</MiddleHeader>
           <StyledReactPlayer>
             <ReactPlayer
-              url="https://www.youtube.com/watch?v=Xs-HbHCcK58"
+              url="https://youtu.be/e_lUniqWAeI"
               controls={true}
               loop={true}
               width="100%"
@@ -137,7 +138,19 @@ const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
           </StyledReactPlayer>
         </PlayerBlock>
         <TeamBlock>
-          <MiddleHeader>Знакомство с нашей командой DreamTeam</MiddleHeader>
+          <LeftTeamBlock>
+            <TeamImage
+              src="https://images.unsplash.com/photo-1606425271394-c3ca9aa1fc06?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=675&q=80"
+              title="Statistic"
+              style={{ maxWidth: '250px' }}
+              alt="Team"
+            />
+          </LeftTeamBlock>
+          <CenterTeamBlock>
+            <MiddleHeader>Знакомство</MiddleHeader>
+            <MiddleHeader>с нашей командой</MiddleHeader>
+            <MiddleHeader>DreamTeam</MiddleHeader>
+          </CenterTeamBlock>
           <RightTeamBlock>
             <a
               href="https://www.linkedin.com/in/nina-viter-8b4459202/"
@@ -148,23 +161,18 @@ const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
                   <img
                     src={nina}
                     title="Nina"
-                    style={{
-                      maxWidth: '200px',
-                      borderRadius: '50%',
-                      marginBottom: '-20px',
-                    }}
+                    style={{ maxWidth: '120px' }}
                     alt="Nina"
                   />
                   <CardContent>
                     <Typography gutterBottom variant="h6" component="h2">
-                      Нина
+                      Nina
                     </Typography>
                     <Typography variant="body2" color="inherit" component="p">
-                      <strong>TeamLead, Разработчик</strong>
+                      <strong>Team Lead, разработчик</strong>
                     </Typography>
                     <Typography variant="body2" color="inherit" component="p">
-                      Игра 'Спринт', Игра 'Аудиовызов', Игра 'SpeakIt', Игра
-                      'Саванна'
+                      Игры 'Спринт', 'Аудиовызов', 'SpeakIt', 'Саванна'
                     </Typography>
                   </CardContent>
                 </TeamCardActionArea>
@@ -179,19 +187,15 @@ const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
                   <img
                     src={anton}
                     title="Anton"
-                    style={{
-                      maxWidth: '200px',
-                      borderRadius: '50%',
-                      marginBottom: '-20px',
-                    }}
+                    style={{ maxWidth: '120px' }}
                     alt="Anton"
                   />
                   <CardContent>
                     <Typography gutterBottom variant="h6" component="h2">
-                      Антон
+                      Anton
                     </Typography>
                     <Typography variant="body2" color="inherit" component="p">
-                      <strong>Full-stack Разработчик</strong>
+                      <strong>Full stack developer</strong>
                     </Typography>
                     <Typography variant="body2" color="inherit" component="p">
                       Электронный учебник, словарь, карточка слова
@@ -209,22 +213,18 @@ const Promo: React.FC<any> = ({ changeModalAuth, isModalActive, isAuth }) => {
                   <img
                     src={andrei}
                     title="Andrei"
-                    style={{
-                      maxWidth: '200px',
-                      borderRadius: '50%',
-                      marginBottom: '-20px',
-                    }}
+                    style={{ maxWidth: '120px' }}
                     alt="Andrei"
                   />
                   <CardContent>
                     <Typography gutterBottom variant="h6" component="h2">
-                      Андрей
+                      Andrei
                     </Typography>
                     <Typography variant="body2" color="inherit" component="p">
-                      <strong>Full-stack Разработчик</strong>
+                      <strong>Frontend developer</strong>
                     </Typography>
                     <Typography variant="body2" color="inherit" component="p">
-                      Backend, Авторизация, Главная страница, Игра 'Саванна'
+                      Авторизация, Главная страница, игра 'Саванна'
                     </Typography>
                   </CardContent>
                 </TeamCardActionArea>

@@ -12,6 +12,7 @@ export const PopUpMenu = styled.div`
   bottom: 0;
   margin: auto;
   background-color: rgba(0, 0, 0, 0.6);
+  z-index: 10;
 `;
 
 export const PopUpMenuInner = styled.div`
@@ -27,6 +28,11 @@ export const PopUpMenuInner = styled.div`
   justify-content: center;
   flex-direction: row;
   align-items: flex-start;
+  @media (max-width: 800px) {
+    left: 5%;
+    right: 5%;
+    top: 5%;
+    bottom: 5%;
 `;
 
 export const TabsBlock = styled.div`

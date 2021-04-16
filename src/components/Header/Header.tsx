@@ -12,6 +12,8 @@ import { API_URL } from 'config';
 
 const StyledGrid = styled(Grid)`
   padding: 0 28px;
+  background: ${({ theme }) => theme.body};
+  z-index: 2;
 `;
 
 const StyledIconButton = styled(IconButton)`
@@ -27,6 +29,13 @@ const StyledMenuBlock = styled(MenuBlock)`
   background-size: cover;
   height: 100vh;
   background-position: center center;
+`;
+
+const AvatarGrid = styled(Grid)`
+  width: 200px;
+  @media (max-width: 800px) {
+    width: 100%;
+  }
 `;
 
 const Header: React.FC<any> = ({
@@ -80,13 +89,12 @@ const Header: React.FC<any> = ({
         {showNight ? <Brightness2 /> : <WbSunny />}
       </StyledIconButton>
       {isAuth ? (
-        <Grid
+        <AvatarGrid
           container
           direction="row"
           justify="center"
           alignItems="center"
           wrap="nowrap"
-          style={{ width: '200px' }}
         >
           <div>{localStorage.getItem('userName')}</div>
           <Avatar src={userAvatar} style={{ margin: '0 0 0 10px' }} />
@@ -97,7 +105,7 @@ const Header: React.FC<any> = ({
           >
             <ExitToApp />
           </StyledIconButton>
-        </Grid>
+        </AvatarGrid>
       ) : (
         <StyledIconButton
           onClick={() => {
