@@ -1,5 +1,4 @@
 import React from 'react';
-import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import ReactPlayer from 'react-player/lazy';
