@@ -26,10 +26,6 @@ const StyledIconButton = styled(IconButton)`
       transform: scale(1.3);
       transition: transform 0.5s;
     }
-    @media (max-width: 700px) {
-      top: 3px;
-      left: 5px;
-    }
   }
 `;
 
@@ -37,10 +33,6 @@ const StyledIconGrid = styled(Grid)`
   position: absolute;
   top: 30px;
   right: 30px;
-  @media (max-width: 700px) {
-    top: 5px;
-    right: 5px;
-  }
 `;
 
 interface IParams {
@@ -261,7 +253,11 @@ const Game: React.FC<IGameProps> = ({
               wrongAnswer={wrongAnswer.toString()}
             />
             <StyledIconButton
-              style={{ top: '0', left: '0', right: '45px', bottom: '30px' }}
+              style={{
+                top: '90%',
+                left: '95%',
+                height: '30px',
+              }}
               onClick={() => setIsSoundOn(!isSoundOn)}
             >
               {isSoundOn ? (
