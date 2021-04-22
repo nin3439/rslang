@@ -1,14 +1,11 @@
-import React, { Dispatch, useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Grid, IconButton, Typography, Avatar } from '@material-ui/core';
 import { AccountCircle } from '@material-ui/icons';
 import { MenuBlock } from './MenuBlock';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
-import { changeModalAuth, endAudioWord } from 'redux/actions/controllerActions';
-import { logout } from 'redux/reducers/userReducer';
 import { ExitToApp, WbSunny, Brightness2 } from '@material-ui/icons';
-import { IStatePage } from 'types';
 import { API_URL } from 'config';
+import { HeaderProps } from './Header.types';
 
 const StyledGrid = styled(Grid)`
   padding: 0 28px;
@@ -38,8 +35,7 @@ const AvatarGrid = styled(Grid)`
   }
 `;
 
-const Header: React.FC<any> = ({
-  isModalActive,
+export const HeaderView = ({
   changeModalAuth,
   isAuth,
   userAvatar,
@@ -51,7 +47,7 @@ const Header: React.FC<any> = ({
   audioMeaning,
   audioExample,
   endAudioWord,
-}) => {
+}: HeaderProps) => {
   const audio = useMemo(() => new Audio(), []);
   const playAudio = (src: string): void => {
     audio.src = `${API_URL}/${src}`;
@@ -107,41 +103,10 @@ const Header: React.FC<any> = ({
           </StyledIconButton>
         </AvatarGrid>
       ) : (
-        <StyledIconButton
-          onClick={() => {
-            changeModalAuth();
-          }}
-        >
+        <StyledIconButton onClick={changeModalAuth}>
           <AccountCircle />
         </StyledIconButton>
       )}
     </StyledGrid>
   );
 };
-const mapStateToProps = (state: IStatePage) => {
-  return {
-    isModalActive: state.controllers.isModalActive,
-    isAuth: state.userReducer.isAuth,
-    userAvatar: state.userReducer.currentUser.avatar,
-    isPlayAudio: state.controllers.isPlayAudio,
-    audioWord: state.controllers.audioWord,
-    audioMeaning: state.controllers.audioMeaning,
-    audioExample: state.controllers.audioExample,
-  };
-};
-const mapStateToDispatch = (dispatch: Dispatch<any>) => {
-  return {
-    changeModalAuth() {
-      const action = changeModalAuth();
-      dispatch(action);
-    },
-    logout: () => {
-      const action = logout();
-      dispatch(action);
-    },
-    endAudioWord: () => {
-      dispatch(endAudioWord());
-    },
-  };
-};
-export default connect(mapStateToProps, mapStateToDispatch)(Header);

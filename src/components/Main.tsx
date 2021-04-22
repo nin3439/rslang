@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
-import Header from './Header/Header';
+import { Header } from './Header';
 import { Footer } from './Footer';
 import TextBook from './Content/TextBook/TextBook';
 import Menu from './Authorization/Authorization';
@@ -21,7 +21,7 @@ import SpeakIt from 'components/Content/Games/SpeakIt/SpeakIt';
 const Main: React.FC<IMainProps> = ({ isModalActive, auth }) => {
   const [theme, setTheme] = useState('light');
   const [showNight, setShowNight] = useState(false);
-  const updateMode = (showNight: any) => {
+  const updateMode = (showNight: boolean) => {
     setShowNight(!showNight);
     theme === 'light' ? setTheme('dark') : setTheme('light');
   };
